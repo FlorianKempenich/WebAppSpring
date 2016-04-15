@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <!-- Latest compiled and minified CSS -->
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/bootstrap-theme.css" th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+    <script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{//maps.googleapis.com/maps/api/js}"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300' rel='stylesheet' type='text/css'/>
+
+    <style>
+        body {
+            background: #222;
+        }
+
+        #what {
+            text-align: center;
+            -ms-word-wrap: break-word;
+            word-wrap: break-word;
+
+            color: rgba(0,0,0,0.6);
+            text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+            font-family: 'Ubuntu', sans-serif;
+            font-weight: 700;
+            font-size: 300px;
+        }
+    </style>
+
+    <title>What ?</title>
+
+</head>
+<!--/*@thymesVar id="what" type="String"*/-->
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div id="what" class="text-center text-uppercase" th:text="${what}"></div>
+    </div>
+</div>
+</body>
+</html>

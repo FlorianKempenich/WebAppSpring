@@ -73,3 +73,5 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+secret_store
+aaaa_temp_file

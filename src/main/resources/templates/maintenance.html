@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Site Maintenance</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/bootstrap-theme.css" th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+    <script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{//maps.googleapis.com/maps/api/js}"></script>
+
+    <style>
+        body {
+            text-align: center;
+            padding: 150px;
+        }
+
+        h1 {
+            font-size: 50px;
+        }
+
+        body {
+            font: 20px Helvetica, sans-serif;
+            color: #333;
+        }
+
+        article {
+            display: block;
+            text-align: left;
+            width: 650px;
+            margin: 0 auto;
+        }
+
+        a {
+            color: #dc8100;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+<!--/*@thymesVar id="title" type="String"*/-->
+<!--/*@thymesVar id="email" type="String"*/-->
+
+
+<article>
+    <h1 th:text="${title}"></h1>
+    <div>
+        <p>Sorry for the inconvenience but we&rsquo;re performing some maintenance at the moment.
+            If you need to you can always <a th:href="'mailto:' + ${email}">
+                contact us</a>, otherwise we&rsquo;ll be back online shortly!</p>
+        <p>&mdash; The Team</p>
+    </div>
+</article>
+
+</body>
+</html>
