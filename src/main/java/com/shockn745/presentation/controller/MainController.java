@@ -26,17 +26,17 @@ public class MainController {
     public String showMain(Model model) {
         model.addAttribute("email", "shockn745@gmail.com");
         model.addAttribute("title", "Hello");
-        return "maintenance";
+        return "dev/maintenance";
     }
 
     @RequestMapping(value = "/map", method = RequestMethod.GET)
     public String showMap() {
-        return "map";
+        return "dev/map";
     }
 
     @RequestMapping(value = "/kitten", method = RequestMethod.GET)
     public String showKitten() {
-        return "kitten";
+        return "dev/kitten";
     }
 
     @RequestMapping(value = "/what", method = RequestMethod.GET)
@@ -45,12 +45,8 @@ public class MainController {
             Model model) {
         String toDisplay = getWhatMessageUseCase.execute(input);
         model.addAttribute("what", toDisplay);
-        return "what";
+        return "dev/what";
     }
 
-    @RequestMapping(value = "/template", method = RequestMethod.GET)
-    public String showTemplate() {
-        return "blog-template";
-    }
 
 }

@@ -1,9 +1,4 @@
-/**
- * Created by Shock on 4/13/2016.
- */
-
-
-///<reference path="../typings/browser.d.ts"/>
+///<reference path="../../typings/browser.d.ts"/>
 
 let options:google.maps.MapOptions = {
     center: {

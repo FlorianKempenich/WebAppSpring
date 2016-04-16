@@ -20,6 +20,6 @@ public class BlogController {
 
     private String showTestMessage(Model model) {
         model.addAttribute("what", "This is a test");
-        return "what";
+        return "dev/what";
     }
 }
