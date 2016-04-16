@@ -4,12 +4,12 @@ import com.shockn745.data.SecretRepository;
 import com.shockn745.domain.application.driving.GetWhatMessageUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Kempenich Florian
  */
-@Component
+@Service
 public class GetWhatMessageUseCaseImpl implements GetWhatMessageUseCase {
 
     private final String defaultString;
