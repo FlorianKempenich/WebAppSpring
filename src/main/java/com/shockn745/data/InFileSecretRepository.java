@@ -1,5 +1,6 @@
 package com.shockn745.data;
 
+import com.shockn745.domain.application.driven.SecretRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

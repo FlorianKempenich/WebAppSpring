@@ -1,5 +1,6 @@
 package com.shockn745.data;
 
+import com.shockn745.domain.application.driven.SecretRepository;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 package com.shockn745.domain.application.driving.impl;
 
-import com.shockn745.data.SecretRepository;
+import com.shockn745.domain.application.driven.SecretRepository;
 import com.shockn745.domain.application.driving.GetWhatMessageUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

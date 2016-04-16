@@ -1,4 +1,4 @@
-package com.shockn745.data;
+package com.shockn745.domain.application.driven;
 
 /**
  * Repository to get all the secrets of the Application
