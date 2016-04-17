@@ -9,15 +9,23 @@
     <script th:src="@{//ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js}"></script>
     <script th:src="@{/js/common/bootstrap.min.js}"></script>
 
-    <!--suppress HtmlUnknownTarget : Placeholder-->
+    <script src="../../static/js/yabe/main.js" th:src="@{/js/yabe/main.js}"></script>
     <link href="../../static/css/yabe/yabe.css" th:href="@{/css/yabe/yabe.css}" rel="stylesheet"/>
     <title>Yabe</title>
 </head>
 <body>
 <div class="container">
     <div class="row">
-
+        <div class="text-center">Title</div>
+    </div>
+    <div class="row" id="posts">
     </div>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    displayPosts(/*[[${posts}]]*/);
+    /*]]>*/
+</script>
 </body>
 </html>

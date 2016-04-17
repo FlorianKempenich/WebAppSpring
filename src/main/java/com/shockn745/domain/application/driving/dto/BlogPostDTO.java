@@ -1,9 +1,6 @@
 package com.shockn745.domain.application.driving.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -18,6 +15,7 @@ public class BlogPostDTO {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = NO_ID;
     private String title = "";
+    @Lob
     private String post = "";
 
     public static BlogPostDTO make(String title, String post, long id) {

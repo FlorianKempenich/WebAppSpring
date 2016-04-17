@@ -1,7 +1,7 @@
 package com.shockn745.integrationtest;
 
+import com.shockn745.TestUtils;
 import com.shockn745.WebAppApplication;
-import com.shockn745.data.jpa.JpaBlogPostRepo;
 import com.shockn745.domain.application.driving.BlogPostUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import org.junit.Before;
@@ -12,7 +12,6 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,18 +28,18 @@ public class BlogPostIntegrationTest {
     @Autowired
     BlogPostUseCase useCase;
     @Autowired
-    JpaBlogPostRepo jpaRepo; //Jpa repository is a singleton
+    TestUtils testUtils;
 
     private String postText = "Hello this is blog postText";
 
     @Before
     public void setUp() throws Exception {
-        jpaRepo.deleteAll();
+        testUtils.eraseDatabase();
     }
 
     @Test
     public void saveAndRetrieve_samePost() throws Exception {
-        BlogPostDTO toSave = makePost("title", postText);
+        BlogPostDTO toSave = TestUtils.makePost("title", postText);
         BlogPostDTO blogPostDTO = useCase.save(toSave);
         long id = blogPostDTO.getId();
         toSave.setId(id);
@@ -52,17 +51,11 @@ public class BlogPostIntegrationTest {
         assertEquals(toSave, result);
     }
 
+
+
     @Test
     public void saveListOfPost_getAll() throws Exception {
-        List<BlogPostDTO> expected = new ArrayList<>(3);
-        expected.add(makePost("title1", "first"));
-        expected.add(makePost("title2", "second"));
-        expected.add(makePost("title3", "third"));
-
-        for (BlogPostDTO postDTO : expected) {
-            BlogPostDTO saved = useCase.save(postDTO);
-            postDTO.setId(saved.getId());
-        }
+        List<BlogPostDTO> expected = testUtils.fillDatabaseWithTestData();
 
         List<BlogPostDTO> result = useCase.getAll();
 
@@ -73,12 +66,5 @@ public class BlogPostIntegrationTest {
             assertEquals(expectedPost, resultPost);
         }
         assertEquals(expected, result);
-    }
-    
-    private static BlogPostDTO makePost(String title, String text) {
-        BlogPostDTO dto = new BlogPostDTO();
-        dto.setPost(text);
-        dto.setTitle(title);
-        return dto;
     }
 }
