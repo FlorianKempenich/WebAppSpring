@@ -7,9 +7,11 @@ import java.util.Objects;
  */
 public class BlogPost {
 
+    public final String title;
     public final String post;
 
-    public BlogPost(String post) {
+    public BlogPost(String title, String post) {
+        this.title = title;
         this.post = post;
     }
 
@@ -19,11 +21,12 @@ public class BlogPost {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BlogPost blogPost = (BlogPost) o;
-        return Objects.equals(post, blogPost.post);
+        return Objects.equals(title, blogPost.title) &&
+                Objects.equals(post, blogPost.post);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(post);
+        return Objects.hash(title, post);
     }
 }

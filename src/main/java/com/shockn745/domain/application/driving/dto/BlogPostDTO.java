@@ -17,17 +17,14 @@ public class BlogPostDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id = NO_ID;
+    private String title = "";
     private String post = "";
 
-    public static BlogPostDTO make(String post) {
+    public static BlogPostDTO make(String title, String post, long id) {
         BlogPostDTO result = new BlogPostDTO();
-        result.setPost(post);
-        return result;
-    }
-
-    public static BlogPostDTO make(String post, long id) {
-        BlogPostDTO result = make(post);
         result.setId(id);
+        result.setPost(post);
+        result.setTitle(title);
         return result;
     }
 
@@ -47,10 +44,18 @@ public class BlogPostDTO {
         this.post = post;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         String shortenedPost = post.length() < 20 ? post : post.substring(0, 19);
-        return "Post : id=" + id + " | text=\"" + shortenedPost + "\"";
+        return "Post : id=" + id + " | title=\"" + title + "\" | text=\"" + shortenedPost + "\"";
     }
 
     @Override
@@ -59,11 +64,12 @@ public class BlogPostDTO {
         if (o == null || getClass() != o.getClass()) return false;
         BlogPostDTO that = (BlogPostDTO) o;
         return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
                 Objects.equals(post, that.post);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, post);
+        return Objects.hash(id, title, post);
     }
 }

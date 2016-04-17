@@ -13,10 +13,11 @@ public class BlogPostMapper {
     public BlogPostDTO transform(BlogPost blogPost) {
         BlogPostDTO result = new BlogPostDTO();
         result.setPost(blogPost.post);
+        result.setTitle(blogPost.title);
         return result;
     }
 
     public BlogPost transform(BlogPostDTO blogPostDTO) {
-        return new BlogPost(blogPostDTO.getPost());
+        return new BlogPost(blogPostDTO.getTitle(), blogPostDTO.getPost());
     }
 }

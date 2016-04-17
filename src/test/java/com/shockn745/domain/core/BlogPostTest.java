@@ -11,8 +11,9 @@ public class BlogPostTest {
     @Test
     public void testEquality() throws Exception {
         new EqualsTester()
-                .addEqualityGroup(new BlogPost("hello"), new BlogPost("hello"))
-                .addEqualityGroup(new BlogPost("test"), new BlogPost("test"))
+                .addEqualityGroup(new BlogPost("title", "hello"), new BlogPost("title", "hello"))
+                .addEqualityGroup(new BlogPost("othertitle", "hello"), new BlogPost("othertitle", "hello"))
+                .addEqualityGroup(new BlogPost("title", "test"), new BlogPost("title", "test"))
                 .testEquals();
     }
 

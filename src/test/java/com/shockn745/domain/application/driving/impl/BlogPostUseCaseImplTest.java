@@ -86,9 +86,9 @@ public class BlogPostUseCaseImplTest {
     @Test
     public void getAllBlogs_returnCorrectList() throws Exception {
         List<BlogPostDTO> expectedList = new ArrayList<>(3);
-        expectedList.add(BlogPostDTO.make("hello how are you ?", 33L));
-        expectedList.add(BlogPostDTO.make("Second post", 66L));
-        expectedList.add(BlogPostDTO.make("asdfl;kjsdaf asd fjasd", 54L));
+        expectedList.add(BlogPostDTO.make("Title21", "hello how are you ?", 33L));
+        expectedList.add(BlogPostDTO.make("sadf", "Second post", 66L));
+        expectedList.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54L));
 
         when(blogPostRepository.getAll()).thenReturn(expectedList);
 

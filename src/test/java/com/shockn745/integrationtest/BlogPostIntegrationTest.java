@@ -31,7 +31,7 @@ public class BlogPostIntegrationTest {
     @Autowired
     JpaBlogPostRepo jpaRepo; //Jpa repository is a singleton
 
-    private String post = "Hello this is blog post";
+    private String postText = "Hello this is blog postText";
 
     @Before
     public void setUp() throws Exception {
@@ -40,27 +40,28 @@ public class BlogPostIntegrationTest {
 
     @Test
     public void saveAndRetrieve_samePost() throws Exception {
-        BlogPostDTO toSave = new BlogPostDTO();
-        toSave.setPost(post);
+        BlogPostDTO toSave = makePost("title", postText);
         BlogPostDTO blogPostDTO = useCase.save(toSave);
         long id = blogPostDTO.getId();
+        toSave.setId(id);
 
         BlogPostDTO result = useCase.get(id);
 
-        assertEquals(post, result.getPost());
-        assertEquals(result, blogPostDTO);
-        System.out.println(result.getPost());
+        assertEquals(postText, result.getPost());
+        assertEquals(toSave, blogPostDTO);
+        assertEquals(toSave, result);
     }
 
     @Test
     public void saveListOfPost_getAll() throws Exception {
         List<BlogPostDTO> expected = new ArrayList<>(3);
-        expected.add(BlogPostDTO.make("first"));
-        expected.add(BlogPostDTO.make("second"));
-        expected.add(BlogPostDTO.make("third"));
+        expected.add(makePost("title1", "first"));
+        expected.add(makePost("title2", "second"));
+        expected.add(makePost("title3", "third"));
 
         for (BlogPostDTO postDTO : expected) {
-            useCase.save(postDTO);
+            BlogPostDTO saved = useCase.save(postDTO);
+            postDTO.setId(saved.getId());
         }
 
         List<BlogPostDTO> result = useCase.getAll();
@@ -71,5 +72,13 @@ public class BlogPostIntegrationTest {
             String resultPost = result.get(i).getPost();
             assertEquals(expectedPost, resultPost);
         }
+        assertEquals(expected, result);
+    }
+    
+    private static BlogPostDTO makePost(String title, String text) {
+        BlogPostDTO dto = new BlogPostDTO();
+        dto.setPost(text);
+        dto.setTitle(title);
+        return dto;
     }
 }
