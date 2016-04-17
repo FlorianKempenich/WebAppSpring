@@ -1,5 +1,6 @@
-package com.shockn745;
+package com.shockn745.integrationtest;
 
+import com.shockn745.WebAppApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;

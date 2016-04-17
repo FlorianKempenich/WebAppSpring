@@ -6,6 +6,8 @@ import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Simple wrapper for a JPA repository.
  * To not expose the Domain to JPA knowledge.
@@ -30,5 +32,10 @@ public class BlogPostRepositoryImpl implements BlogPostRepository{
     @Override
     public BlogPostDTO get(long id) {
         return repo.findOne(id);
+    }
+
+    @Override
+    public List<BlogPostDTO> getAll() {
+        return repo.findAll();
     }
 }
