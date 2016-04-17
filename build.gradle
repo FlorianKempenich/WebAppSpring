@@ -27,10 +27,21 @@ repositories {
 
 
 dependencies {
+    // Common
+	compile("org.springframework.boot:spring-boot-devtools")
+    compile('com.google.guava:guava:19.0')
+
+    // Presentation
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile("org.springframework.boot:spring-boot-devtools")
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+
+    // Data
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtime('com.h2database:h2')
+
+    // Test
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('com.google.guava:guava-testlib:19.0')
 }
 
 

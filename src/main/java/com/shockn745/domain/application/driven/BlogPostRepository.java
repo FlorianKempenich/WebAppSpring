@@ -1,11 +1,12 @@
 package com.shockn745.domain.application.driven;
 
-import com.shockn745.domain.core.BlogPost;
+import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 
 /**
  * @author Kempenich Florian
  */
 public interface BlogPostRepository {
 
-    BlogPost getBlogPost(int id);
+    BlogPostDTO save(BlogPostDTO toSave);
+    BlogPostDTO get(long id);
 }
