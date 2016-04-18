@@ -23,13 +23,19 @@ public class DataConfiguration {
 
     @Bean
     @Profile("dev")
-    public BlogPostRepository getFakeBlogPostRepository() {
+    public BlogPostRepository getBlogPostRepository_dev() {
         return new FakeBlogPostRepositoryImpl();
     }
 
     @Bean
+    @Profile("prod")
+    public BlogPostRepository getBlogPostRepository_prod(JpaBlogPostRepo jpaBlogPostRepo) {
+        return new BlogPostRepositoryImpl(jpaBlogPostRepo);
+    }
+
+    @Bean
     @Profile("integration-test")
-    public BlogPostRepository getBlogPostRepository(JpaBlogPostRepo jpaBlogPostRepo) {
+    public BlogPostRepository getBlogPostRepository_integration_tests(JpaBlogPostRepo jpaBlogPostRepo) {
         return new BlogPostRepositoryImpl(jpaBlogPostRepo);
     }
 }
