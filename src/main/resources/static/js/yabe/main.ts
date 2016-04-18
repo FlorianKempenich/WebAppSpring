@@ -4,15 +4,8 @@ class Serializable {
     fillFromJSON(json) {
         for (var propName in json) {
             //noinspection JSUnfilteredForInLoop
-            if (this.validProperty(propName, json)) {
-                //noinspection JSUnfilteredForInLoop
-                this[propName] = json[propName]
-            }
+            this[propName] = json[propName]
         }
-    }
-
-    private validProperty(propName:string, json) {
-        return this.hasOwnProperty(propName) && json.hasOwnProperty(propName);
     }
 
 

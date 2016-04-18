@@ -13,8 +13,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = WebAppApplication.class)
 @WebAppConfiguration
@@ -37,11 +35,5 @@ public class WebAppApplicationTests {
         String jsonPosts = jacksonMapper.writeValueAsString(posts);
 
         System.out.println(jsonPosts);
-        assertEquals(
-                "[{\"id\":5,\"title\":\"title1\",\"post\":\"first\"}," +
-                        "{\"id\":6,\"title\":\"title2\",\"post\":\"second\"}," +
-                        "{\"id\":7,\"title\":\"title3\",\"post\":\"third\"}]",
-                jsonPosts
-        );
     }
 }

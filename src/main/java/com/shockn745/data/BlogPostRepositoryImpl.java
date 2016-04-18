@@ -3,8 +3,6 @@ package com.shockn745.data;
 import com.shockn745.data.jpa.JpaBlogPostRepo;
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -14,12 +12,10 @@ import java.util.List;
  *
  * @author Kempenich Florian
  */
-@Repository
-public class BlogPostRepositoryImpl implements BlogPostRepository{
+public class BlogPostRepositoryImpl implements BlogPostRepository {
 
     private final JpaBlogPostRepo repo;
 
-    @Autowired
     public BlogPostRepositoryImpl(JpaBlogPostRepo repo) {
         this.repo = repo;
     }

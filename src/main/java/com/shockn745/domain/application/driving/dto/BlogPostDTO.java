@@ -18,6 +18,8 @@ public class BlogPostDTO {
     @Lob
     private String post = "";
 
+    public final static BlogPostDTO EMPTY = BlogPostDTO.make("", "", 0L);
+
     public static BlogPostDTO make(String title, String post, long id) {
         BlogPostDTO result = new BlogPostDTO();
         result.setId(id);
