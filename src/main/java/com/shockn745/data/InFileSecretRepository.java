@@ -36,6 +36,8 @@ public class InFileSecretRepository implements SecretRepository {
     private String getGiorgosFromFile() throws IOException {
         File file = new File(secretStoreFilePath);
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        return reader.readLine();
+        String secret = reader.readLine();
+        reader.close();
+        return secret;
     }
 }
