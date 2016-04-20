@@ -1,13 +1,16 @@
 package com.shockn745;
 
 import com.shockn745.data.BlogPostRepositoryImpl;
-import com.shockn745.data.FakeBlogPostRepositoryImpl;
+import com.shockn745.data.InFileBlogPostRepositoryImpl;
 import com.shockn745.data.jpa.JpaBlogPostRepo;
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Kempenich Florian
@@ -23,8 +26,14 @@ public class DataConfiguration {
 
     @Bean
     @Profile("dev")
-    public BlogPostRepository getBlogPostRepository_dev() {
-        return new FakeBlogPostRepositoryImpl();
+    public BlogPostRepository getBlogPostRepository_dev(Path database) {
+        return new InFileBlogPostRepositoryImpl(database);
+    }
+
+    @Bean
+    @Qualifier("in-file-database-path")
+    public Path getInFileDatabaseDirectoryPath() {
+        return Paths.get("file_database", "blog_posts");
     }
 
     @Bean
