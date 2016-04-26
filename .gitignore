@@ -75,3 +75,4 @@ fabric.properties
 
 secret_store
 aaaa_temp_file
+file_database/blog_posts/*
