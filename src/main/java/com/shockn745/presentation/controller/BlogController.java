@@ -43,6 +43,11 @@ public class BlogController {
         return "yabe/yabe";
     }
 
+    @RequestMapping(value = "/paper")
+    public String paper() {
+        return "yabe/paper";
+    }
+
 
 
     private String showTestMessage(Model model) {
