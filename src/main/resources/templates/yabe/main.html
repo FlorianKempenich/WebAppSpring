@@ -21,7 +21,7 @@
 
 
     <!--suppress HtmlUnknownTarget : Placeholder-->
-    <link href="../../static/css/yabe/paper.css" th:href="@{/css/yabe/paper.css}" rel="stylesheet"/>
+    <link href="../../static/css/yabe/main.css" th:href="@{/css/yabe/main.css}" rel="stylesheet"/>
 
     <title>RENAME</title>
 </head>
@@ -57,16 +57,23 @@
 <!-- end navbar  -->
 
 
+<!--/*@thymesVar id="posts" type="List<BlogPostDTO>"*/-->
 <div class="wrapper">
     <div class="container">
         <div class="blog">
-            <div class="article">
+
+
+
+
+
+            <div th:each="post : ${posts}" class="article">
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="text-center">
                             <span class="label label-primary">Featured</span>
-                            <a href="javascrip: void(0);"><h3 class="title">My Review of Pitchfork’s ‘Indie 500’ Album
-                                Review</h3></a>
+                            <a href="javascrip: void(0);">
+                                <h3 class="title" th:text="${post.title}"></h3>
+                            </a>
                             <h6 class="title-uppercase">November 20, 2016</h6>
                         </div>
                     </div>
@@ -85,7 +92,8 @@
                             </a>
                         </div>
                         <div class="article-content text-center">
-                            <p>
+
+                            <p th:utext="${post.post}">
                                 In the first sentence of Pitchfork’s review of my collaborative project with 9th Wonder,
                                 INDIE 500, a reviewer who is associated with music review site rhapsody.com writes about
                                 how I criticize and then distance myself from “celebrity straw men” with the line
@@ -98,69 +106,7 @@
             </div>
 
 
-            <div class="article">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="text-center">
-                            <span class="label label-primary">TAG</span>
-                            <a href="javascrip: void(0);"><h3 class="title">My Review of Pitchfork’s ‘Indie 500’ Album
-                                Review</h3></a>
-                            <h6 class="title-uppercase">November 20, 2016</h6>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="article-image text-center">
-                            <a href="javascrip: void(0);">
-                                <div class="card-big-shadow">
-                                    <div class="card" data-radius="none"
-                                         th:style="'background-image:url(' + @{/assets/space.jpg} + ');'"
-                                         style="background-image: url('../../static/assets/space.jpg');">
-                                    </div> <!-- end card -->
-                                </div>
-                                <p class="image-thumb">Pitchfork website front page</p>
-                            </a>
-                        </div>
-                        <div class="article-content text-center">
-                            <p>
-                                In the first sentence of Pitchfork’s review of my collaborative project with 9th Wonder,
-                                INDIE 500, a reviewer who is associated with music review site rhapsody.com writes about
-                                how I criticize and then distance myself from “celebrity straw men” with the line
-                                “celebrities be making money...
-                            </p>
-                            <button class="btn btn-danger btn-fill btn-sm">Read more</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-        </div>
-
-        <div class="article">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="text-center">
-                        <span class="label label-primary">TAG</span>
-                        <a href="javascript: void(0);"><h3 class="title">My Review of Pitchfork’s ‘Indie 500’ Album
-                            Review</h3></a>
-                        <h6 class="title-uppercase">November 20, 2016</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="article-content text-center">
-                        <p>
-                            In the first sentence of Pitchfork’s review of my collaborative project with 9th Wonder,
-                            INDIE 500, a reviewer who is associated with music review site rhapsody.com writes about
-                            how I criticize and then distance myself from “celebrity straw men” with the line
-                            “celebrities be making money...
-                        </p>
-                        <button class="btn btn-danger btn-fill btn-sm">Read more</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <hr/>

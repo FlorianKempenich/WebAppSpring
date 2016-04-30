@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shockn745.TestUtils;
 import com.shockn745.domain.application.driving.BlogPostUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,8 +28,8 @@ public class BlogController {
     @Autowired
     ObjectMapper jacksonMapper;
 
-    @RequestMapping(value = "/main")
-    public String main(Model model) {
+    @RequestMapping(value = "/old")
+    public String old(Model model) {
         // todo remove : Temp test
         testUtils.eraseDatabase();
         testUtils.fillDatabaseWithTestData();
@@ -41,6 +42,24 @@ public class BlogController {
             e.printStackTrace();
         }
         return "yabe/yabe";
+    }
+
+    @RequestMapping(value = "/main")
+    public String main(Model model) {
+
+        List<BlogPostDTO> posts = blogPostUseCase.getAll();
+
+        // Temp. Todo: Move
+        PegDownProcessor processor = new PegDownProcessor();
+        for (BlogPostDTO post : posts) {
+            String text = post.getPost();
+            String htmlText = processor.markdownToHtml(text);
+            post.setPost(htmlText);
+        }
+
+        model.addAttribute("posts", posts);
+
+        return "yabe/main";
     }
 
     @RequestMapping(value = "/paper")

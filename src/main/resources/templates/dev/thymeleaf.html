@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Spring Boot CLI + Javascript</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="../../static/paperkitpro/js/jquery-1.10.2.js" th:src="@{/paperkitpro/js/jquery-1.10.2.js}"
+            type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('ul').animate({
+                fontSize: '48px'
+            }, "slow");
+        });
+    </script>
+</head>
+<body>
+
+<a th:href="@{/yabe/main}">Click here!</a>
+
+<!--/*@thymesVar id="names" type="List<String>"*/-->
+<!--/*@thymesVar id="name" type="String"*/-->
+<ul>
+    <li th:each="name : ${names}" th:text="${name}"/>
+    <li th:text="'Hello, ' + ${name} + '!'"/>
+
+</ul>
+<div th:each="name : ${names}">
+    <hr/>
+<h1>hello</h1>
+    coucou
+</div>
+
+<p th:text="'Hello, ' + ${name} + '!'"/>
+</body>
+</html>
