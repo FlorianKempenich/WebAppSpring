@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -59,7 +60,11 @@ public class BlogPostIntegrationTest {
     public void saveListOfPost_getAll() throws Exception {
         List<BlogPostDTO> expected = testUtils.fillDatabaseWithTestData();
 
-        List<BlogPostDTO> result = useCase.getAll();
+        List<Long> ids = useCase.getAllIds();
+        List<BlogPostDTO> result = new ArrayList<>(ids.size());
+        for (Long id : ids) {
+            result.add(useCase.get(id));
+        }
 
         assertEquals(3, result.size());
         for (int i = 0; i < 3; i++) {

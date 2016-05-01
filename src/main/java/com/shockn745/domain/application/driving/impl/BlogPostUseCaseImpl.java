@@ -8,6 +8,7 @@ import com.shockn745.domain.core.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,16 +37,32 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
 
     @Override
     public BlogPostDTO get(long id) {
-        BlogPostDTO fromRepository = repository.get(id);
-        BlogPost blogPost = mapper.transform(fromRepository);
+        BlogPost blogPost = getBlogPost(id);
         // if needed do stuff with blogPost here
         BlogPostDTO result = mapper.transform(blogPost);
         result.setId(id);
         return result;
     }
 
+    private BlogPost getBlogPost(long id) {
+        BlogPostDTO fromRepository = repository.get(id);
+        return mapper.transform(fromRepository);
+    }
+
     @Override
-    public List<BlogPostDTO> getAll() {
-        return repository.getAll();
+    public List<Long> getAllIds() {
+        List<BlogPostDTO> posts = repository.getAll();
+        List<Long> result = new ArrayList<>(posts.size());
+        for (BlogPostDTO post : posts) {
+            result.add(post.getId());
+        }
+
+        return result;
+    }
+
+    @Override
+    public String getSummary(long postId) {
+        BlogPost post = getBlogPost(postId);
+        return post.summarize(200);
     }
 }

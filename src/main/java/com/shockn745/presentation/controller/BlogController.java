@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +35,11 @@ public class BlogController {
         testUtils.eraseDatabase();
         testUtils.fillDatabaseWithTestData();
 
-        List<BlogPostDTO> posts = blogPostUseCase.getAll();
-
+        List<Long> postIds = blogPostUseCase.getAllIds();
+        List<BlogPostDTO> posts = new ArrayList<>(postIds.size());
+        for (Long postId : postIds) {
+            posts.add(blogPostUseCase.get(postId));
+        }
         try {
             model.addAttribute("posts", jacksonMapper.writeValueAsString(posts));
         } catch (JsonProcessingException e) {
@@ -47,7 +51,11 @@ public class BlogController {
     @RequestMapping(value = "/main")
     public String main(Model model) {
 
-        List<BlogPostDTO> posts = blogPostUseCase.getAll();
+        List<Long> postIds = blogPostUseCase.getAllIds();
+        List<BlogPostDTO> posts = new ArrayList<>(postIds.size());
+        for (Long postId : postIds) {
+            posts.add(blogPostUseCase.get(postId));
+        }
 
         // Temp. Todo: Move
         PegDownProcessor processor = new PegDownProcessor();

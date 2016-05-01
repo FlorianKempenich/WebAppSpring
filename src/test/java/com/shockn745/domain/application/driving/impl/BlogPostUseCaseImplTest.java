@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.verify;
@@ -25,12 +26,11 @@ import static org.mockito.Mockito.when;
  */
 public class BlogPostUseCaseImplTest {
 
-    private BlogPostUseCase useCase;
     @Mock
     BlogPostRepository blogPostRepository;
     @Captor
     ArgumentCaptor<BlogPostDTO> blogPostCaptor;
-
+    private BlogPostUseCase useCase;
     private BlogPostDTO mockSavedPost;
 
     @Before
@@ -56,7 +56,7 @@ public class BlogPostUseCaseImplTest {
 
         BlogPostDTO postDTO = new BlogPostDTO();
         postDTO.setPost(post);
-        BlogPostDTO returned = useCase.save(postDTO) ;
+        BlogPostDTO returned = useCase.save(postDTO);
 
         verify(blogPostRepository).save(blogPostCaptor.capture());
         BlogPostDTO saved = blogPostCaptor.getValue();
@@ -84,19 +84,31 @@ public class BlogPostUseCaseImplTest {
 
 
     @Test
-    public void getAllBlogs_returnCorrectList() throws Exception {
-        List<BlogPostDTO> expectedList = new ArrayList<>(3);
-        expectedList.add(BlogPostDTO.make("Title21", "hello how are you ?", 33L));
-        expectedList.add(BlogPostDTO.make("sadf", "Second post", 66L));
-        expectedList.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54L));
+    public void getAllIds_returnCorrectIdList() throws Exception {
+        List<BlogPostDTO> posts = new ArrayList<>(3);
+        posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33L));
+        posts.add(BlogPostDTO.make("sadf", "Second post", 66L));
+        posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54L));
 
-        when(blogPostRepository.getAll()).thenReturn(expectedList);
+        List<Long> expectedIds = new ArrayList<>(3);
+        for (BlogPostDTO post : posts) {
+            expectedIds.add(post.getId());
+        }
 
-        List<BlogPostDTO> allPosts = useCase.getAll();
+        when(blogPostRepository.getAll()).thenReturn(posts);
 
-        assertEquals(expectedList, allPosts);
+        assertEquals(expectedIds, useCase.getAllIds());
     }
 
+    @Test
+    public void getSummaryForSpecificPost() throws Exception {
+        String postText = "Expected text that is a bit long, and will be shortened";
+        Long postId = 11L;
+        mockSavedPost.setId(postId);
+        mockSavedPost.setPost(postText);
 
-
+        String summary = useCase.getSummary(postId);
+        assertTrue(postText.startsWith(summary));
+        assertTrue(summary.length() <= postText.length());
+    }
 }
