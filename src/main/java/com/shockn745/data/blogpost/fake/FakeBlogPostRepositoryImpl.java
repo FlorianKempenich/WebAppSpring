@@ -1,4 +1,4 @@
-package com.shockn745.data;
+package com.shockn745.data.blogpost.fake;
 
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;

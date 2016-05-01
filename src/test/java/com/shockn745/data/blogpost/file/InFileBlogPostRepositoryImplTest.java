@@ -1,4 +1,4 @@
-package com.shockn745.data;
+package com.shockn745.data.blogpost.file;
 
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -29,6 +30,8 @@ public class InFileBlogPostRepositoryImplTest {
     private BlogPostDTO post1;
     private Path tempFile2;
     private BlogPostDTO post2;
+
+    private List<Path> additionalTempFilesToDelete = new LinkedList<>();
 
     @Before
     public void setUp() throws Exception {
@@ -105,6 +108,67 @@ public class InFileBlogPostRepositoryImplTest {
         assertEquals(post1, postFromRepo);
     }
 
+    /**
+     * This test checks that the id is equal the last number in the file name. (Convention)
+     * @throws Exception
+     */
+    @Test
+    public void test_id_onlyDependsOnLastNumber() throws Exception {
+        String fileName = "sdhsadf23.txt";
+        Path tempFile = tempDir.resolve(fileName);
+        BlogPostDTO tempPost = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23L,
+                "Title",
+                "Content",
+                "Content line 1"
+        );
+        String fileName2 = "hello-57.txt";
+        Path tempFile2 = tempDir.resolve(fileName2);
+        BlogPostDTO tempPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 57L,
+                "Title",
+                "Content",
+                "Content line 1"
+        );
+
+        String fileName3 = "h232--sdfdsah33.txt";
+        Path tempFile3 = tempDir.resolve(fileName3);
+        BlogPostDTO tempPost3 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile3, 33L,
+                "Title",
+                "Content",
+                "Content line 1"
+        );
+        additionalTempFilesToDelete.add(tempFile);
+        additionalTempFilesToDelete.add(tempFile2);
+        additionalTempFilesToDelete.add(tempFile3);
+
+
+        assertEquals(tempPost, repository.get(23L));
+        assertEquals(tempPost2, repository.get(57L));
+        assertEquals(tempPost3, repository.get(33L));
+    }
+
+    @Test (expected = TwoPostWithSameIdException.class)
+    public void twoPostWithSameId_throwException() throws Exception {
+        // Save 2 files with same id
+        String fileName = "sdhsadf23.txt";
+        Path tempFile = tempDir.resolve(fileName);
+        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23L,
+                "Title",
+                "Content",
+                "Content line 1"
+        );
+        String fileName2 = "hello-23.txt";
+        Path tempFile2 = tempDir.resolve(fileName2);
+        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 23L,
+                "Title",
+                "Content",
+                "Content line 1"
+        );
+        additionalTempFilesToDelete.add(tempFile);
+        additionalTempFilesToDelete.add(tempFile2);
+
+        repository.get(23);
+    }
+
     @Test
     public void getAllPost() throws Exception {
         List<BlogPostDTO> allPosts = repository.getAll();
@@ -121,6 +185,12 @@ public class InFileBlogPostRepositoryImplTest {
         try {
             Files.delete(tempFile2);
             Files.delete(tempFile1);
+
+            for (Path file : additionalTempFilesToDelete) {
+                Files.delete(file);
+            }
+            additionalTempFilesToDelete.clear();
+
             Files.delete(tempDir);
         } catch (IOException e) {
             e.printStackTrace();

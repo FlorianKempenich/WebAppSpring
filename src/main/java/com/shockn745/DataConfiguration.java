@@ -1,8 +1,8 @@
 package com.shockn745;
 
-import com.shockn745.data.BlogPostRepositoryImpl;
-import com.shockn745.data.InFileBlogPostRepositoryImpl;
-import com.shockn745.data.jpa.JpaBlogPostRepo;
+import com.shockn745.data.blogpost.jpa.BlogPostRepositoryImpl;
+import com.shockn745.data.blogpost.file.InFileBlogPostRepositoryImpl;
+import com.shockn745.data.blogpost.jpa.JpaBlogPostRepo;
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

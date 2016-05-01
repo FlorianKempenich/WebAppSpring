@@ -1,7 +1,7 @@
 package com.shockn745.integrationtest.data;
 
 import com.shockn745.WebAppApplication;
-import com.shockn745.data.jpa.JpaBlogPostRepo;
+import com.shockn745.data.blogpost.jpa.JpaBlogPostRepo;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

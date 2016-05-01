@@ -1,6 +1,6 @@
 package com.shockn745;
 
-import com.shockn745.data.jpa.JpaBlogPostRepo;
+import com.shockn745.data.blogpost.jpa.JpaBlogPostRepo;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

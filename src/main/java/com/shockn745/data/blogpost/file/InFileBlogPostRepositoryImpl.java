@@ -1,4 +1,4 @@
-package com.shockn745.data;
+package com.shockn745.data.blogpost.file;
 
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
@@ -8,7 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -16,6 +20,7 @@ import java.util.stream.Stream;
  */
 public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
 
+    private final Pattern idPattern = Pattern.compile("(\\d+).txt");
     private final Path directory;
 
     public InFileBlogPostRepositoryImpl(Path directory) {
@@ -36,10 +41,10 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
      */
     @Override
     public BlogPostDTO get(long id) {
-        Path file = getPath(id);
         try {
+            Path file = getPath(id);
             return getPost(file);
-        } catch (NoSuchFileException e) {
+        } catch (IdNotFoundException | NoSuchFileException e) {
             // Normal : id inexistant
             return BlogPostDTO.EMPTY;
         } catch (IOException e) {
@@ -63,21 +68,48 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
         return content.toString();
     }
 
+    private Path getPath(long id) throws IdNotFoundException {
+        try {
+            // Get all files in folder
+            Stream<Path> files = Files.list(directory);
+            List<Path> fileList = files.collect(Collectors.toList()); // Not used to work with Streams yet
+
+            List<Path> matchingPaths = new LinkedList<>();
+            for (Path path : fileList) {
+                if (fileMatchesId(id, path)) {
+                    matchingPaths.add(path);
+                }
+            }
+
+            if (matchingPaths.isEmpty()) {
+                throw new IdNotFoundException();
+            } else if (matchingPaths.size() > 1) {
+                throw new TwoPostWithSameIdException();
+            } else {
+                return matchingPaths.get(0);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new IdNotFoundException();
+        }
+    }
+
+    private boolean fileMatchesId(long id, Path path) {
+        long fileId = extractId(path);
+        return fileId == id;
+    }
+
     private long extractId(Path file) {
         String filename = file.getFileName().toString();
+        Matcher matcher = idPattern.matcher(filename);
 
-        String withoutExtension = filename.split("[.]")[0];
-        String id = withoutExtension.substring(10);
-        return Long.parseLong(id);
-    }
-
-    private Path getPath(long id) {
-        String filename = makeFilename(id);
-        return directory.resolve(filename);
-    }
-
-    private String makeFilename(long id) {
-        return "blog-post-" + id + ".txt";
+        if (matcher.find()) {
+            String id = matcher.group(1);
+            return Long.parseLong(id);
+        } else {
+            return -1;
+        }
     }
 
     @Override
