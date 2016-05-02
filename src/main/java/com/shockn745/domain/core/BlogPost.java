@@ -34,8 +34,21 @@ public class BlogPost {
     public String summarize(int charLimit) {
 
         String truncatedInLength = truncatePostInLength(charLimit);
+        String truncatedAtFirstTitle = truncateAtFirstTitle(truncatedInLength);
 
-        return truncateAtFirstTitle(truncatedInLength);
+        return addEllipsis(truncatedAtFirstTitle);
+    }
+
+    private String addEllipsis(String text) {
+        text = removeSpecialCharacterAtTheEnd(text);
+        return text + " . . .";
+    }
+
+    /**
+     * Removes the following characters from the end of the string : " ", "\n", '."
+     */
+    private String removeSpecialCharacterAtTheEnd(String text) {
+        return text.replaceAll("[ \\n.]$", "");
     }
 
     private String truncateAtFirstTitle(String truncated) {
@@ -49,9 +62,18 @@ public class BlogPost {
 
     private String truncatePostInLength(int charLimit) {
         if (post.length() > charLimit) {
+            while (inMiddleOfWord(charLimit)) {
+                charLimit--;
+            }
             return post.substring(0, charLimit);
         } else {
             return post;
         }
+    }
+
+    private boolean inMiddleOfWord(int charLimit) {
+        char atLimit = post.charAt(charLimit);
+        char afterLimit = post.charAt(charLimit + 1);
+        return Character.isLetter(atLimit) && Character.isLetter(afterLimit);
     }
 }

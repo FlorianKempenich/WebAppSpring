@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shockn745.TestUtils;
 import com.shockn745.domain.application.driving.BlogPostUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
+import com.shockn745.presentation.model.PostSummary;
+import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,15 @@ public class BlogController {
         for (Long postId : postIds) {
             posts.add(blogPostUseCase.get(postId));
         }
+
+
+        PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
+        for (BlogPostDTO post : posts) {
+            String text = post.getPost();
+            String htmlText = processor.markdownToHtml(text);
+            post.setPost(htmlText);
+        }
+
         try {
             model.addAttribute("posts", jacksonMapper.writeValueAsString(posts));
         } catch (JsonProcessingException e) {
@@ -52,20 +63,27 @@ public class BlogController {
     public String main(Model model) {
 
         List<Long> postIds = blogPostUseCase.getAllIds();
-        List<BlogPostDTO> posts = new ArrayList<>(postIds.size());
+        List<PostSummary> postSummaries = new ArrayList<>();
         for (Long postId : postIds) {
-            posts.add(blogPostUseCase.get(postId));
+            BlogPostDTO post = blogPostUseCase.get(postId);
+            String summary = blogPostUseCase.getSummary(postId);
+
+            postSummaries.add(new PostSummary(post.getTitle(), summary));
         }
 
-        // Temp. Todo: Move
-        PegDownProcessor processor = new PegDownProcessor();
-        for (BlogPostDTO post : posts) {
-            String text = post.getPost();
-            String htmlText = processor.markdownToHtml(text);
-            post.setPost(htmlText);
-        }
+//        // Temp. Todo: Move
+//        PegDownProcessor processor = new PegDownProcessor();
+//        for (BlogPostDTO post : posts) {
+//            String text = post.getPost();
+//            String htmlText = processor.markdownToHtml(text);
+//            post.setPost(htmlText);
+//        }
 
-        model.addAttribute("posts", posts);
+
+
+
+
+        model.addAttribute("posts", postSummaries);
 
         return "yabe/main";
     }

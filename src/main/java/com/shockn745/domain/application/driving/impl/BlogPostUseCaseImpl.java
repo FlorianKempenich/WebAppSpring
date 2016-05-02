@@ -63,6 +63,6 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
     @Override
     public String getSummary(long postId) {
         BlogPost post = getBlogPost(postId);
-        return post.summarize(200);
+        return post.summarize(300);
     }
 }

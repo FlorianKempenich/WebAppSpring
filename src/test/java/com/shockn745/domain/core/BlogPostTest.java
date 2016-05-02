@@ -24,7 +24,7 @@ public class BlogPostTest {
         BlogPost post = new BlogPost("This is title", "This is the content");
 
         int charLimit = 7;
-        assertEquals("This is", post.summarize(charLimit));
+        assertEquals("This is . . .", post.summarize(charLimit));
     }
 
     @Test
@@ -32,7 +32,7 @@ public class BlogPostTest {
         BlogPost post = new BlogPost("This is title", "This is the content");
 
         int charLimit = 90;
-        assertEquals("This is the content", post.summarize(charLimit));
+        assertEquals("This is the content . . .", post.summarize(charLimit));
     }
 
     @Test
@@ -40,7 +40,27 @@ public class BlogPostTest {
         BlogPost post = new BlogPost("This is title", "This is");
 
         int charLimit = 7;
-        assertEquals("This is", post.summarize(charLimit));
+        assertEquals("This is . . .", post.summarize(charLimit));
+    }
+
+    @Test
+    public void summarize_removeSpecialCharacterBeforeEllipsis() throws Exception {
+        BlogPost postDot = new BlogPost("Title", "This is the content.");
+        BlogPost postNewLine = new BlogPost("Title", "This is the content\n");
+        BlogPost postSpace = new BlogPost("Title", "This is the content ");
+
+        String expected = "This is the content . . .";
+        assertEquals(expected, postDot.summarize(1000));
+        assertEquals(expected, postNewLine.summarize(1000));
+        assertEquals(expected, postSpace.summarize(1000));
+    }
+
+    @Test
+    public void summarize_doNotCutInTheMiddleOfAWord() throws Exception {
+        BlogPost post = new BlogPost("Title", "This is the content, hello this is a test");
+
+        int indexInTheMiddleOfWordContent = 15;
+        assertEquals("This is the . . .", post.summarize(indexInTheMiddleOfWordContent));
     }
 
     @Test
@@ -57,9 +77,9 @@ public class BlogPostTest {
 
         int charLimit = 10000;
         assertEquals("Hello this is a blog post now we return to the next line\n" +
-                "But the text still continues. No problem there.\n" //Stop just before the title
+                "But the text still continues. No problem there . . ." //Stop just before the title
                 , withTitlePost.summarize(charLimit)
         );
-        assertEquals(withoutTitle, withoutTitlePost.summarize(charLimit));
+        assertEquals(withoutTitle + " . . .", withoutTitlePost.summarize(charLimit));
     }
 }

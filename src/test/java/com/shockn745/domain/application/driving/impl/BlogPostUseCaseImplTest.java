@@ -108,7 +108,7 @@ public class BlogPostUseCaseImplTest {
         mockSavedPost.setPost(postText);
 
         String summary = useCase.getSummary(postId);
-        assertTrue(postText.startsWith(summary));
-        assertTrue(summary.length() <= postText.length());
+        String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);
+        assertTrue(postText.startsWith(summaryWithoutEllipsis));
     }
 }
