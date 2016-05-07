@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -93,9 +94,6 @@ public class BlogController {
 //        }
 
 
-
-
-
         model.addAttribute("posts", postSummaries);
 
         return "yabe/main";
@@ -106,26 +104,10 @@ public class BlogController {
         return "yabe/paper";
     }
 
-
-
-    private String showTestMessage(Model model) {
-        model.addAttribute("what", "This is a test");
-        return "dev/what";
-    }
-
-
     @RequestMapping(value = "/post")
     public String post(Model model) {
-        List<Long> postsId = blogPostUseCase.getAllIds();
-        if (!postsId.isEmpty()) {
-            BlogPostDTO post = blogPostUseCase.get(postsId.get(0));
-            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getPost());
-            post.setPost(htmlPost);
-            model.addAttribute("post", replacePicture(post));
-        }
-        return "yabe/post";
+        return postWithId(1, model);
     }
-
 
     private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
         String post = blogPostDTO.getPost();
@@ -134,5 +116,22 @@ public class BlogController {
                 "</div>\n");
         blogPostDTO.setPost(postWithImage);
         return blogPostDTO;
+    }
+
+    @RequestMapping(value = "/post/{id}")
+    public String postWithId(@PathVariable int id, Model model) {
+
+        if (id <= 3 && id >=0) {
+            BlogPostDTO post = blogPostUseCase.get(id);
+            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getPost());
+            post.setPost(htmlPost);
+            model.addAttribute("post", replacePicture(post));
+        }
+        return "yabe/post";
+    }
+
+    private String showTestMessage(Model model) {
+        model.addAttribute("what", "This is a test");
+        return "dev/what";
     }
 }
