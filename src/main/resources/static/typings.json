@@ -1,5 +1,6 @@
 {
   "ambientDependencies": {
+    "bootstrap": "registry:dt/bootstrap#3.3.5+20160316155526",
     "jquery": "registry:dt/jquery#2.0.0+20160303223636"
   }
 }

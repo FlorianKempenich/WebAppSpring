@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:fragment="head">
+        <meta charset="UTF-8"/>
+        <link rel="icon" type="image/png" href="../../static/paperkitpro/img/favicon.ico"
+              th:href="@{/paperkitpro/img/favicon.ico}"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+
+        <!-- Bootstrap -->
+        <link href="../../static/bootstrap3/css/bootstrap.css" th:href="@{/bootstrap3/css/bootstrap.min.css}"
+              rel="stylesheet"/>
+
+        <!-- Paper kit -->
+        <link href="../../static/paperkitpro/css/ct-paper.css" th:href="@{/paperkitpro/css/ct-paper.css}"
+              rel="stylesheet"/>
+        <link href="../../static/paperkitpro/css/demo.css" th:href="@{/paperkitpro/css/demo.css}" rel="stylesheet"/>
+
+        <!--     Fonts and icons     -->
+        <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'/>
+    </th:block>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+<!--    NAVBAR     -->
+<div th:fragment="navbar">
+    <nav class="navbar navbar-fixed-top" role="navigation-demo">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Professional Beginner</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" class="btn nav-item btn-simple">Manifesto</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" class="btn nav-item btn-simple">Blog</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+
+        </div><!-- /.container-->
+    </nav>
+</div>
+
+
+<!--    SIDEBAR     -->
+<div th:fragment="sidebarcontent">
+    <ul>
+        <!--<ul id="sidebar" data-spy="affix">-->
+        <li><a href="#section1">Section 1</a></li>
+        <li><a href="#section2">Section 2</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li><a href="#section3">Section 3</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Section 4 <span
+                    class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="#section41">Section 4-1</a></li>
+                <li><a href="#section42">Section 4-2</a></li>
+            </ul>
+        </li>
+    </ul>
+    <h1>Test</h1>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<th:block th:fragment="sidebar">
+    <div class="col-sm-3 hidden-xs">
+        <div class="sidebar" data-spy="affix">
+            <div th:replace="yabe/fragments :: sidebarcontent"></div>
+        </div>
+    </div>
+    <div class="col-sm-3 hidden-sm hidden-md hidden-lg">
+        <ul class="sidebar">
+            <div th:replace="yabe/fragments :: sidebarcontent"></div>
+        </ul>
+    </div>
+</th:block>
+
+
+</body>
+
+<th:block th:fragment="scripts">
+    <script src="../../static/paperkitpro/js/jquery-1.10.2.js" th:src="@{/paperkitpro/js/jquery-1.10.2.js}"
+            type="text/javascript"></script>
+    <script src="../../static/paperkitpro/js/jquery-ui-1.10.4.custom.min.js"
+            th:src="@{/paperkitpro/js/jquery-ui-1.10.4.custom.min.js}"
+            type="text/javascript"></script>
+
+    <script src="../../static/bootstrap3/js/bootstrap.js" th:src="@{/bootstrap3/js/bootstrap.min.js}"
+            type="text/javascript"></script>
+    <script src="../../static/paperkitpro/js/ct-paper.js" th:src="@{/paperkitpro/js/ct-paper.js}"
+            type="text/javascript"></script>
+
+    <!--  Plugins -->
+    <script src="../../static/paperkitpro/js/ct-paper-checkbox.js"
+            th:src="@{/paperkitpro/js/ct-paper-checkbox.js}"></script>
+    <script src="../../static/paperkitpro/js/ct-paper-radio.js" th:src="@{/paperkitpro/js/ct-paper-radio.js}"></script>
+    <script src="../../static/paperkitpro/js/bootstrap-select.js"
+            th:src="@{/paperkitpro/js/bootstrap-select.js}"></script>
+    <script src="../../static/paperkitpro/js/bootstrap-datepicker.js"
+            th:src="@{/paperkitpro/js/bootstrap-datepicker.js}"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"
+            th:src="@{//maps.googleapis.com/maps/api/js}"></script>
+</th:block>
+
+</html>
