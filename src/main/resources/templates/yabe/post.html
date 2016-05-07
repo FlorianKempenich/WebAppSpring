@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="yabe/fragments :: head"></th:block>
+    <title>Test</title>
+</head>
+<body>
+
+<th:block th:include="yabe/fragments :: navbar"></th:block>
+
+
+<div class="wrapper">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="main-content"></div>
+            </div>
+
+            <th:block th:include="yabe/fragments :: sidebar"></th:block>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<th:block th:include="yabe/fragments :: scripts"></th:block>
+</html>

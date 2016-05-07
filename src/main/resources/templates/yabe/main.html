@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-sm-9">
-                <div class="blog">
+                <div class="main-content">
 
                     <div th:each="post : ${posts}" class="article">
                         <div class="row">
@@ -43,7 +43,6 @@
                                                  style="background-image: url('../../static/assets/lion.jpg');">
                                             </div> <!-- end card -->
                                         </div>
-                                        <p class="image-thumb">Pitchfork website front page</p>
                                     </a>
                                 </div>
                                 <div class="article-content text-center">
@@ -69,7 +68,6 @@
             </div>
 
             <th:block th:include="yabe/fragments :: sidebar"></th:block>
-
         </div>
     </div>
 </div>

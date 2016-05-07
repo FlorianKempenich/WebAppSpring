@@ -20,23 +20,16 @@
         <!--     Fonts and icons     -->
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
         <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'/>
+
+        <link href="../../static/css/yabe/common.css" th:href="@{/css/yabe/common.css}" rel="stylesheet"/>
     </th:block>
 </head>
 <body>
 
 
-
-
-
-
-
-
-
-
-
 <!--    NAVBAR     -->
 <div th:fragment="navbar">
-    <nav class="navbar navbar-fixed-top" role="navigation-demo">
+    <nav class="navbar navbar-fixed-top section-brown" role="navigation-demo">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -67,54 +60,56 @@
 
 <!--    SIDEBAR     -->
 <div th:fragment="sidebarcontent">
+    <h4 class="text-center">Manifesto</h4>
     <ul>
-        <!--<ul id="sidebar" data-spy="affix">-->
-        <li><a href="#section1">Section 1</a></li>
-        <li><a href="#section2">Section 2</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li><a href="#section3">Section 3</a></li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Section 4 <span
-                    class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="#section41">Section 4-1</a></li>
-                <li><a href="#section42">Section 4-2</a></li>
-            </ul>
-        </li>
+        <li>I am not an <strong>expert</strong></li>
+        <li>A place to share my <strong>thoughts</strong></li>
+        <li>Will try to update as often as <strong>possible</strong></li>
+        <li><strong>Not</strong> an online course</li>
+        <li><strong>Sharing</strong> instead of <strong>teaching</strong></li>
     </ul>
-    <h1>Test</h1>
+    <div class="text-center">
+        <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+    </div>
+
+    <hr/>
+    <h4 class="text-center">About me</h4>
+    <div class="card-image" id="profile-picture">
+        <a href="#">
+            <img th:src="@{/assets/profile_picture.jpg}" src="../../static/assets/profile_picture.jpg"
+                 alt="Rounded Image" class="img-rounded img-responsive"/>
+        </a>
+    </div>
+    <p class="text-justify" style="margin-top: 20px;">
+        My name is <strong>Florian</strong>, and I am the <strong>Professional Beginner</strong>. <br/>
+        On this blog I present programming <strong>concepts</strong> taken from the
+        <strong>industry</strong>, with the point of view of a <strong>beginner</strong>.
+    </p>
+
+    <div class="text-center">
+        <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+    </div>
+
+    <hr/>
+    <h4 class="text-center">Popular tags</h4>
+    <span class="label label-primary">Featured</span>
+    <span class="label label-primary">Test</span>
+    <span class="label label-primary">Tag</span>
+    <span class="label label-primary">Architecture</span>
+    <span class="label label-primary">TDD</span>
+
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <th:block th:fragment="sidebar">
     <div class="col-sm-3 hidden-xs">
-        <div class="sidebar" data-spy="affix">
+        <div class="sidebar" id="on-the-side" data-spy="affix">
             <div th:replace="yabe/fragments :: sidebarcontent"></div>
         </div>
     </div>
     <div class="col-sm-3 hidden-sm hidden-md hidden-lg">
-        <ul class="sidebar">
+        <hr/>
+        <ul class="sidebar" id="at-the-bottom">
             <div th:replace="yabe/fragments :: sidebarcontent"></div>
         </ul>
     </div>

@@ -9,6 +9,7 @@ import com.shockn745.presentation.model.PostSummary;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,9 @@ public class BlogController {
     TestUtils testUtils;
     @Autowired
     ObjectMapper jacksonMapper;
+
+    @Autowired
+    Environment environment;
 
     @RequestMapping(value = "/old")
     public String old(Model model) {
@@ -61,6 +65,11 @@ public class BlogController {
 
     @RequestMapping(value = "/main")
     public String main(Model model) {
+
+        // FIXME: 5/7/2016 Remove only for demo purposes
+        if (environment.getActiveProfiles()[0].equals("prod")) {
+            testUtils.fillDatabaseWithTestData();
+        }
 
         List<Long> postIds = blogPostUseCase.getAllIds();
         List<PostSummary> postSummaries = new ArrayList<>();
@@ -98,5 +107,12 @@ public class BlogController {
     private String showTestMessage(Model model) {
         model.addAttribute("what", "This is a test");
         return "dev/what";
+    }
+
+
+    @RequestMapping(value = "/post")
+    public String post(Model model) {
+
+        return "yabe/post";
     }
 }

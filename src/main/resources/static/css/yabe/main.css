@@ -1,28 +1,7 @@
-* {
-    /*border: crimson solid 1px;*/
-}
-
-.navbar {
-    background-color: #AD9F9F;
-}
-
-.navbar-brand {
-    color: white;
-}
-
-.navbar .navbar-nav > li > a.nav-item {
-    border-color: transparent !important;
-    color: white !important;
-}
-
 .article {
     border-top: 1px solid #F1EAE0;
     padding-top: 30px;
     padding-bottom: 30px;
-}
-
-.blog {
-    padding-top: 80px;
 }
 
 .card {
@@ -34,19 +13,6 @@
 
 .card-big-shadow {
     max-width: 100%;
-}
-
-@media (max-width: 767px) /* @grid-float-breakpoint -1 */
-{
-    .blog {
-        padding-top: 0;
-    }
-
-    .navbar-fixed-top
-    {
-        position: relative;
-        top: auto;
-    }
 }
 
 .article > .article-content {
