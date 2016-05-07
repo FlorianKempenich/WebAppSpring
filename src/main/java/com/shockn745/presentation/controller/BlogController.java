@@ -48,7 +48,7 @@ public class BlogController {
         }
 
 
-        PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
+        PegDownProcessor processor = getMarkdownProcessor();
         for (BlogPostDTO post : posts) {
             String text = post.getPost();
             String htmlText = processor.markdownToHtml(text);
@@ -61,6 +61,10 @@ public class BlogController {
             e.printStackTrace();
         }
         return "yabe/yabe";
+    }
+
+    private PegDownProcessor getMarkdownProcessor() {
+        return new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
     }
 
     @RequestMapping(value = "/main")
@@ -112,7 +116,23 @@ public class BlogController {
 
     @RequestMapping(value = "/post")
     public String post(Model model) {
-
+        List<Long> postsId = blogPostUseCase.getAllIds();
+        if (!postsId.isEmpty()) {
+            BlogPostDTO post = blogPostUseCase.get(postsId.get(0));
+            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getPost());
+            post.setPost(htmlPost);
+            model.addAttribute("post", replacePicture(post));
+        }
         return "yabe/post";
+    }
+
+
+    private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
+        String post = blogPostDTO.getPost();
+        String postWithImage = post.replace("PICTURE", "<div class=\"card-image card-with-shadow\">\n" +
+                "    <img src=\"/assets/lion.jpg\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
+                "</div>\n");
+        blogPostDTO.setPost(postWithImage);
+        return blogPostDTO;
     }
 }

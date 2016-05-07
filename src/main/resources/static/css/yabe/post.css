@@ -1,0 +1,17 @@
+* {
+    /*border:solid crimson 1px !important;*/
+}
+
+.article-detail strong {
+    color: #7A9E9F;
+
+}
+
+
+.article-detail .card-image {
+    margin: 30px 120px;
+}
+
+#article-title {
+    margin-bottom: 50px;
+}
