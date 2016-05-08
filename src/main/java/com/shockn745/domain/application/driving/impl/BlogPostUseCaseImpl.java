@@ -36,7 +36,7 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
     }
 
     @Override
-    public BlogPostDTO get(long id) {
+    public BlogPostDTO get(int id) {
         BlogPost blogPost = getBlogPost(id);
         // if needed do stuff with blogPost here
         BlogPostDTO result = mapper.transform(blogPost);
@@ -44,15 +44,15 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
         return result;
     }
 
-    private BlogPost getBlogPost(long id) {
+    private BlogPost getBlogPost(int id) {
         BlogPostDTO fromRepository = repository.get(id);
         return mapper.transform(fromRepository);
     }
 
     @Override
-    public List<Long> getAllIds() {
+    public List<Integer> getAllIds() {
         List<BlogPostDTO> posts = repository.getAll();
-        List<Long> result = new ArrayList<>(posts.size());
+        List<Integer> result = new ArrayList<>(posts.size());
         for (BlogPostDTO post : posts) {
             result.add(post.getId());
         }
@@ -61,7 +61,7 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
     }
 
     @Override
-    public String getSummary(long postId) {
+    public String getSummary(int postId) {
         BlogPost post = getBlogPost(postId);
         return post.summarize(300);
     }

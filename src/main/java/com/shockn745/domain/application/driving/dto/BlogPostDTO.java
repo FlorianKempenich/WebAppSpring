@@ -9,18 +9,18 @@ import java.util.Objects;
 @Entity
 public class BlogPostDTO {
 
-    public static final Long NO_ID = -1L;
+    public static final int NO_ID = -1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id = NO_ID;
+    private int id = NO_ID;
     private String title = "";
     @Lob
     private String markdownPost = "";
 
-    public final static BlogPostDTO EMPTY = BlogPostDTO.make("", "", 0L);
+    public final static BlogPostDTO EMPTY = BlogPostDTO.make("", "", 0);
 
-    public static BlogPostDTO make(String title, String post, long id) {
+    public static BlogPostDTO make(String title, String post, int id) {
         BlogPostDTO result = new BlogPostDTO();
         result.setId(id);
         result.setMarkdownPost(post);
@@ -28,11 +28,11 @@ public class BlogPostDTO {
         return result;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

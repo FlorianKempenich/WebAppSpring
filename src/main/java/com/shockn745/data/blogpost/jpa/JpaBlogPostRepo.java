@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * @author Kempenich Florian
  */
-public interface JpaBlogPostRepo extends JpaRepository<BlogPostDTO, Long> {
+public interface JpaBlogPostRepo extends JpaRepository<BlogPostDTO, Integer> {
 }

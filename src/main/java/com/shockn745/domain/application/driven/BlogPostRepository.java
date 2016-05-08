@@ -10,7 +10,7 @@ import java.util.List;
 public interface BlogPostRepository {
 
     BlogPostDTO save(BlogPostDTO toSave);
-    BlogPostDTO get(long id);
+    BlogPostDTO get(int id);
 
     List<BlogPostDTO> getAll();
 }

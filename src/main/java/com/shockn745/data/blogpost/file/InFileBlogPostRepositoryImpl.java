@@ -40,7 +40,7 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
      * @return BlogPost for given id
      */
     @Override
-    public BlogPostDTO get(long id) {
+    public BlogPostDTO get(int id) {
         try {
             Path file = getPath(id);
             return getPost(file);
@@ -100,13 +100,13 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
         return fileId == id;
     }
 
-    private long extractId(Path file) {
+    private int extractId(Path file) {
         String filename = file.getFileName().toString();
         Matcher matcher = idPattern.matcher(filename);
 
         if (matcher.find()) {
             String id = matcher.group(1);
-            return Long.parseLong(id);
+            return Integer.parseInt(id);
         } else {
             return -1;
         }

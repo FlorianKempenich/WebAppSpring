@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -44,13 +44,13 @@ public class BlogPostUseCaseImplTest {
         // Setup mock repo
         mockSavedPost = new BlogPostDTO();
         when(blogPostRepository.save(any(BlogPostDTO.class))).thenReturn(mockSavedPost);
-        when(blogPostRepository.get(anyLong())).thenReturn(mockSavedPost);
+        when(blogPostRepository.get(anyInt())).thenReturn(mockSavedPost);
     }
 
     @Test
     public void saveNewPost_returnCorrectPostWithId() throws Exception {
         String post = "Hello this is my first blog post";
-        Long id = 23L;
+        int id = 23;
         mockSavedPost.setId(id);
         mockSavedPost.setMarkdownPost(post);
 
@@ -73,7 +73,7 @@ public class BlogPostUseCaseImplTest {
     @Test
     public void getWithId_returnCorrectPost() throws Exception {
         String expectedText = "Expected text";
-        Long expectedId = 11L;
+        int expectedId = 11;
         mockSavedPost.setId(expectedId);
         mockSavedPost.setMarkdownPost(expectedText);
 
@@ -86,11 +86,11 @@ public class BlogPostUseCaseImplTest {
     @Test
     public void getAllIds_returnCorrectIdList() throws Exception {
         List<BlogPostDTO> posts = new ArrayList<>(3);
-        posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33L));
-        posts.add(BlogPostDTO.make("sadf", "Second post", 66L));
-        posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54L));
+        posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33));
+        posts.add(BlogPostDTO.make("sadf", "Second post", 66));
+        posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54));
 
-        List<Long> expectedIds = new ArrayList<>(3);
+        List<Integer> expectedIds = new ArrayList<>(3);
         for (BlogPostDTO post : posts) {
             expectedIds.add(post.getId());
         }
@@ -103,7 +103,7 @@ public class BlogPostUseCaseImplTest {
     @Test
     public void getSummaryForSpecificPost() throws Exception {
         String postText = "Expected text that is a bit long, and will be shortened";
-        Long postId = 11L;
+        int postId = 11;
         mockSavedPost.setId(postId);
         mockSavedPost.setMarkdownPost(postText);
 

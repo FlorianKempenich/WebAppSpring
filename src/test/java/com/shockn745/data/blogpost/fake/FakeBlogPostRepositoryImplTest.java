@@ -23,7 +23,7 @@ public class FakeBlogPostRepositoryImplTest {
 
     @Test
     public void save_doNothing_returnEmptyBlogPost() throws Exception {
-        BlogPostDTO post1 = repository.save(BlogPostDTO.make("test", "asdfsdafdas", 23L));
+        BlogPostDTO post1 = repository.save(BlogPostDTO.make("test", "asdfsdafdas", 23));
         BlogPostDTO post2 = repository.save(null);
         assertEquals(BlogPostDTO.EMPTY, post1);
         assertEquals(BlogPostDTO.EMPTY, post2);

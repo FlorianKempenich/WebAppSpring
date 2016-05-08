@@ -25,7 +25,7 @@ public class BlogPostRepositoryImpl implements BlogPostRepository {
     }
 
     @Override
-    public BlogPostDTO get(long id) {
+    public BlogPostDTO get(int id) {
         return repo.findOne(id);
     }
 

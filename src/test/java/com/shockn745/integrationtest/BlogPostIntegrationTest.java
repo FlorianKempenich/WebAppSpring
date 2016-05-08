@@ -44,7 +44,7 @@ public class BlogPostIntegrationTest {
     public void saveAndRetrieve_samePost() throws Exception {
         BlogPostDTO toSave = TestUtils.makePost("title", postText);
         BlogPostDTO blogPostDTO = useCase.save(toSave);
-        long id = blogPostDTO.getId();
+        int id = blogPostDTO.getId();
         toSave.setId(id);
 
         BlogPostDTO result = useCase.get(id);
@@ -60,9 +60,9 @@ public class BlogPostIntegrationTest {
     public void saveListOfPost_getAll() throws Exception {
         List<BlogPostDTO> expected = testUtils.fillDatabaseWithTestData();
 
-        List<Long> ids = useCase.getAllIds();
+        List<Integer> ids = useCase.getAllIds();
         List<BlogPostDTO> result = new ArrayList<>(ids.size());
-        for (Long id : ids) {
+        for (int id : ids) {
             result.add(useCase.get(id));
         }
 

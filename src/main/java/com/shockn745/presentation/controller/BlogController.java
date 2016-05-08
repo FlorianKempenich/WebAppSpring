@@ -42,9 +42,9 @@ public class BlogController {
         testUtils.eraseDatabase();
         testUtils.fillDatabaseWithTestData();
 
-        List<Long> postIds = blogPostUseCase.getAllIds();
+        List<Integer> postIds = blogPostUseCase.getAllIds();
         List<BlogPostDTO> posts = new ArrayList<>(postIds.size());
-        for (Long postId : postIds) {
+        for (int postId : postIds) {
             posts.add(blogPostUseCase.get(postId));
         }
 
@@ -76,9 +76,9 @@ public class BlogController {
             testUtils.fillDatabaseWithTestData();
         }
 
-        List<Long> postIds = blogPostUseCase.getAllIds();
+        List<Integer> postIds = blogPostUseCase.getAllIds();
         List<PostSummary> postSummaries = new ArrayList<>();
-        for (Long postId : postIds) {
+        for (int postId : postIds) {
             BlogPostDTO post = blogPostUseCase.get(postId);
             String summary = blogPostUseCase.getSummary(postId);
 
@@ -109,12 +109,13 @@ public class BlogController {
         if (environment.getActiveProfiles()[0].equals("prod")) {
             testUtils.fillDatabaseWithTestData();
         }
-        List<Long> postIds = blogPostUseCase.getAllIds();
-        return postWithId(postIds.get(2).intValue(), model);
+        List<Integer> postIds = blogPostUseCase.getAllIds();
+        return postWithId(postIds.get(2), model);
     }
 
     private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
         String post = blogPostDTO.getMarkdownPost();
+        @SuppressWarnings("HtmlUnknownTarget")
         String postWithImage = post.replace("PICTURE", "<div class=\"card-image card-with-shadow\">\n" +
                 "    <img src=\"/assets/lion.jpg\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
                 "</div>\n");

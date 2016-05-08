@@ -23,7 +23,7 @@ public class FakeBlogPostRepositoryImpl implements BlogPostRepository {
     }
 
     @Override
-    public BlogPostDTO get(long id) {
+    public BlogPostDTO get(int id) {
         return FAKE_POST;
     }
 

@@ -21,9 +21,9 @@ import static org.junit.Assert.assertEquals;
  */
 public class InFileBlogPostRepositoryImplTest {
 
-    private Long id1 = 1L;
-    private Long id2 = 643274238L;
-    private long wrongId = 232345;
+    private int id1 = 1;
+    private int id2 = 643274238;
+    private int wrongId = 232345;
     private BlogPostRepository repository;
     private Path tempDir;
     private Path tempFile1;
@@ -61,7 +61,7 @@ public class InFileBlogPostRepositoryImplTest {
         return "blog-post-" + id1 + ".txt";
     }
 
-    private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, Long id, String... lines) {
+    private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, int id, String... lines) {
         List<String> toWrite = Arrays.asList(lines);
         try {
             Files.write(file, toWrite);
@@ -72,7 +72,7 @@ public class InFileBlogPostRepositoryImplTest {
         }
     }
 
-    private BlogPostDTO makeBlogPostDTO(Long id, List<String> toWrite) {
+    private BlogPostDTO makeBlogPostDTO(int id, List<String> toWrite) {
         String title = toWrite.get(0);
 
         StringBuilder content = new StringBuilder("");
@@ -116,14 +116,14 @@ public class InFileBlogPostRepositoryImplTest {
     public void test_id_onlyDependsOnLastNumber() throws Exception {
         String fileName = "sdhsadf23.txt";
         Path tempFile = tempDir.resolve(fileName);
-        BlogPostDTO tempPost = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23L,
+        BlogPostDTO tempPost = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
                 "Title",
                 "Content",
                 "Content line 1"
         );
         String fileName2 = "hello-57.txt";
         Path tempFile2 = tempDir.resolve(fileName2);
-        BlogPostDTO tempPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 57L,
+        BlogPostDTO tempPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 57,
                 "Title",
                 "Content",
                 "Content line 1"
@@ -131,7 +131,7 @@ public class InFileBlogPostRepositoryImplTest {
 
         String fileName3 = "h232--sdfdsah33.txt";
         Path tempFile3 = tempDir.resolve(fileName3);
-        BlogPostDTO tempPost3 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile3, 33L,
+        BlogPostDTO tempPost3 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile3, 33,
                 "Title",
                 "Content",
                 "Content line 1"
@@ -141,9 +141,9 @@ public class InFileBlogPostRepositoryImplTest {
         additionalTempFilesToDelete.add(tempFile3);
 
 
-        assertEquals(tempPost, repository.get(23L));
-        assertEquals(tempPost2, repository.get(57L));
-        assertEquals(tempPost3, repository.get(33L));
+        assertEquals(tempPost, repository.get(23));
+        assertEquals(tempPost2, repository.get(57));
+        assertEquals(tempPost3, repository.get(33));
     }
 
     @Test (expected = TwoPostWithSameIdException.class)
@@ -151,14 +151,14 @@ public class InFileBlogPostRepositoryImplTest {
         // Save 2 files with same id
         String fileName = "sdhsadf23.txt";
         Path tempFile = tempDir.resolve(fileName);
-        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23L,
+        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
                 "Title",
                 "Content",
                 "Content line 1"
         );
         String fileName2 = "hello-23.txt";
         Path tempFile2 = tempDir.resolve(fileName2);
-        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 23L,
+        writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 23,
                 "Title",
                 "Content",
                 "Content line 1"

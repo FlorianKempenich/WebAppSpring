@@ -11,9 +11,9 @@ public interface BlogPostUseCase {
 
     BlogPostDTO save(BlogPostDTO post);
 
-    BlogPostDTO get(long id);
+    BlogPostDTO get(int id);
 
-    List<Long> getAllIds();
+    List<Integer> getAllIds();
 
-    String getSummary(long postId);
+    String getSummary(int postId);
 }
