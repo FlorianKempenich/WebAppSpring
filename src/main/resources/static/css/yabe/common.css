@@ -42,7 +42,7 @@ html, body{
     background-color: #FFFCF5;
 }
 
-.navbar-brand {
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus{
     color: white;
 }
 
