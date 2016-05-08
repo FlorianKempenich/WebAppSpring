@@ -49,7 +49,7 @@ public class BlogPostUseCaseImplTest {
 
     @Test
     public void saveNewPost_returnCorrectPostWithId() throws Exception {
-        String post = "Hello this is my first blog post";
+        String post = "Hello this is my first blog markdownContent";
         int id = 23;
         mockSavedPost.setId(id);
         mockSavedPost.setMarkdownPost(post);
@@ -87,7 +87,7 @@ public class BlogPostUseCaseImplTest {
     public void getAllIds_returnCorrectIdList() throws Exception {
         List<BlogPostDTO> posts = new ArrayList<>(3);
         posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33));
-        posts.add(BlogPostDTO.make("sadf", "Second post", 66));
+        posts.add(BlogPostDTO.make("sadf", "Second markdownContent", 66));
         posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54));
 
         List<Integer> expectedIds = new ArrayList<>(3);

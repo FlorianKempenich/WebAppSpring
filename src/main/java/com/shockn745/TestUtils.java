@@ -20,7 +20,7 @@ public class TestUtils {
     public List<BlogPostDTO> fillDatabaseWithTestData() {
         List<BlogPostDTO> expected = new ArrayList<>(3);
         expected.add(makePost(
-                "Placeholder post",
+                "Placeholder markdownContent",
                 "Hello this is a blog <strong>post</strong> that is quite long. It's about the end of the uni" +
                         "verse, so be prepared if you actually read through. It's going to be " +
                         "long and tough. \n" +

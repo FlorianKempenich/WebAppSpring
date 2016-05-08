@@ -12,7 +12,7 @@ import java.util.List;
 public class FakeBlogPostRepositoryImpl implements BlogPostRepository {
 
     static final BlogPostDTO FAKE_POST = BlogPostDTO.make(
-            "This is a fake blog post",
+            "This is a fake blog markdownContent",
             "Fake content",
             BlogPostDTO.NO_ID
     );

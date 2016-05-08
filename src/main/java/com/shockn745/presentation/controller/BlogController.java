@@ -87,10 +87,10 @@ public class BlogController {
 
 //        // Temp. Todo: Move
 //        PegDownProcessor processor = new PegDownProcessor();
-//        for (BlogPostDTO post : posts) {
-//            String text = post.getMarkdownPost();
+//        for (BlogPostDTO markdownContent : posts) {
+//            String text = markdownContent.getMarkdownPost();
 //            String htmlText = processor.markdownToHtml(text);
-//            post.setMarkdownPost(htmlText);
+//            markdownContent.setMarkdownPost(htmlText);
 //        }
 
 
@@ -131,10 +131,10 @@ public class BlogController {
             String htmlPost = getMarkdownProcessor().markdownToHtml(post.getMarkdownPost());
             post.setMarkdownPost(htmlPost);
             model.addAttribute("post", replacePicture(post));
-            model.addAttribute("page_url", "http://shockn745.noip.me/yabe/post/" + id);
-            model.addAttribute("page_identifier", "post-id-" + id);
+            model.addAttribute("page_url", "http://shockn745.noip.me/yabe/markdownContent/" + id);
+            model.addAttribute("page_identifier", "markdownContent-id-" + id);
         }
-        return "yabe/post";
+        return "yabe/markdownContent";
     }
 
     private String showTestMessage(Model model) {

@@ -2,6 +2,7 @@ package com.shockn745.domain.application.mapper;
 
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.domain.core.BlogPost;
+import com.shockn745.domain.core.BlogPostFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -10,14 +11,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class BlogPostMapper {
 
+    private BlogPostFactory blogPostFactory;
+
+    public BlogPostMapper() {
+        blogPostFactory = new BlogPostFactory();
+    }
+
     public BlogPostDTO transform(BlogPost blogPost) {
         BlogPostDTO result = new BlogPostDTO();
-        result.setMarkdownPost(blogPost.post);
+        result.setMarkdownPost(blogPost.markdownContent);
         result.setTitle(blogPost.title);
         return result;
     }
 
     public BlogPost transform(BlogPostDTO blogPostDTO) {
-        return new BlogPost(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost());
+        return blogPostFactory.make(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost());
     }
 }

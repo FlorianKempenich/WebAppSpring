@@ -33,10 +33,10 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
     }
 
     /**
-     * Returns a blog post stored in a file at : blog-post-ID.txt in the given directory.
-     * By convention the first line is considered the title of the blog post.
+     * Returns a blog markdownContent stored in a file at : blog-markdownContent-ID.txt in the given directory.
+     * By convention the first line is considered the title of the blog markdownContent.
      *
-     * @param id Id of the blog post
+     * @param id Id of the blog markdownContent
      * @return BlogPost for given id
      */
     @Override
@@ -123,7 +123,7 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
                     BlogPostDTO post = getPost(path);
                     posts.add(post);
                 } catch (IOException e) {
-                    System.err.println("Couldn't find post: " + path);
+                    System.err.println("Couldn't find markdownContent: " + path);
                 }
             });
             return posts;

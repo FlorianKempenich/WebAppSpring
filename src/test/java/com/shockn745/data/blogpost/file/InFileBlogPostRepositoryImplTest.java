@@ -58,7 +58,7 @@ public class InFileBlogPostRepositoryImplTest {
     }
 
     private static String makeFileName(long id1) {
-        return "blog-post-" + id1 + ".txt";
+        return "blog-markdownContent-" + id1 + ".txt";
     }
 
     private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, int id, String... lines) {
@@ -90,7 +90,7 @@ public class InFileBlogPostRepositoryImplTest {
 
     @Test
     public void savePost_forNow_doNothing_returnEmptyBlogPost() throws Exception {
-        BlogPostDTO blogPost1 = repository.save(BlogPostDTO.make("title", "this is the post text", 324));
+        BlogPostDTO blogPost1 = repository.save(BlogPostDTO.make("title", "this is the markdownContent text", 324));
         BlogPostDTO blogPost2 = repository.save(null);
 
         assertEquals(BlogPostDTO.EMPTY, blogPost1);
