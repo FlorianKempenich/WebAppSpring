@@ -51,9 +51,9 @@ public class BlogController {
 
         PegDownProcessor processor = getMarkdownProcessor();
         for (BlogPostDTO post : posts) {
-            String text = post.getPost();
+            String text = post.getMarkdownPost();
             String htmlText = processor.markdownToHtml(text);
-            post.setPost(htmlText);
+            post.setMarkdownPost(htmlText);
         }
 
         try {
@@ -88,9 +88,9 @@ public class BlogController {
 //        // Temp. Todo: Move
 //        PegDownProcessor processor = new PegDownProcessor();
 //        for (BlogPostDTO post : posts) {
-//            String text = post.getPost();
+//            String text = post.getMarkdownPost();
 //            String htmlText = processor.markdownToHtml(text);
-//            post.setPost(htmlText);
+//            post.setMarkdownPost(htmlText);
 //        }
 
 
@@ -106,15 +106,19 @@ public class BlogController {
 
     @RequestMapping(value = "/post")
     public String post(Model model) {
-        return postWithId(1, model);
+        if (environment.getActiveProfiles()[0].equals("prod")) {
+            testUtils.fillDatabaseWithTestData();
+        }
+        List<Long> postIds = blogPostUseCase.getAllIds();
+        return postWithId(postIds.get(2).intValue(), model);
     }
 
     private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
-        String post = blogPostDTO.getPost();
+        String post = blogPostDTO.getMarkdownPost();
         String postWithImage = post.replace("PICTURE", "<div class=\"card-image card-with-shadow\">\n" +
                 "    <img src=\"/assets/lion.jpg\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
                 "</div>\n");
-        blogPostDTO.setPost(postWithImage);
+        blogPostDTO.setMarkdownPost(postWithImage);
         return blogPostDTO;
     }
 
@@ -123,8 +127,8 @@ public class BlogController {
 
         if (id <= 3 && id >=0) {
             BlogPostDTO post = blogPostUseCase.get(id);
-            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getPost());
-            post.setPost(htmlPost);
+            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getMarkdownPost());
+            post.setMarkdownPost(htmlPost);
             model.addAttribute("post", replacePicture(post));
             model.addAttribute("page_url", "http://shockn745.noip.me/yabe/post/" + id);
             model.addAttribute("page_identifier", "post-id-" + id);

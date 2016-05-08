@@ -52,10 +52,10 @@ public class BlogPostUseCaseImplTest {
         String post = "Hello this is my first blog post";
         Long id = 23L;
         mockSavedPost.setId(id);
-        mockSavedPost.setPost(post);
+        mockSavedPost.setMarkdownPost(post);
 
         BlogPostDTO postDTO = new BlogPostDTO();
-        postDTO.setPost(post);
+        postDTO.setMarkdownPost(post);
         BlogPostDTO returned = useCase.save(postDTO);
 
         verify(blogPostRepository).save(blogPostCaptor.capture());
@@ -63,8 +63,8 @@ public class BlogPostUseCaseImplTest {
 
 
         // Post saved
-        assertEquals(post, saved.getPost());
-        assertEquals(post, returned.getPost());
+        assertEquals(post, saved.getMarkdownPost());
+        assertEquals(post, returned.getMarkdownPost());
 
         // Id updated
         assertEquals(id, returned.getId());
@@ -75,7 +75,7 @@ public class BlogPostUseCaseImplTest {
         String expectedText = "Expected text";
         Long expectedId = 11L;
         mockSavedPost.setId(expectedId);
-        mockSavedPost.setPost(expectedText);
+        mockSavedPost.setMarkdownPost(expectedText);
 
         BlogPostDTO result = useCase.get(expectedId);
 
@@ -105,7 +105,7 @@ public class BlogPostUseCaseImplTest {
         String postText = "Expected text that is a bit long, and will be shortened";
         Long postId = 11L;
         mockSavedPost.setId(postId);
-        mockSavedPost.setPost(postText);
+        mockSavedPost.setMarkdownPost(postText);
 
         String summary = useCase.getSummary(postId);
         String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);

@@ -49,7 +49,7 @@ public class BlogPostIntegrationTest {
 
         BlogPostDTO result = useCase.get(id);
 
-        assertEquals(postText, result.getPost());
+        assertEquals(postText, result.getMarkdownPost());
         assertEquals(toSave, blogPostDTO);
         assertEquals(toSave, result);
     }
@@ -68,8 +68,8 @@ public class BlogPostIntegrationTest {
 
         assertEquals(3, result.size());
         for (int i = 0; i < 3; i++) {
-            String expectedPost = expected.get(i).getPost();
-            String resultPost = result.get(i).getPost();
+            String expectedPost = expected.get(i).getMarkdownPost();
+            String resultPost = result.get(i).getMarkdownPost();
             assertEquals(expectedPost, resultPost);
         }
         assertEquals(expected, result);

@@ -53,7 +53,7 @@ public class TestUtils {
 
     public static BlogPostDTO makePost(String title, String text) {
         BlogPostDTO dto = new BlogPostDTO();
-        dto.setPost(text);
+        dto.setMarkdownPost(text);
         dto.setTitle(title);
         return dto;
     }
