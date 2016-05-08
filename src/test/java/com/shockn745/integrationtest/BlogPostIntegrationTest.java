@@ -66,8 +66,8 @@ public class BlogPostIntegrationTest {
             result.add(useCase.get(id));
         }
 
-        assertEquals(3, result.size());
-        for (int i = 0; i < 3; i++) {
+        assertEquals(4, result.size());
+        for (int i = 0; i < 4; i++) {
             String expectedPost = expected.get(i).getMarkdownPost();
             String resultPost = result.get(i).getMarkdownPost();
             assertEquals(expectedPost, resultPost);
