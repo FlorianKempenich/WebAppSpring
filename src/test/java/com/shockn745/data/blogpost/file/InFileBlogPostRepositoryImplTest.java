@@ -58,7 +58,7 @@ public class InFileBlogPostRepositoryImplTest {
     }
 
     private static String makeFileName(long id1) {
-        return "blog-markdownContent-" + id1 + ".txt";
+        return "blog-markdownContent-" + id1 + ".md";
     }
 
     private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, int id, String... lines) {
@@ -114,14 +114,14 @@ public class InFileBlogPostRepositoryImplTest {
      */
     @Test
     public void test_id_onlyDependsOnLastNumber() throws Exception {
-        String fileName = "sdhsadf23.txt";
+        String fileName = "sdhsadf23.md";
         Path tempFile = tempDir.resolve(fileName);
         BlogPostDTO tempPost = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
                 "Title",
                 "Content",
                 "Content line 1"
         );
-        String fileName2 = "hello-57.txt";
+        String fileName2 = "hello-57.md";
         Path tempFile2 = tempDir.resolve(fileName2);
         BlogPostDTO tempPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 57,
                 "Title",
@@ -129,7 +129,7 @@ public class InFileBlogPostRepositoryImplTest {
                 "Content line 1"
         );
 
-        String fileName3 = "h232--sdfdsah33.txt";
+        String fileName3 = "h232--sdfdsah33.md";
         Path tempFile3 = tempDir.resolve(fileName3);
         BlogPostDTO tempPost3 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile3, 33,
                 "Title",
@@ -149,14 +149,14 @@ public class InFileBlogPostRepositoryImplTest {
     @Test (expected = TwoPostWithSameIdException.class)
     public void twoPostWithSameId_throwException() throws Exception {
         // Save 2 files with same id
-        String fileName = "sdhsadf23.txt";
+        String fileName = "sdhsadf23.md";
         Path tempFile = tempDir.resolve(fileName);
         writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
                 "Title",
                 "Content",
                 "Content line 1"
         );
-        String fileName2 = "hello-23.txt";
+        String fileName2 = "hello-23.md";
         Path tempFile2 = tempDir.resolve(fileName2);
         writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 23,
                 "Title",

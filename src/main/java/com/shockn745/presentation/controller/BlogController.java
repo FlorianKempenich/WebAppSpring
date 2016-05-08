@@ -110,14 +110,18 @@ public class BlogController {
             testUtils.fillDatabaseWithTestData();
         }
         List<Integer> postIds = blogPostUseCase.getAllIds();
-        return postWithId(postIds.get(2), model);
+        return postWithId(postIds.get(postIds.size() - 1), model);
     }
 
     private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
         String post = blogPostDTO.getMarkdownPost();
+
+        String pathToAsset = "/assets/blog-post";
+        String src = pathToAsset + "/" + "1000" + "/" + "space.jpg";
+
         @SuppressWarnings("HtmlUnknownTarget")
         String postWithImage = post.replace("PICTURE", "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"/assets/lion.jpg\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
+                "    <img src=\""+ src +"\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
                 "</div>\n");
         blogPostDTO.setMarkdownPost(postWithImage);
         return blogPostDTO;
@@ -126,15 +130,13 @@ public class BlogController {
     @RequestMapping(value = "/post/{id}")
     public String postWithId(@PathVariable int id, Model model) {
 
-        if (id <= 3 && id >=0) {
-            BlogPostDTO post = blogPostUseCase.get(id);
-            String htmlPost = getMarkdownProcessor().markdownToHtml(post.getMarkdownPost());
-            post.setMarkdownPost(htmlPost);
-            model.addAttribute("post", replacePicture(post));
-            model.addAttribute("page_url", "http://shockn745.noip.me/yabe/markdownContent/" + id);
-            model.addAttribute("page_identifier", "markdownContent-id-" + id);
-        }
-        return "yabe/markdownContent";
+        BlogPostDTO post = blogPostUseCase.get(id);
+        String htmlPost = getMarkdownProcessor().markdownToHtml(post.getMarkdownPost());
+        post.setMarkdownPost(htmlPost);
+        model.addAttribute("post", replacePicture(post));
+        model.addAttribute("page_url", "http://shockn745.noip.me/yabe/post/" + id);
+        model.addAttribute("page_identifier", "post-id-" + id);
+        return "yabe/post";
     }
 
     private String showTestMessage(Model model) {

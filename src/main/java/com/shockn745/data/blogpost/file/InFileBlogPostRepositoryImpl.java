@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  */
 public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
 
-    private final Pattern idPattern = Pattern.compile("(\\d+).txt");
+    private final Pattern idPattern = Pattern.compile("(\\d+).md");
     private final Path directory;
 
     public InFileBlogPostRepositoryImpl(Path directory) {

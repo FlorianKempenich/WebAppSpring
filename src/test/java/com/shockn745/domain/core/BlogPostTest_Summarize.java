@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author Kempenich Florian
  */
-public class BlogPostTest {
+public class BlogPostTest_Summarize {
     
     private BlogPostFactory blogPostFactory = new BlogPostFactory();
 
