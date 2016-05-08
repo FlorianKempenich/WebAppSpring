@@ -1,5 +1,7 @@
 package com.shockn745;
 
+import com.shockn745.domain.application.driven.MarkdownParser;
+import com.shockn745.parsing.PegdownBasedParser;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import org.springframework.context.annotation.Bean;
@@ -16,4 +18,8 @@ public class ParsingConfiguration {
         return new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
     }
 
+    @Bean
+    public MarkdownParser getMarkdownParser(PegDownProcessor processor) {
+        return new PegdownBasedParser(processor);
+    }
 }

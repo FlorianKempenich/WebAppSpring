@@ -43,9 +43,9 @@
         <div class="row">
             <div class="col-sm-9">
                 <div class="main-content">
-                    <h1 class="text-center" id="article-title" th:text="${post.title}"></h1>
+                    <h1 class="text-center" id="article-title" th:text="${title}"></h1>
                     <div class="article-detail text-justify">
-                        <p th:utext="${post.markdownPost}"></p>
+                        <p th:utext="${htmlContent}"></p>
 
                     </div>
                     <div id="disqus_thread"></div>
