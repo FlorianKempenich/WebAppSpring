@@ -24,6 +24,10 @@ html, body{
     /*border: solid 1px crimson !important;*/
 }
 
+.sidebar .label {
+    margin-bottom: 5px;
+}
+
 #on-the-side {
     top: 80px;
     max-width: 210px;
