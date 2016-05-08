@@ -126,6 +126,8 @@ public class BlogController {
             String htmlPost = getMarkdownProcessor().markdownToHtml(post.getPost());
             post.setPost(htmlPost);
             model.addAttribute("post", replacePicture(post));
+            model.addAttribute("page_url", "http://shockn745.noip.me/yabe/post/" + id);
+            model.addAttribute("page_identifier", "post-id-" + id);
         }
         return "yabe/post";
     }
