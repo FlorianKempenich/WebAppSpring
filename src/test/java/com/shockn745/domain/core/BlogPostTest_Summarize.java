@@ -1,7 +1,12 @@
 package com.shockn745.domain.core;
 
 import com.google.common.testing.EqualsTester;
+import com.shockn745.domain.application.driven.MarkdownParser;
+import com.shockn745.parsing.PegdownBasedParser;
+import org.junit.Before;
 import org.junit.Test;
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +15,15 @@ import static org.junit.Assert.assertEquals;
  */
 public class BlogPostTest_Summarize {
     
-    private BlogPostFactory blogPostFactory = new BlogPostFactory();
+    private BlogPostFactory blogPostFactory;
+
+    @Before
+    public void setUp() throws Exception {
+
+        PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
+        MarkdownParser parser = new PegdownBasedParser(processor);
+        blogPostFactory = new BlogPostFactory(parser);
+    }
 
     @Test
     public void testEquality() throws Exception {

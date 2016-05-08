@@ -5,6 +5,8 @@ import com.shockn745.domain.core.BlogPost;
 import com.shockn745.domain.core.BlogPostFactory;
 import org.springframework.stereotype.Component;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * @author Kempenich Florian
  */
@@ -13,8 +15,9 @@ public class BlogPostMapper {
 
     private BlogPostFactory blogPostFactory;
 
-    public BlogPostMapper() {
-        blogPostFactory = new BlogPostFactory();
+    public BlogPostMapper(BlogPostFactory blogPostFactory) {
+        checkNotNull(blogPostFactory);
+        this.blogPostFactory = blogPostFactory;
     }
 
     public BlogPostDTO transform(BlogPost blogPost) {

@@ -1,9 +1,11 @@
 package com.shockn745.domain.application.driving.impl;
 
 import com.shockn745.domain.application.driven.BlogPostRepository;
+import com.shockn745.domain.application.driven.MarkdownParser;
 import com.shockn745.domain.application.driving.BlogPostUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.domain.application.mapper.BlogPostMapper;
+import com.shockn745.domain.core.BlogPostFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -28,6 +30,8 @@ public class BlogPostUseCaseImplTest {
 
     @Mock
     BlogPostRepository blogPostRepository;
+    @Mock
+    MarkdownParser parser;
     @Captor
     ArgumentCaptor<BlogPostDTO> blogPostCaptor;
     private BlogPostUseCase useCase;
@@ -38,7 +42,8 @@ public class BlogPostUseCaseImplTest {
         MockitoAnnotations.initMocks(this);
 
         // Init usecase
-        BlogPostMapper mapper = new BlogPostMapper();
+        BlogPostFactory factory = new BlogPostFactory(parser);
+        BlogPostMapper mapper = new BlogPostMapper(factory);
         useCase = new BlogPostUseCaseImpl(blogPostRepository, mapper);
 
         // Setup mock repo
@@ -110,5 +115,20 @@ public class BlogPostUseCaseImplTest {
         String summary = useCase.getSummary(postId);
         String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);
         assertTrue(postText.startsWith(summaryWithoutEllipsis));
+    }
+
+    @Test
+    public void getHtmlForSpecificPost() throws Exception {
+        String markdownText = "markdown post";
+        int postId = 12;
+        mockSavedPost.setId(postId);
+        mockSavedPost.setMarkdownPost(markdownText);
+
+        String expectedHtml = "MOCK HTML";
+
+        when(parser.toHtml(markdownText)).thenReturn(expectedHtml);
+
+        String html = useCase.getHtml(postId);
+        assertEquals(expectedHtml, html);
     }
 }

@@ -1,5 +1,7 @@
 package com.shockn745.domain.core;
 
+import com.shockn745.domain.application.driven.MarkdownParser;
+
 import java.util.Objects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -10,16 +12,19 @@ import static com.google.common.base.Strings.nullToEmpty;
  */
 public class BlogPost {
 
-    private Summarizer summarizer;
+    private final Summarizer summarizer;
+    private final MarkdownParser markdownParser;
 
     public final String title;
     public final String markdownContent;
 
-    BlogPost(String title, String markdownContent, Summarizer summarizer) {
+    BlogPost(String title, String markdownContent, Summarizer summarizer, MarkdownParser markdownParser) {
         checkNotNull(summarizer);
+        checkNotNull(markdownParser);
         this.title = nullToEmpty(title);
         this.markdownContent = nullToEmpty(markdownContent);
         this.summarizer = summarizer;
+        this.markdownParser = markdownParser;
     }
 
     @Override
@@ -40,4 +45,7 @@ public class BlogPost {
         return summarizer.getSummary(markdownContent, charLimit);
     }
 
+    public String getHtml() {
+        return markdownParser.toHtml(markdownContent);
+    }
 }
