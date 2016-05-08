@@ -14,13 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author Kempenich Florian
  */
 @Controller
-@RequestMapping(value = "/yabe")
+@RequestMapping(value = "/")
 public class BlogController {
 
     @Autowired
@@ -56,9 +58,8 @@ public class BlogController {
         return "yabe/yabe";
     }
 
-    @RequestMapping(value = "/main")
-    public String main(Model model) {
-
+    @RequestMapping(value = "/")
+    public String mainPage(Model model) {
         // FIXME: 5/7/2016 Remove only for demo purposes
         if (inProduction()) {
             testUtils.fillDatabaseWithTestData();
@@ -74,35 +75,17 @@ public class BlogController {
 
     private List<PostSummary> makePostSummaries(List<Integer> postIds) {
         List<PostSummary> postSummaries = new ArrayList<>();
+        Collections.sort(postIds, Comparator.reverseOrder());
         for (int postId : postIds) {
             BlogPostDTO post = blogPostUseCase.get(postId);
             String summary = blogPostUseCase.getSummary(postId);
-            postSummaries.add(new PostSummary(post.getTitle(), summary));
+            postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary));
         }
         return postSummaries;
     }
 
     private boolean inProduction() {
         return environment.getActiveProfiles()[0].equals("prod");
-    }
-
-    @RequestMapping(value = "/paper")
-    public String paper() {
-        return "yabe/paper";
-    }
-
-    @RequestMapping(value = "/post")
-    public String post(Model model) {
-        if (inProduction()) {
-            testUtils.fillDatabaseWithTestData();
-        }
-        List<Integer> postIds = blogPostUseCase.getAllIds();
-
-        if (postIds.contains(1000)) {
-            return postWithId(1000, model);
-        } else {
-            return postWithId(1, model);
-        }
     }
 
     @RequestMapping(value = "/post/{id}")
@@ -120,6 +103,12 @@ public class BlogController {
         model.addAttribute("page_identifier", disqus.getPageIdentifier(id));
 
         return "yabe/post";
+    }
+
+    @RequestMapping(value = "/manifesto")
+    public String showManifesto(Model model) {
+        // By convention manifesto id == 1
+        return postWithId(1, model);
     }
 
     // todo remove

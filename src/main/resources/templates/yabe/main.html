@@ -26,7 +26,7 @@
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="text-center">
                                     <span class="label label-primary">Featured</span>
-                                    <a href="javascrip: void(0);">
+                                    <a th:href="@{/post/{id}(id=${post.id})}">
                                         <h3 class="title" th:text="${post.title}"></h3>
                                     </a>
                                     <h6 class="title-uppercase">November 20, 2016</h6>
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-8 col-md-offset-2">
                                 <div class="article-image text-center">
-                                    <a href="javascrip: void(0);">
+                                    <a th:href="@{/post/{id}(id=${post.id})}">
                                         <div class="card-big-shadow">
                                             <div class="card" data-radius="none"
                                                  th:style="'background-image:url(' + @{/assets/lion.jpg} + ');'"
@@ -47,7 +47,9 @@
                                 </div>
                                 <div class="article-content text-center">
                                     <p th:utext="${post.summary}"></p>
-                                    <button class="btn btn-danger btn-fill btn-sm">Read more</button>
+                                    <a th:href="@{/post/{id}(id=${post.id})}">
+                                        <button class="btn btn-danger btn-fill btn-sm">Read more</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

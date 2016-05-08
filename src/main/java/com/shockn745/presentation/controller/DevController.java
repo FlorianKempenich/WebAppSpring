@@ -40,4 +40,9 @@ public class DevController {
 
         return "dev/thymeleaf";
     }
+
+    @RequestMapping(value = "/paper")
+    public String paper() {
+        return "yabe/paper";
+    }
 }

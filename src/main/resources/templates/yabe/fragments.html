@@ -46,10 +46,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" class="btn nav-item btn-simple">Manifesto</a></li>
+                    <li><a th:href="@{/manifesto}" class="btn nav-item btn-simple">Manifesto</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" class="btn nav-item btn-simple">Blog</a></li>
+                    <li><a th:href="@{/}" class="btn nav-item btn-simple">Blog</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
 
@@ -69,13 +69,15 @@
         <li><strong>Asking</strong> instead of <strong>answering</strong></li>
     </ul>
     <div class="text-center">
-        <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+        <a th:href="@{/manifesto}">
+            <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+        </a>
     </div>
 
     <hr/>
     <h4 class="text-center">About me</h4>
     <div class="card-image" id="profile-picture">
-        <a href="#">
+        <a th:href="@{/manifesto}">
             <img th:src="@{/assets/profile_picture.jpg}" src="../../static/assets/profile_picture.jpg"
                  alt="Rounded Image" class="img-rounded img-responsive"/>
         </a>
@@ -87,7 +89,9 @@
     </p>
 
     <div class="text-center">
-        <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+        <a th:href="@{/manifesto}">
+            <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+        </a>
     </div>
 
     <hr/>

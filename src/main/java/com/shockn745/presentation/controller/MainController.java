@@ -22,7 +22,7 @@ public class MainController {
         this.getWhatMessageUseCase = getWhatMessageUseCase;
     }
 
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/maintenance")
     public String showMain(Model model) {
         model.addAttribute("email", "shockn745@gmail.com");
         model.addAttribute("title", "Hello");
