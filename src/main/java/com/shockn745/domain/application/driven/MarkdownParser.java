@@ -5,6 +5,6 @@ package com.shockn745.domain.application.driven;
  */
 public interface MarkdownParser {
 
-    String toHtml(String markdown);
+    String toHtml(String markdown, int postId);
 
 }

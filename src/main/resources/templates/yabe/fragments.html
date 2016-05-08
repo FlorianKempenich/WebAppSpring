@@ -17,6 +17,9 @@
               rel="stylesheet"/>
         <link href="../../static/paperkitpro/css/demo.css" th:href="@{/paperkitpro/css/demo.css}" rel="stylesheet"/>
 
+        <!-- Highlight.js -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"/>
+
         <!--     Fonts and icons     -->
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
         <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'/>
@@ -144,6 +147,8 @@
             th:src="@{/paperkitpro/js/bootstrap-datepicker.js}"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"
             th:src="@{//maps.googleapis.com/maps/api/js}"></script>
+    <script th:src="@{//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 </th:block>
 
 </html>

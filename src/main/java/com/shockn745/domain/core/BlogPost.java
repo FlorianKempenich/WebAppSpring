@@ -45,7 +45,7 @@ public class BlogPost {
         return summarizer.getSummary(markdownContent, charLimit);
     }
 
-    public String getHtml() {
-        return markdownParser.toHtml(markdownContent);
+    public String getHtml(int postId) {
+        return markdownParser.toHtml(markdownContent, postId);
     }
 }

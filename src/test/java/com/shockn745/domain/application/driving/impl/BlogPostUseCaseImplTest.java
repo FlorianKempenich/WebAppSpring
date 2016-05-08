@@ -126,7 +126,7 @@ public class BlogPostUseCaseImplTest {
 
         String expectedHtml = "MOCK HTML";
 
-        when(parser.toHtml(markdownText)).thenReturn(expectedHtml);
+        when(parser.toHtml(markdownText, postId)).thenReturn(expectedHtml);
 
         String html = useCase.getHtml(postId);
         assertEquals(expectedHtml, html);

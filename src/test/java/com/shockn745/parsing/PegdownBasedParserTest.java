@@ -31,8 +31,22 @@ public class PegdownBasedParserTest {
                 "<h1>First title</h1>";
 
 
-        String resultHtml = parser.toHtml(markdown);
+        String resultHtml = parser.toHtml(markdown, 0);
 
         assertEquals(expectedHtml, resultHtml);
     }
+
+    @Test
+    public void parseImage() throws Exception {
+        String image = "PICTURE:test";
+        int postId = 12;
+        String expectedHtml = "<div class=\"card-image card-with-shadow\">\n" +
+                "    <img src=\"" + "/assets/blog-post/" + postId + "/test.jpg" + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
+                "</div>";
+
+        assertEquals(expectedHtml, parser.toHtml(image, postId));
+    }
+
+
+
 }

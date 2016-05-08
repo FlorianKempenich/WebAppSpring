@@ -55,6 +55,10 @@ html, body{
     margin: 10px;
 }
 
+pre {
+    background-color: #F0F0F0;
+}
+
 /*For the sticky navbar only on desktop*/
 .main-content {
     padding-top: 80px;
