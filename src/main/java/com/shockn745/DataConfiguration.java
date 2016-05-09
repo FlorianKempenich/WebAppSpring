@@ -32,14 +32,22 @@ public class DataConfiguration {
 
     @Bean
     @Qualifier("in-file-database-path")
+    @Profile("dev")
     public Path getInFileDatabaseDirectoryPath() {
         return Paths.get("file_database", "blog_posts");
     }
 
     @Bean
+    @Qualifier("in-file-database-path")
     @Profile("prod")
-    public BlogPostRepository getBlogPostRepository_prod(JpaBlogPostRepo jpaBlogPostRepo) {
-        return new BlogPostRepositoryImpl(jpaBlogPostRepo);
+    public Path getInFileDatabaseDirectoryPath_prod() {
+        return Paths.get("..", "ftp", "professional_beginner", "blog_posts");
+    }
+
+    @Bean
+    @Profile("prod")
+    public BlogPostRepository getBlogPostRepository_prod(Path database) {
+        return new InFileBlogPostRepositoryImpl(database);
     }
 
     @Bean
