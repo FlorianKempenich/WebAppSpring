@@ -33,18 +33,35 @@ public class PegdownBasedParser implements MarkdownParser {
             String imageTag = matcher.group();
             String imageName = matcher.group(1);
 
+            String imageLink;
+
+            if (isWebLink(imageName)) {
+                imageLink = imageName;
+            } else {
+                imageLink = makeLocalImageLink(imageName, postId);
+            }
+
             html = html.replace(
                     imageTag,
-                    makeImageDiv(imageName, postId)
+                    makeImageDiv(imageLink)
             );
         }
 
         return html;
     }
 
-    private String makeImageDiv(String imageName, int postId) {
+    private boolean isWebLink(String imageName) {
+        return imageName.startsWith("http");
+    }
+
+
+    private String makeLocalImageLink(String imageName, int postId) {
+        return "/assets/blog-post/" + postId + "/" + imageName + ".jpg";
+    }
+
+    private String makeImageDiv(String imageLink) {
         return "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"" + "/assets/blog-post/" + postId + "/" + imageName + ".jpg" +
+                "    <img src=\"" + imageLink +
                 "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
                 "</div>\n";
     }

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class PegdownBasedParserTest {
 
 
-    MarkdownParser parser;
+    private MarkdownParser parser;
 
     @Before
     public void setUp() throws Exception {
@@ -47,6 +47,15 @@ public class PegdownBasedParserTest {
         assertEquals(expectedHtml, parser.toHtml(image, postId));
     }
 
+    @Test
+    public void parseImageWithLink() throws Exception {
+        String imageLink = "http://ichef.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg";
+        String image = "PICTURE:" + imageLink;
+        int postId = 12;
+        String expectedHtml = "<div class=\"card-image card-with-shadow\">\n" +
+                "    <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
+                "</div>";
 
-
+        assertEquals(expectedHtml, parser.toHtml(image, postId));
+    }
 }
