@@ -29,7 +29,7 @@
                                     <a th:href="@{/post/{id}(id=${post.id})}">
                                         <h3 class="title" th:text="${post.title}"></h3>
                                     </a>
-                                    <h6 class="title-uppercase">November 20, 2016</h6>
+                                    <h6 class="title-uppercase" th:text="${post.date}"></h6>
                                 </div>
                             </div>
                         </div>

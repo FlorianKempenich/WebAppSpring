@@ -79,7 +79,7 @@ public class BlogController {
         for (int postId : postIds) {
             BlogPostDTO post = blogPostUseCase.get(postId);
             String summary = blogPostUseCase.getSummary(postId);
-            postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary));
+            postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary, post.getDate()));
         }
         return postSummaries;
     }
