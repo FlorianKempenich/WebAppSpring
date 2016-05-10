@@ -3,6 +3,7 @@ package com.shockn745.data.blogpost.fake;
 import com.shockn745.domain.application.driven.BlogPostRepository;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ public class FakeBlogPostRepositoryImpl implements BlogPostRepository {
     static final BlogPostDTO FAKE_POST = BlogPostDTO.make(
             "This is a fake blog markdownContent",
             "Fake content",
-            BlogPostDTO.NO_ID
+            BlogPostDTO.NO_ID,
+            LocalDate.MIN,
+            new ArrayList<>()
     );
 
     @Override

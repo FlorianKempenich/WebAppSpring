@@ -13,6 +13,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,9 +92,9 @@ public class BlogPostUseCaseImplTest {
     @Test
     public void getAllIds_returnCorrectIdList() throws Exception {
         List<BlogPostDTO> posts = new ArrayList<>(3);
-        posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33));
-        posts.add(BlogPostDTO.make("sadf", "Second markdownContent", 66));
-        posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54));
+        posts.add(BlogPostDTO.make("Title21", "hello how are you ?", 33, LocalDate.MIN, new ArrayList<>()));
+        posts.add(BlogPostDTO.make("sadf", "Second markdownContent", 66, LocalDate.MIN, new ArrayList<>()));
+        posts.add(BlogPostDTO.make("test", "asdfl;kjsdaf asd fjasd", 54, LocalDate.MIN, new ArrayList<>()));
 
         List<Integer> expectedIds = new ArrayList<>(3);
         for (BlogPostDTO post : posts) {

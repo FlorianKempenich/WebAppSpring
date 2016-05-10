@@ -5,6 +5,7 @@ import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,13 @@ public class TestUtils {
     JpaBlogPostRepo jpaRepo;
 
     public List<BlogPostDTO> fillDatabaseWithTestData() {
+
+        LocalDate fakeDate = LocalDate.ofEpochDay(5);
+        List<String> fakeTags = new ArrayList<>(3);
+        fakeTags.add("Architecture");
+        fakeTags.add("TDD");
+        fakeTags.add("Android");
+
         List<BlogPostDTO> expected = new ArrayList<>(3);
         expected.add(makePost(
                 "Placeholder markdownContent",
@@ -176,7 +184,9 @@ public class TestUtils {
                                 "PICTURE:test\n" +
                                 "\n" +
                                 "What do you think ?\n",
-                        1000
+                        1000,
+                        fakeDate,
+                        fakeTags
                 )
         );
         for (BlogPostDTO postDTO : expected) {

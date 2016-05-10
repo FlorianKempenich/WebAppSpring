@@ -22,10 +22,12 @@ public class BlogPostMapper {
         BlogPostDTO result = new BlogPostDTO();
         result.setMarkdownPost(blogPost.markdownContent);
         result.setTitle(blogPost.title);
+        result.setDate(blogPost.date);
+        result.setTags(blogPost.tags);
         return result;
     }
 
     public BlogPost transform(BlogPostDTO blogPostDTO) {
-        return blogPostFactory.make(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost());
+        return blogPostFactory.make(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost(), blogPostDTO.getDate(), blogPostDTO.getTags());
     }
 }

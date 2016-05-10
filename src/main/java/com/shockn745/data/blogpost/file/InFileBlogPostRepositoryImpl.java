@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,6 +18,15 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
+ * Implementation of the {@link BlogPostRepository} base on files.
+ *
+ * CONVENTION:
+ *
+ * (line #) <-> (role)
+ * 1 <-> Title
+ * 2 <-> Tags --> separated with spaces
+ * 3 <-> date --> SimpleDateFormat: yyyy-MM-dd
+ *
  * @author Kempenich Florian
  */
 public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
@@ -56,7 +67,18 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
     private BlogPostDTO getPost(Path file) throws IOException {
         List<String> lines = Files.readAllLines(file);
         String title = lines.get(0); // CONVENTION
-        return BlogPostDTO.make(title, makeContent(lines), extractId(file));
+        List<String> tags = parseTags(lines.get(1));
+        LocalDate date = parseDate(lines.get(2));
+        return BlogPostDTO.make(title, makeContent(lines), extractId(file), date, tags);
+    }
+
+    private LocalDate parseDate(String dateString) {
+        return LocalDate.parse(dateString);
+    }
+
+    private List<String> parseTags(String tagsString) {
+        String[] tags = tagsString.split(" ");
+        return Arrays.asList(tags);
     }
 
     private String makeContent(List<String> lines) {

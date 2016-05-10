@@ -2,13 +2,6 @@ Color scheme :
 
 
 
-TODO Use Highlight.js for code syntax highlighting
-
-TODO Rather than creating a custom parsing mechanism for pictures in Pegdown. Create an image parser from scratch.
-Easier, and quicker.
-Use following format: PICTURE=name-of-the-image. Then for each post have a dedicated folder in assets and
-
-
 Design feedback:
 - Couleur de la Navbar -> Vire au violet chez florent.
     -> Plus neutre: Gris

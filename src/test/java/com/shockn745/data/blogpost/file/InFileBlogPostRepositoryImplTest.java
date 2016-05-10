@@ -9,10 +9,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,8 +38,20 @@ public class InFileBlogPostRepositoryImplTest {
         tempFile1 = tempDir.resolve(makeFileName(id1));
         tempFile2 = tempDir.resolve(makeFileName(id2));
 
+        List<String> tags1 = new ArrayList<>();
+        tags1.add("TDD");
+        tags1.add("Architecture");
+        List<String> tags2 = new ArrayList<>();
+        tags2.add("Android");
+        tags2.add("DDD");
+
+
         post1 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile1, id1,
+                LocalDate.of(2016,5,9),
+                tags1,
                 "This is the title!",
+                "TDD Architecture", //tags2
+                "2016-05-09",
                 "Hello how are you doing ?",
                 "My name is giorgos, and I'm the best greek guy on Earth",
                 "This is a 3rd line just for test",
@@ -49,7 +59,11 @@ public class InFileBlogPostRepositoryImplTest {
         );
 
         post2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, id2,
+                LocalDate.of(2020,8,6),
+                tags2,
                 "This is the second file Title",
+                "Android DDD", //tags2
+                "2020-08-06",
                 "Again, this is now the text",
                 "Nothing new here, just some random text"
         );
@@ -61,18 +75,19 @@ public class InFileBlogPostRepositoryImplTest {
         return "blog-markdownContent-" + id1 + ".md";
     }
 
-    private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, int id, String... lines) {
+    private BlogPostDTO writeLinesAndReturnCorrespondingBlogPostDTO(Path file, int id, LocalDate date,
+                                                                    List<String> tags,  String... lines) {
         List<String> toWrite = Arrays.asList(lines);
         try {
             Files.write(file, toWrite);
-            return makeBlogPostDTO(id, toWrite);
+            return makeBlogPostDTO(id, toWrite, date, tags);
         } catch (IOException e) {
             e.printStackTrace();
             return BlogPostDTO.EMPTY;
         }
     }
 
-    private BlogPostDTO makeBlogPostDTO(int id, List<String> toWrite) {
+    private BlogPostDTO makeBlogPostDTO(int id, List<String> toWrite, LocalDate date, List<String> tags) {
         String title = toWrite.get(0);
 
         StringBuilder content = new StringBuilder("");
@@ -84,13 +99,15 @@ public class InFileBlogPostRepositoryImplTest {
         return BlogPostDTO.make(
                 title,
                 content.toString(),
-                id
+                id,
+                date,
+                tags
         );
     }
 
     @Test
     public void savePost_forNow_doNothing_returnEmptyBlogPost() throws Exception {
-        BlogPostDTO blogPost1 = repository.save(BlogPostDTO.make("title", "this is the markdownContent text", 324));
+        BlogPostDTO blogPost1 = repository.save(BlogPostDTO.make("title", "this is the markdownContent text", 324, LocalDate.MIN, new ArrayList<>()));
         BlogPostDTO blogPost2 = repository.save(null);
 
         assertEquals(BlogPostDTO.EMPTY, blogPost1);
@@ -117,14 +134,22 @@ public class InFileBlogPostRepositoryImplTest {
         String fileName = "sdhsadf23.md";
         Path tempFile = tempDir.resolve(fileName);
         BlogPostDTO tempPost = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
+                LocalDate.of(2016,5,9),
+                new ArrayList<>(),
                 "Title",
+                " ",
+                "2016-05-09",
                 "Content",
                 "Content line 1"
         );
         String fileName2 = "hello-57.md";
         Path tempFile2 = tempDir.resolve(fileName2);
         BlogPostDTO tempPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 57,
+                LocalDate.of(2016,5,9),
+                new ArrayList<>(),
                 "Title",
+                " ",
+                "2016-05-09",
                 "Content",
                 "Content line 1"
         );
@@ -132,7 +157,11 @@ public class InFileBlogPostRepositoryImplTest {
         String fileName3 = "h232--sdfdsah33.md";
         Path tempFile3 = tempDir.resolve(fileName3);
         BlogPostDTO tempPost3 = writeLinesAndReturnCorrespondingBlogPostDTO(tempFile3, 33,
+                LocalDate.of(2016,5,9),
+                new ArrayList<>(),
                 "Title",
+                " ",
+                "2016-05-09",
                 "Content",
                 "Content line 1"
         );
@@ -141,9 +170,9 @@ public class InFileBlogPostRepositoryImplTest {
         additionalTempFilesToDelete.add(tempFile3);
 
 
-        assertEquals(tempPost, repository.get(23));
-        assertEquals(tempPost2, repository.get(57));
-        assertEquals(tempPost3, repository.get(33));
+        assertEquals(tempPost.getId(), repository.get(23).getId());
+        assertEquals(tempPost2.getId(), repository.get(57).getId());
+        assertEquals(tempPost3.getId(), repository.get(33).getId());
     }
 
     @Test (expected = TwoPostWithSameIdException.class)
@@ -152,14 +181,22 @@ public class InFileBlogPostRepositoryImplTest {
         String fileName = "sdhsadf23.md";
         Path tempFile = tempDir.resolve(fileName);
         writeLinesAndReturnCorrespondingBlogPostDTO(tempFile, 23,
+                LocalDate.of(2016,5,9),
+                new ArrayList<>(),
                 "Title",
+                " ",
+                "2016-05-09",
                 "Content",
                 "Content line 1"
         );
         String fileName2 = "hello-23.md";
         Path tempFile2 = tempDir.resolve(fileName2);
         writeLinesAndReturnCorrespondingBlogPostDTO(tempFile2, 23,
+                LocalDate.of(2016,5,9),
+                new ArrayList<>(),
                 "Title",
+                " ",
+                "2016-05-09",
                 "Content",
                 "Content line 1"
         );

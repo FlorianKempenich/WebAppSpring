@@ -111,21 +111,6 @@ public class BlogController {
         return postWithId(1, model);
     }
 
-    // todo remove
-    private BlogPostDTO replacePicture(BlogPostDTO blogPostDTO) {
-        String post = blogPostDTO.getMarkdownPost();
-
-        String pathToAsset = "/assets/blog-post";
-        String src = pathToAsset + "/" + "1000" + "/" + "space.jpg";
-
-        @SuppressWarnings("HtmlUnknownTarget")
-        String postWithImage = post.replace("PICTURE", "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"" + src + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
-                "</div>\n");
-        blogPostDTO.setMarkdownPost(postWithImage);
-        return blogPostDTO;
-    }
-
     private String showTestMessage(Model model) {
         model.addAttribute("what", "This is a test");
         return "dev/what";
