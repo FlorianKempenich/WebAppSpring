@@ -25,7 +25,8 @@
                         <div class="row">
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="text-center">
-                                    <span class="label label-primary">Featured</span>
+
+                                        <span th:each="tag : ${post.tags}" th:text="${tag}" class="label label-primary blog-tag"></span>
                                     <a th:href="@{/post/{id}(id=${post.id})}">
                                         <h3 class="title" th:text="${post.title}"></h3>
                                     </a>
