@@ -83,11 +83,19 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
 
     private String makeContent(List<String> lines) {
         StringBuilder content = new StringBuilder("");
-        for (int i = 1; i < lines.size(); i++) {
+        int startIndex = getNumberParameterLines();
+        for (int i = startIndex; i < lines.size(); i++) {
             content.append(lines.get(i))
                     .append("\n");
         }
         return content.toString();
+    }
+
+    /**
+     * Return the amount of parameter lines to ignore when parsing the content.
+     */
+    private int getNumberParameterLines() {
+        return 3;
     }
 
     private Path getPath(long id) throws IdNotFoundException {

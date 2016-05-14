@@ -91,7 +91,8 @@ public class InFileBlogPostRepositoryImplTest {
         String title = toWrite.get(0);
 
         StringBuilder content = new StringBuilder("");
-        for (int i = 1; i < toWrite.size(); i++) {
+        int startIndex = 3; // Ignore: Title, date and tags
+        for (int i = startIndex; i < toWrite.size(); i++) {
             content.append(toWrite.get(i))
                     .append("\n");
         }
