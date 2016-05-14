@@ -31,6 +31,7 @@ html, body{
 #on-the-side {
     top: 0;
     max-width: 210px;
+    max-height: 100%;
     overflow-y: auto;
     padding-top: 80px;
     padding-bottom: 30px;
