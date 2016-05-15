@@ -1,5 +1,6 @@
 package com.shockn745.domain.core;
 
+import com.shockn745.domain.DomainTestUtils;
 import com.shockn745.domain.application.driven.MarkdownParser;
 import com.shockn745.parsing.PegdownBasedParser;
 import org.junit.Before;
@@ -7,15 +8,10 @@ import org.junit.Test;
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 /**
  * @author Kempenich Florian
@@ -43,10 +39,7 @@ public class PagesManagerTest {
 
     @Test
     public void lessPostsThanPerPage_onePage() throws Exception {
-        List<BlogPost> threePosts = new ArrayList<>();
-        threePosts.add(makeFakeBlogPost());
-        threePosts.add(makeFakeBlogPost());
-        threePosts.add(makeFakeBlogPost());
+        List<BlogPost> threePosts = DomainTestUtils.makeFakeListPosts(3, blogPostFactory);
         pagesManager = new PagesManager(threePosts, 10);
 
         assertEquals(1, pagesManager.getPagesCount());
@@ -78,10 +71,7 @@ public class PagesManagerTest {
 
     @Test
     public void SixPosts_twoPerPage_moduloZero() throws Exception {
-        List<BlogPost> sixPosts = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            sixPosts.add(makeFakeBlogPost());
-        }
+        List<BlogPost> sixPosts = DomainTestUtils.makeFakeListPosts(6, blogPostFactory);
 
         List<BlogPost> expectedFirstPage = sixPosts.subList(0, 2);
         List<BlogPost> expectedSecondPage = sixPosts.subList(2, 4);
@@ -97,10 +87,7 @@ public class PagesManagerTest {
 
     @Test
     public void SevenPosts_threePerPage_moduloNotZero() throws Exception {
-        List<BlogPost> sevenPosts = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            sevenPosts.add(makeFakeBlogPost());
-        }
+        List<BlogPost> sevenPosts = DomainTestUtils.makeFakeListPosts(7, blogPostFactory);
 
         List<BlogPost> expectedFirstPage = sevenPosts.subList(0, 3);
         List<BlogPost> expectedSecondPage = sevenPosts.subList(3, 6);
@@ -114,14 +101,5 @@ public class PagesManagerTest {
         assertEquals(expectedThirdPage, pagesManager.getPage(2));
     }
 
-    private BlogPost makeFakeBlogPost() {
-        Random random = new Random();
-        String content = generateRandomString(random);
-        String title = generateRandomString(random);
-        return blogPostFactory.make(title, content, LocalDate.MIN, new ArrayList<>());
-    }
 
-    private String generateRandomString(Random random) {
-        return new BigInteger(130, random).toString(32);
-    }
 }

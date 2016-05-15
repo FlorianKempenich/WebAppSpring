@@ -4,6 +4,9 @@ import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.domain.core.BlogPost;
 import com.shockn745.domain.core.BlogPostFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -29,5 +32,22 @@ public class BlogPostMapper {
 
     public BlogPost transform(BlogPostDTO blogPostDTO) {
         return blogPostFactory.make(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost(), blogPostDTO.getDate(), blogPostDTO.getTags());
+    }
+
+
+    public List<BlogPost> transformListDtoToDomain(List<BlogPostDTO> blogPostDTOs) {
+        List<BlogPost> result = new ArrayList<>(blogPostDTOs.size());
+        for (BlogPostDTO blogPostDTO : blogPostDTOs) {
+            result.add(transform(blogPostDTO));
+        }
+        return result;
+    }
+
+    public List<BlogPostDTO> transformListDomainToDto(List<BlogPost> blogPosts) {
+        List<BlogPostDTO> result = new ArrayList<>(blogPosts.size());
+        for (BlogPost blogPost : blogPosts) {
+            result.add(transform(blogPost));
+        }
+        return result;
     }
 }
