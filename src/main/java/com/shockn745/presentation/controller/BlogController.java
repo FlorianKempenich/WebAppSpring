@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * @author Kempenich Florian
@@ -41,59 +41,92 @@ public class BlogController {
     @Autowired
     Environment environment;
 
-    @RequestMapping(value = "/old")
-    public String old(Model model) {
-//        // todo remove : Temp test
-//        testUtils.eraseDatabase();
-//        testUtils.fillDatabaseWithTestData();
-//
-//        List<Integer> postIds = blogPostUseCase.getAllIds();
-//        List<BlogPostDTO> posts = new ArrayList<>(postIds.size());
-//        for (int postId : postIds) {
-//            posts.add(blogPostUseCase.get(postId));
-//        }
-//
-//        try {
-//            model.addAttribute("posts", jacksonMapper.writeValueAsString(posts));
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-        return "yabe/yabe";
-    }
-
     @RequestMapping(value = "/")
     public String mainPage(Model model) {
-        // FIXME: 5/7/2016 Remove only for demo purposes
-        if (inProduction()) {
-            testUtils.fillDatabaseWithTestData();
-        }
-
-        List<Integer> postIds = blogPostUseCase.getAllIds();
-        List<PostSummary> postSummaries = makePostSummaries(postIds);
-
-        model.addAttribute("posts", postSummaries);
-
+        updateModelWithPageInformation(0, model);
         return "yabe/main";
     }
 
-    private List<PostSummary> makePostSummaries(List<Integer> postIds) {
+    @RequestMapping(value = "/{pageIndex}")
+    public String followingPages(@PathVariable int pageIndex, Model model) {
+        if (pageIndex == 0) {
+            return "redirect:"; //to remove the '0' from the url
+        } else {
+            updateModelWithPageInformation(pageIndex, model);
+            return "yabe/main";
+        }
+    }
+
+    private void updateModelWithPageInformation(@PathVariable int pageIndex, Model model) {
+        int pageCount = mainPageUseCase.getPageCount();
+        int indexOfPageToDisplay = getIndexOfPageToDisplay(pageIndex, pageCount);
+        System.out.println(indexOfPageToDisplay);
+        System.out.println(pageCount);
+        int indexOfNextPage = getIndexOfNextPage(indexOfPageToDisplay, pageCount);
+        int indexOfPreviousPage = getIndexOfPreviousPage(indexOfPageToDisplay, pageCount);
+        boolean isFirstPage = indexOfPageToDisplay == 0;
+        boolean isLastPage = indexOfPageToDisplay == pageCount - 1;
+
+        List<BlogPostDTO> posts = mainPageUseCase.getPage(indexOfPageToDisplay);
+        List<PostSummary> postSummaries = makePostSummaries(posts);
+
+        model.addAttribute("posts", postSummaries);
+        model.addAttribute("indexOfNextPage", indexOfNextPage);
+        model.addAttribute("indexOfPreviousPage", indexOfPreviousPage);
+        model.addAttribute("isFirstPage", isFirstPage);
+        model.addAttribute("isLastPage", isLastPage);
+    }
+
+    private int getIndexOfPreviousPage(int pageIndexCurrentlyDisplayed, int pageCount) {
+        checkArgument(pageIndexCurrentlyDisplayed >= 0 && pageIndexCurrentlyDisplayed < pageCount);
+
+        int indexOfPreviousPage;
+        if (pageIndexCurrentlyDisplayed == 0) {
+            indexOfPreviousPage = pageIndexCurrentlyDisplayed;
+        } else {
+            indexOfPreviousPage = pageIndexCurrentlyDisplayed - 1;
+        }
+
+        return indexOfPreviousPage;
+    }
+
+    private int getIndexOfPageToDisplay(int pageIndexFromUrl, int pageCount) {
+        int indexOfPageToDisplay;
+        if (pageIndexFromUrl < 0) {
+            indexOfPageToDisplay = 0;
+        } else if (pageIndexFromUrl >= pageCount){
+            indexOfPageToDisplay = pageCount - 1; // last page
+        } else {
+            indexOfPageToDisplay = pageIndexFromUrl;
+        }
+        return indexOfPageToDisplay;
+    }
+
+    private int getIndexOfNextPage(int pageIndexCurrentlyDisplayed, int pageCount) {
+        checkArgument(pageIndexCurrentlyDisplayed >= 0 && pageIndexCurrentlyDisplayed < pageCount);
+
+        int indexOfNextPage;
+        if (pageIndexCurrentlyDisplayed == pageCount - 1) {
+            indexOfNextPage = pageIndexCurrentlyDisplayed;
+        } else {
+            indexOfNextPage = pageIndexCurrentlyDisplayed + 1;
+        }
+
+        return indexOfNextPage;
+    }
+
+    private List<PostSummary> makePostSummaries(List<BlogPostDTO> posts) {
         List<PostSummary> postSummaries = new ArrayList<>();
-        Collections.sort(postIds, Comparator.reverseOrder());
-        for (int postId : postIds) {
-            BlogPostDTO post = blogPostUseCase.get(postId);
-            String summary = mainPageUseCase.getSummary(postId);
+        for (BlogPostDTO post : posts) {
+            String summary = mainPageUseCase.getSummary(post.getId());
             postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary, post.getDate(), post.getTags()));
         }
         return postSummaries;
     }
 
-    private boolean inProduction() {
-        return environment.getActiveProfiles()[0].equals("prod");
-    }
 
     @RequestMapping(value = "/post/{id}")
     public String postWithId(@PathVariable int id, Model model) {
-
         BlogPostDTO post = blogPostUseCase.get(id);
 
         String title = post.getTitle();

@@ -28,7 +28,7 @@ public class ApplicationConfiguration {
     @Bean
     @Qualifier(value = "posts-per-page")
     public int getPostsPerPage() {
-        return 3;
+        return 2;
     }
 
 }

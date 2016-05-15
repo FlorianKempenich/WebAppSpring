@@ -26,7 +26,8 @@
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="text-center">
 
-                                        <span th:each="tag : ${post.tags}" th:text="${tag}" class="label label-primary blog-tag"></span>
+                                    <span th:each="tag : ${post.tags}" th:text="${tag}"
+                                          class="label label-primary blog-tag"></span>
                                     <a th:href="@{/post/{id}(id=${post.id})}">
                                         <h3 class="title" th:text="${post.title}"></h3>
                                     </a>
@@ -60,11 +61,23 @@
                 </div>
 
                 <hr/>
-                <div class="row">
-                    <div class="col-md-2 col-md-offset-10">
-                        <div class="pull-right">
-                            <button class="btn btn-simple btn-default btn-move-right">Older Posts <i
-                                    class="fa fa-angle-right"></i></button>
+                <div class="row article-footer">
+                    <div class="col-md-2">
+                        <div th:unless="${isFirstPage}" class="pull-left">
+                            <a th:href="@{/{previousPage}(previousPage=${indexOfPreviousPage})}">
+                                <button class="btn btn-simple btn-default btn-move-left">
+                                    <i class="fa fa-angle-left"></i>Newer Posts
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-md-offset-8">
+                        <div th:unless="${isLastPage}" class="pull-right">
+                            <a th:href="@{/{nextPage}(nextPage=${indexOfNextPage})}">
+                                <button class="btn btn-simple btn-default btn-move-right">Older Posts
+                                    <i class="fa fa-angle-right"></i>
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
