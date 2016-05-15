@@ -15,7 +15,5 @@ public interface BlogPostUseCase {
 
     List<Integer> getAllIds();
 
-    String getSummary(int postId);
-
     String getHtml(int postId);
 }

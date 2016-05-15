@@ -7,18 +7,22 @@ import com.shockn745.domain.application.mapper.BlogPostMapper;
 import com.shockn745.domain.core.BlogPost;
 import com.shockn745.domain.core.PagesManager;
 import com.shockn745.domain.core.PagesManagerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * @author Kempenich Florian
  */
+@Component
 public class MainPageUseCaseImpl implements MainPageUseCase {
 
     private final BlogPostRepository blogPostRepository;
     private final PagesManagerFactory pagesManagerFactory;
     private final BlogPostMapper blogPostMapper;
 
+    @Autowired
     public MainPageUseCaseImpl(BlogPostRepository blogPostRepository, PagesManagerFactory pagesManagerFactory, BlogPostMapper blogPostMapper) {
         this.blogPostRepository = blogPostRepository;
         this.pagesManagerFactory = pagesManagerFactory;
@@ -44,5 +48,16 @@ public class MainPageUseCaseImpl implements MainPageUseCase {
 
         List<BlogPost> postsInPage = pagesManager.getPage(pageIndex);
         return blogPostMapper.transformListDomainToDto(postsInPage);
+    }
+
+    @Override
+    public String getSummary(int postId) {
+        BlogPost post = getBlogPost(postId);
+        return post.summarize(300);
+    }
+
+    private BlogPost getBlogPost(int id) {
+        BlogPostDTO fromRepository = blogPostRepository.get(id);
+        return blogPostMapper.transform(fromRepository);
     }
 }

@@ -12,4 +12,6 @@ public interface MainPageUseCase {
     int getPageCount();
 
     List<BlogPostDTO> getPage(int pageIndex);
+
+    String getSummary(int postId);
 }

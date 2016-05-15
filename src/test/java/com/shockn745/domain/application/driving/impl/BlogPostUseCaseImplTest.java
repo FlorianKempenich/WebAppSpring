@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
@@ -106,17 +105,6 @@ public class BlogPostUseCaseImplTest {
         assertEquals(expectedIds, useCase.getAllIds());
     }
 
-    @Test
-    public void getSummaryForSpecificPost() throws Exception {
-        String postText = "Expected text that is a bit long, and will be shortened";
-        int postId = 11;
-        mockSavedPost.setId(postId);
-        mockSavedPost.setMarkdownPost(postText);
-
-        String summary = useCase.getSummary(postId);
-        String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);
-        assertTrue(postText.startsWith(summaryWithoutEllipsis));
-    }
 
     @Test
     public void getHtmlForSpecificPost() throws Exception {

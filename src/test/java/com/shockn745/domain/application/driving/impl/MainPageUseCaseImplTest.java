@@ -20,6 +20,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.when;
 
 /**
@@ -81,5 +82,17 @@ public class MainPageUseCaseImplTest {
         assertEquals(expectedId, firstPageResult.get(0).getId());
     }
 
+    @Test
+    public void getSummaryForSpecificPost() throws Exception {
+        String postText = "Expected text that is a bit long, and will be shortened";
+        int postId = 11;
+        BlogPostDTO postDTO = BlogPostDTO.EMPTY;
+        postDTO.setId(postId);
+        postDTO.setMarkdownPost(postText);
+        when(blogPostRepository.get(anyInt())).thenReturn(postDTO);
 
+        String summary = mainPageUseCase.getSummary(postId);
+        String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);
+        assertTrue(postText.startsWith(summaryWithoutEllipsis));
+    }
 }

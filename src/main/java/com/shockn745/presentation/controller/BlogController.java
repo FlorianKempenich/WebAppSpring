@@ -3,6 +3,7 @@ package com.shockn745.presentation.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shockn745.TestUtils;
 import com.shockn745.domain.application.driving.BlogPostUseCase;
+import com.shockn745.domain.application.driving.MainPageUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.presentation.model.PostSummary;
 import com.shockn745.presentation.util.Disqus;
@@ -27,6 +28,8 @@ public class BlogController {
 
     @Autowired
     BlogPostUseCase blogPostUseCase;
+    @Autowired
+    MainPageUseCase mainPageUseCase;
 
     @Autowired
     TestUtils testUtils;
@@ -78,7 +81,7 @@ public class BlogController {
         Collections.sort(postIds, Comparator.reverseOrder());
         for (int postId : postIds) {
             BlogPostDTO post = blogPostUseCase.get(postId);
-            String summary = blogPostUseCase.getSummary(postId);
+            String summary = mainPageUseCase.getSummary(postId);
             postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary, post.getDate(), post.getTags()));
         }
         return postSummaries;
