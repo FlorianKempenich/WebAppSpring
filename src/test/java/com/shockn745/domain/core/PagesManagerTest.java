@@ -131,7 +131,7 @@ public class PagesManagerTest {
     private static class DateBlogPostComparator implements Comparator<BlogPost> {
         @Override
         public int compare(BlogPost o1, BlogPost o2) {
-            return o1.date.compareTo(o2.date);
+            return -1 * o1.date.compareTo(o2.date);
         }
     }
 }

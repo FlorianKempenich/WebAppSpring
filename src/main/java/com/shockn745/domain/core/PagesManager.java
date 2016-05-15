@@ -35,7 +35,7 @@ public class PagesManager {
     }
 
     private void sortByDecreasingDate() {
-        Collections.sort(this.posts, new DateBlogPostComparator());
+        Collections.sort(this.posts, new DecreasingDateBlogPostComparator());
     }
 
     private static void checkValid(int postsPerPage) {
@@ -98,10 +98,10 @@ public class PagesManager {
         return pagesCount;
     }
 
-    private static class DateBlogPostComparator implements Comparator<BlogPost> {
+    private static class DecreasingDateBlogPostComparator implements Comparator<BlogPost> {
         @Override
         public int compare(BlogPost o1, BlogPost o2) {
-            return o1.date.compareTo(o2.date);
+            return -1 * o1.date.compareTo(o2.date);
         }
     }
 }

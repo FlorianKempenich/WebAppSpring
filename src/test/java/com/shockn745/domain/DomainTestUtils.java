@@ -8,6 +8,7 @@ import com.shockn745.domain.core.BlogPostFactory;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +33,12 @@ public class DomainTestUtils {
     }
 
     public List<BlogPost> makeFakeListPostsWithDecreasingDate(int size) {
+        List<BlogPost> posts = makeFakeListPostsWithIncreasingDate(size);
+        Collections.reverse(posts);
+        return posts;
+    }
+
+    private List<BlogPost> makeFakeListPostsWithIncreasingDate(int size) {
         List<BlogPost> fakeList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             fakeList.add(makeFakeBlogPost(blogPostFactory));

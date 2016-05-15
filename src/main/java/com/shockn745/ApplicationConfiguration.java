@@ -7,6 +7,7 @@ import com.shockn745.domain.core.PagesManagerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * @author Kempenich Florian
@@ -26,8 +27,23 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    @Qualifier(value = "posts-per-page")
-    public int getPostsPerPage() {
+    @Qualifier("posts-per-page")
+    @Profile("prod")
+    public int getPostsPerPage_prod() {
+        return 4;
+    }
+
+    @Bean
+    @Qualifier("posts-per-page")
+    @Profile("dev")
+    public int getPostsPerPage_dev() {
+        return 2;
+    }
+
+    @Bean
+    @Qualifier("posts-per-page")
+    @Profile("integration-test")
+    public int getPostsPerPage_test() {
         return 2;
     }
 
