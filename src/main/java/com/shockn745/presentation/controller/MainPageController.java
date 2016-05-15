@@ -1,14 +1,9 @@
 package com.shockn745.presentation.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shockn745.TestUtils;
-import com.shockn745.domain.application.driving.BlogPostUseCase;
 import com.shockn745.domain.application.driving.MainPageUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.presentation.model.PostSummary;
-import com.shockn745.presentation.util.Disqus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,37 +19,15 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 @Controller
 @RequestMapping(value = "/")
-public class BlogController {
+public class MainPageController {
 
-    @Autowired
-    BlogPostUseCase blogPostUseCase;
     @Autowired
     MainPageUseCase mainPageUseCase;
-
-    @Autowired
-    TestUtils testUtils;
-    @Autowired
-    ObjectMapper jacksonMapper;
-    @Autowired
-    Disqus disqus;
-
-    @Autowired
-    Environment environment;
 
     @RequestMapping(value = "/")
     public String mainPage(Model model) {
         updateModelWithPageInformation(0, model);
         return "yabe/main";
-    }
-
-    @RequestMapping(value = "/{pageIndex}")
-    public String followingPages(@PathVariable int pageIndex, Model model) {
-        if (pageIndex == 0) {
-            return "redirect:"; //to remove the '0' from the url
-        } else {
-            updateModelWithPageInformation(pageIndex, model);
-            return "yabe/main";
-        }
     }
 
     private void updateModelWithPageInformation(@PathVariable int pageIndex, Model model) {
@@ -94,7 +67,7 @@ public class BlogController {
         int indexOfPageToDisplay;
         if (pageIndexFromUrl < 0) {
             indexOfPageToDisplay = 0;
-        } else if (pageIndexFromUrl >= pageCount){
+        } else if (pageIndexFromUrl >= pageCount) {
             indexOfPageToDisplay = pageCount - 1; // last page
         } else {
             indexOfPageToDisplay = pageIndexFromUrl;
@@ -124,31 +97,14 @@ public class BlogController {
         return postSummaries;
     }
 
-
-    @RequestMapping(value = "/post/{id}")
-    public String postWithId(@PathVariable int id, Model model) {
-        BlogPostDTO post = blogPostUseCase.get(id);
-
-        String title = post.getTitle();
-        String htmlContent = mainPageUseCase.getHtml(id);
-
-        model.addAttribute("title", title);
-        model.addAttribute("htmlContent", htmlContent);
-
-        model.addAttribute("page_url", disqus.getPageUrl(id));
-        model.addAttribute("page_identifier", disqus.getPageIdentifier(id));
-
-        return "yabe/post";
+    @RequestMapping(value = "/{pageIndex}")
+    public String followingPages(@PathVariable int pageIndex, Model model) {
+        if (pageIndex == 0) {
+            return "redirect:"; //to remove the '0' from the url
+        } else {
+            updateModelWithPageInformation(pageIndex, model);
+            return "yabe/main";
+        }
     }
 
-    @RequestMapping(value = "/manifesto")
-    public String showManifesto(Model model) {
-        // By convention manifesto id == 1
-        return postWithId(1, model);
-    }
-
-    private String showTestMessage(Model model) {
-        model.addAttribute("what", "This is a test");
-        return "dev/what";
-    }
 }

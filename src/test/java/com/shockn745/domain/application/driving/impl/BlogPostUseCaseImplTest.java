@@ -75,18 +75,6 @@ public class BlogPostUseCaseImplTest {
         assertEquals(id, returned.getId());
     }
 
-    @Test
-    public void getWithId_returnCorrectPost() throws Exception {
-        String expectedText = "Expected text";
-        int expectedId = 11;
-        mockSavedPost.setId(expectedId);
-        mockSavedPost.setMarkdownPost(expectedText);
-
-        BlogPostDTO result = useCase.get(expectedId);
-
-        assertEquals(mockSavedPost, result);
-    }
-
 
     @Test
     public void getAllIds_returnCorrectIdList() throws Exception {

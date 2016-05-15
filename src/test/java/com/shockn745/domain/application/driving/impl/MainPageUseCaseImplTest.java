@@ -8,12 +8,10 @@ import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.domain.application.mapper.BlogPostMapper;
 import com.shockn745.domain.core.BlogPostFactory;
 import com.shockn745.domain.core.PagesManagerFactory;
-import com.shockn745.parsing.PegdownBasedParser;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,20 +95,4 @@ public class MainPageUseCaseImplTest {
         assertTrue(postText.startsWith(summaryWithoutEllipsis));
     }
 
-    @Test
-    public void getHtmlForSpecificPost() throws Exception {
-        String postText = "Expected text that is a bit long, and will be shortened";
-        int postId = 14;
-        BlogPostDTO postDTO = BlogPostDTO.EMPTY;
-        postDTO.setId(postId);
-        postDTO.setMarkdownPost(postText);
-        when(blogPostRepository.get(anyInt())).thenReturn(postDTO);
-
-        String expectedHtml = "MOCK HTML";
-
-        when(parser.toHtml(postText, postId)).thenReturn(expectedHtml);
-
-        String html = mainPageUseCase.getHtml(postId);
-        assertEquals(expectedHtml, html);
-    }
 }

@@ -36,20 +36,6 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
     }
 
     @Override
-    public BlogPostDTO get(int id) {
-        BlogPost blogPost = getBlogPost(id);
-        // if needed do stuff with blogPost here
-        BlogPostDTO result = mapper.transform(blogPost);
-        result.setId(id);
-        return result;
-    }
-
-    private BlogPost getBlogPost(int id) {
-        BlogPostDTO fromRepository = repository.get(id);
-        return mapper.transform(fromRepository);
-    }
-
-    @Override
     public List<Integer> getAllIds() {
         List<BlogPostDTO> posts = repository.getAll();
         List<Integer> result = new ArrayList<>(posts.size());

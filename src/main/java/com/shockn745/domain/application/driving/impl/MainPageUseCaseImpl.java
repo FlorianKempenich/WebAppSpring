@@ -60,10 +60,4 @@ public class MainPageUseCaseImpl implements MainPageUseCase {
         BlogPostDTO fromRepository = blogPostRepository.get(id);
         return blogPostMapper.transform(fromRepository);
     }
-
-    @Override
-    public String getHtml(int postId) {
-        BlogPost post = getBlogPost(postId);
-        return post.getHtml(postId);
-    }
 }
