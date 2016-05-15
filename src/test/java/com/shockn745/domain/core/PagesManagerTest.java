@@ -2,6 +2,7 @@ package com.shockn745.domain.core;
 
 import com.shockn745.domain.DomainTestUtils;
 import com.shockn745.domain.application.driven.MarkdownParser;
+import com.shockn745.domain.application.mapper.BlogPostMapper;
 import com.shockn745.parsing.PegdownBasedParser;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +10,8 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -19,6 +22,10 @@ import static org.junit.Assert.*;
 public class PagesManagerTest {
 
     private BlogPostFactory blogPostFactory;
+
+    private DomainTestUtils domainTestUtils;
+
+
     private PagesManager pagesManager;
 
     @Before
@@ -26,6 +33,10 @@ public class PagesManagerTest {
         PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
         MarkdownParser markdownParser = new PegdownBasedParser(processor);
         blogPostFactory = new BlogPostFactory(markdownParser);
+        BlogPostMapper blogPostMapper = new BlogPostMapper(blogPostFactory);
+
+        domainTestUtils = new DomainTestUtils(blogPostFactory, blogPostMapper);
+
     }
 
     @Test
@@ -39,7 +50,7 @@ public class PagesManagerTest {
 
     @Test
     public void lessPostsThanPerPage_onePage() throws Exception {
-        List<BlogPost> threePosts = DomainTestUtils.makeFakeListPosts(3, blogPostFactory);
+        List<BlogPost> threePosts = domainTestUtils.makeFakeListPostsWithDecreasingDate(3);
         pagesManager = new PagesManager(threePosts, 10);
 
         assertEquals(1, pagesManager.getPagesCount());
@@ -71,7 +82,7 @@ public class PagesManagerTest {
 
     @Test
     public void SixPosts_twoPerPage_moduloZero() throws Exception {
-        List<BlogPost> sixPosts = DomainTestUtils.makeFakeListPosts(6, blogPostFactory);
+        List<BlogPost> sixPosts = domainTestUtils.makeFakeListPostsWithDecreasingDate(6);
 
         List<BlogPost> expectedFirstPage = sixPosts.subList(0, 2);
         List<BlogPost> expectedSecondPage = sixPosts.subList(2, 4);
@@ -87,7 +98,7 @@ public class PagesManagerTest {
 
     @Test
     public void SevenPosts_threePerPage_moduloNotZero() throws Exception {
-        List<BlogPost> sevenPosts = DomainTestUtils.makeFakeListPosts(7, blogPostFactory);
+        List<BlogPost> sevenPosts = domainTestUtils.makeFakeListPostsWithDecreasingDate(7);
 
         List<BlogPost> expectedFirstPage = sevenPosts.subList(0, 3);
         List<BlogPost> expectedSecondPage = sevenPosts.subList(3, 6);
@@ -102,4 +113,25 @@ public class PagesManagerTest {
     }
 
 
+    @Test
+    public void ensurePostsAreOrderedByDecreasingDate() throws Exception {
+        List<BlogPost> posts = domainTestUtils.makeFakeListPostsWithDecreasingDate(30);
+        Collections.shuffle(posts);
+
+        pagesManager = new PagesManager(posts, 10);
+
+        List<BlogPost> expectedFirstPage_WrongOrder = posts.subList(0, 10);
+        assertNotEquals(expectedFirstPage_WrongOrder, pagesManager.getPage(0));
+
+        Collections.sort(posts, new DateBlogPostComparator());
+        List<BlogPost> expectedFirstPage_CorrectOrder = posts.subList(0, 10);
+        assertEquals(expectedFirstPage_CorrectOrder, pagesManager.getPage(0));
+    }
+
+    private static class DateBlogPostComparator implements Comparator<BlogPost> {
+        @Override
+        public int compare(BlogPost o1, BlogPost o2) {
+            return o1.date.compareTo(o2.date);
+        }
+    }
 }

@@ -16,12 +16,22 @@ import java.util.Random;
  */
 public class DomainTestUtils {
 
-    public static List<BlogPostDTO> makeFakeListPostsDto(int size, BlogPostFactory blogPostFactory, BlogPostMapper mapper) {
-        List<BlogPost> fakePosts = makeFakeListPosts(size, blogPostFactory);
-        return mapper.transformListDomainToDto(fakePosts);
+    private final BlogPostFactory blogPostFactory;
+    private final BlogPostMapper blogPostMapper;
+
+    private int counter = 0;
+
+    public DomainTestUtils(BlogPostFactory blogPostFactory, BlogPostMapper blogPostMapper) {
+        this.blogPostFactory = blogPostFactory;
+        this.blogPostMapper = blogPostMapper;
     }
 
-    public static List<BlogPost> makeFakeListPosts(int size, BlogPostFactory blogPostFactory) {
+    public List<BlogPostDTO> makeFakeListPostsDtoWithDecreasingDate(int size) {
+        List<BlogPost> fakePosts = makeFakeListPostsWithDecreasingDate(size);
+        return blogPostMapper.transformListDomainToDto(fakePosts);
+    }
+
+    public List<BlogPost> makeFakeListPostsWithDecreasingDate(int size) {
         List<BlogPost> fakeList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             fakeList.add(makeFakeBlogPost(blogPostFactory));
@@ -29,14 +39,22 @@ public class DomainTestUtils {
         return fakeList;
     }
 
-    private static BlogPost makeFakeBlogPost(BlogPostFactory blogPostFactory) {
+    private BlogPost makeFakeBlogPost(BlogPostFactory blogPostFactory) {
+        counter++;
         Random random = new Random();
+        int id = counter;
         String content = generateRandomString(random);
         String title = generateRandomString(random);
-        return blogPostFactory.make(title, content, LocalDate.MIN, new ArrayList<>());
+        LocalDate date = makeDate();
+        return blogPostFactory.make(id, title, content, date, new ArrayList<>());
     }
 
-    private static String generateRandomString(Random random) {
+    private LocalDate makeDate() {
+        int year = 2000 + counter;
+        return LocalDate.of(year, 6, 8);
+    }
+
+    private String generateRandomString(Random random) {
         return new BigInteger(130, random).toString(32);
     }
 }

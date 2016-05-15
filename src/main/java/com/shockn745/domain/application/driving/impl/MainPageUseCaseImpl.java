@@ -43,8 +43,6 @@ public class MainPageUseCaseImpl implements MainPageUseCase {
         PagesManager pagesManager = pagesManagerFactory.make(posts);
 
         List<BlogPost> postsInPage = pagesManager.getPage(pageIndex);
-        List<BlogPostDTO> postsInPageDTO = blogPostMapper.transformListDomainToDto(postsInPage);
-
-        return postsInPageDTO;
+        return blogPostMapper.transformListDomainToDto(postsInPage);
     }
 }

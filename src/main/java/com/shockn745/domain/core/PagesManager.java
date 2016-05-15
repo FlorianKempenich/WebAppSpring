@@ -1,11 +1,16 @@
 package com.shockn745.domain.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * Manages the different pages when displaying the list of blog posts.
+ * The posts are ordered by decreasing date.
+ *
  * @author Kempenich Florian
  */
 public class PagesManager {
@@ -15,12 +20,22 @@ public class PagesManager {
     private final int postsPerPage;
     private int pagesCount;
 
+    /**
+     * @param posts
+     * @param postsPerPage
+     */
     public PagesManager(List<BlogPost> posts, int postsPerPage) {
         checkNotNull(posts);
         checkValid(postsPerPage);
         this.postsPerPage = postsPerPage;
-        this.posts = posts;
+        this.posts = new ArrayList<>(posts);
+
+        sortByDecreasingDate();
         computePagesCount();
+    }
+
+    private void sortByDecreasingDate() {
+        Collections.sort(this.posts, new DateBlogPostComparator());
     }
 
     private static void checkValid(int postsPerPage) {
@@ -81,5 +96,12 @@ public class PagesManager {
 
     public int getPagesCount() {
         return pagesCount;
+    }
+
+    private static class DateBlogPostComparator implements Comparator<BlogPost> {
+        @Override
+        public int compare(BlogPost o1, BlogPost o2) {
+            return o1.date.compareTo(o2.date);
+        }
     }
 }

@@ -15,9 +15,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.pegdown.PegDownProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -29,9 +31,8 @@ public class MainPageUseCaseImplTest {
 
     @Mock
     BlogPostRepository blogPostRepository;
-    private PagesManagerFactory pagesManagerFactory;
-    private BlogPostFactory blogPostFactory;
-    private BlogPostMapper blogPostMapper;
+
+    private DomainTestUtils domainTestUtils;
 
     private MainPageUseCase mainPageUseCase;
 
@@ -39,16 +40,18 @@ public class MainPageUseCaseImplTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         MarkdownParser parser = new PegdownBasedParser(new PegDownProcessor());
-        blogPostFactory = new BlogPostFactory(parser);
-        blogPostMapper = new BlogPostMapper(blogPostFactory);
-        pagesManagerFactory = new PagesManagerFactory(POSTS_PER_PAGE);
-        mainPageUseCase = new MainPageUseCaseImpl(blogPostRepository, pagesManagerFactory, blogPostMapper);
+        BlogPostFactory blogPostFactory = new BlogPostFactory(parser);
+        BlogPostMapper blogPostMapper = new BlogPostMapper(blogPostFactory);
+        PagesManagerFactory pagesManagerFactory = new PagesManagerFactory(POSTS_PER_PAGE);
 
+        domainTestUtils = new DomainTestUtils(blogPostFactory, blogPostMapper);
+
+        mainPageUseCase = new MainPageUseCaseImpl(blogPostRepository, pagesManagerFactory, blogPostMapper);
     }
 
     @Test
     public void getCount() throws Exception {
-        List<BlogPostDTO> fakeList = DomainTestUtils.makeFakeListPostsDto(6, blogPostFactory, blogPostMapper);
+        List<BlogPostDTO> fakeList = domainTestUtils.makeFakeListPostsDtoWithDecreasingDate(6);
         when(blogPostRepository.getAll()).thenReturn(fakeList);
 
         assertEquals(2, mainPageUseCase.getPageCount());
@@ -56,11 +59,27 @@ public class MainPageUseCaseImplTest {
 
     @Test
     public void getSpecificPage() throws Exception {
-        List<BlogPostDTO> fakeList = DomainTestUtils.makeFakeListPostsDto(6, blogPostFactory, blogPostMapper);
+        List<BlogPostDTO> fakeList = domainTestUtils.makeFakeListPostsDtoWithDecreasingDate(6);
         when(blogPostRepository.getAll()).thenReturn(fakeList);
 
 
         List<BlogPostDTO> firstPage = fakeList.subList(0, 3);
         assertEquals(firstPage, mainPageUseCase.getPage(0));
     }
+
+    @Test
+    public void checkThat_id_correspondTo_idFromRepository() throws Exception {
+        int expectedId = 12;
+        BlogPostDTO postDTO = BlogPostDTO.EMPTY;
+        postDTO.setId(expectedId);
+
+        List<BlogPostDTO> fakeList = new ArrayList<>();
+        fakeList.add(postDTO);
+        when(blogPostRepository.getAll()).thenReturn(fakeList);
+
+        List<BlogPostDTO> firstPageResult = mainPageUseCase.getPage(0);
+        assertEquals(expectedId, firstPageResult.get(0).getId());
+    }
+
+
 }
