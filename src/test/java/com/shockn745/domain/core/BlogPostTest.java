@@ -28,7 +28,7 @@ public class BlogPostTest {
     }
 
     @Test
-    public void testEquality() throws Exception {
+    public void testEquality_workingButNotRelevantAnymore() throws Exception {
         LocalDate date1 = LocalDate.MAX;
         LocalDate date2 = LocalDate.MIN;
         List<String> list1 = new ArrayList<>();
@@ -36,12 +36,20 @@ public class BlogPostTest {
         list1.add("tag1");
         list2.add("tag2");
 
+        // Works but not relevant anymore
         new EqualsTester()
-                .addEqualityGroup(blogPostFactory.make("title", "hello", date1, list1), blogPostFactory.make("title", "hello", date1, list1))
-                .addEqualityGroup(blogPostFactory.make("othertitle", "hello", date1, list1), blogPostFactory.make("othertitle", "hello", date1, list1))
-                .addEqualityGroup(blogPostFactory.make("title", "test", date1, list1), blogPostFactory.make("title", "test", date1, list1))
-                .addEqualityGroup(blogPostFactory.make("title", "test", date2, list1), blogPostFactory.make("title", "test", date2, list1))
-                .addEqualityGroup(blogPostFactory.make("title", "test", date1, list2), blogPostFactory.make("title", "test", date1, list2))
+                .addEqualityGroup(blogPostFactory.make(1, "title", "hello", date1, list1), blogPostFactory.make(1, "title", "hello", date1, list1))
+                .addEqualityGroup(blogPostFactory.make(2, "othertitle", "hello", date1, list1), blogPostFactory.make(2, "othertitle", "hello", date1, list1))
+                .addEqualityGroup(blogPostFactory.make(3, "title", "test", date1, list1), blogPostFactory.make(3, "title", "test", date1, list1))
+                .addEqualityGroup(blogPostFactory.make(4, "title", "test", date2, list1), blogPostFactory.make(4, "title", "test", date2, list1))
+                .addEqualityGroup(blogPostFactory.make(5, "title", "test", date1, list2), blogPostFactory.make(5, "title", "test", date1, list2))
+                .testEquals();
+
+        //Only test on id is relevant with current implementation
+        new EqualsTester()
+                .addEqualityGroup(blogPostFactory.make(1, "title", "content", date1, list1), blogPostFactory.make(1, "title", "content", date1, list1))
+                .addEqualityGroup(blogPostFactory.make(2, "title", "content", date1, list1), blogPostFactory.make(2, "title", "content", date1, list1))
+                .addEqualityGroup(blogPostFactory.make(3, "title", "content", date1, list1), blogPostFactory.make(3, "othertitle", "othercontent", date2, list2))
                 .testEquals();
     }
 

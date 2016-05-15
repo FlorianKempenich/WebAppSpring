@@ -23,6 +23,7 @@ public class BlogPostMapper {
 
     public BlogPostDTO transform(BlogPost blogPost) {
         BlogPostDTO result = new BlogPostDTO();
+        result.setId(blogPost.id);
         result.setMarkdownPost(blogPost.markdownContent);
         result.setTitle(blogPost.title);
         result.setDate(blogPost.date);
@@ -31,7 +32,7 @@ public class BlogPostMapper {
     }
 
     public BlogPost transform(BlogPostDTO blogPostDTO) {
-        return blogPostFactory.make(blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost(), blogPostDTO.getDate(), blogPostDTO.getTags());
+        return blogPostFactory.make(blogPostDTO.getId(), blogPostDTO.getTitle(), blogPostDTO.getMarkdownPost(), blogPostDTO.getDate(), blogPostDTO.getTags());
     }
 
 

@@ -15,19 +15,20 @@ import static com.google.common.base.Strings.nullToEmpty;
  */
 public class BlogPost {
 
-    private final Summarizer summarizer;
-    private final MarkdownParser markdownParser;
-
+    public final int id;
     public final String title;
     public final String markdownContent;
     public final LocalDate date;
     public final List<String> tags;
+    private final Summarizer summarizer;
+    private final MarkdownParser markdownParser;
 
-    BlogPost(String title, String markdownContent, LocalDate date, List<String> tags, Summarizer summarizer, MarkdownParser markdownParser) {
+    BlogPost(int id, String title, String markdownContent, LocalDate date, List<String> tags, Summarizer summarizer, MarkdownParser markdownParser) {
         checkNotNull(summarizer);
         checkNotNull(markdownParser);
         checkNotNull(date);
         checkNotNull(tags);
+        this.id = id;
         this.title = nullToEmpty(title);
         this.markdownContent = nullToEmpty(markdownContent);
         this.summarizer = summarizer;
@@ -41,10 +42,12 @@ public class BlogPost {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BlogPost blogPost = (BlogPost) o;
-        return Objects.equals(title, blogPost.title) &&
-                Objects.equals(markdownContent, blogPost.markdownContent) &&
-                Objects.equals(date, blogPost.date) &&
-                Objects.equals(tags, blogPost.tags);
+        return id == blogPost.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
@@ -57,11 +60,6 @@ public class BlogPost {
                 .add("date", date)
                 .add("tags", tags)
                 .toString();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, markdownContent, date, tags);
     }
 
     public String summarize(int charLimit) {
