@@ -33,8 +33,6 @@ public class MainPageController {
     private void updateModelWithPageInformation(@PathVariable int pageIndex, Model model) {
         int pageCount = mainPageUseCase.getPageCount();
         int indexOfPageToDisplay = getIndexOfPageToDisplay(pageIndex, pageCount);
-        System.out.println(indexOfPageToDisplay);
-        System.out.println(pageCount);
         int indexOfNextPage = getIndexOfNextPage(indexOfPageToDisplay, pageCount);
         int indexOfPreviousPage = getIndexOfPreviousPage(indexOfPageToDisplay, pageCount);
         boolean isFirstPage = indexOfPageToDisplay == 0;
