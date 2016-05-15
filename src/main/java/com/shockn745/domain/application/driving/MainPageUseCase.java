@@ -14,4 +14,6 @@ public interface MainPageUseCase {
     List<BlogPostDTO> getPage(int pageIndex);
 
     String getSummary(int postId);
+
+    String getHtml(int postId);
 }

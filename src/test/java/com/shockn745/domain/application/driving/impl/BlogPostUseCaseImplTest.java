@@ -105,19 +105,4 @@ public class BlogPostUseCaseImplTest {
         assertEquals(expectedIds, useCase.getAllIds());
     }
 
-
-    @Test
-    public void getHtmlForSpecificPost() throws Exception {
-        String markdownText = "markdown post";
-        int postId = 12;
-        mockSavedPost.setId(postId);
-        mockSavedPost.setMarkdownPost(markdownText);
-
-        String expectedHtml = "MOCK HTML";
-
-        when(parser.toHtml(markdownText, postId)).thenReturn(expectedHtml);
-
-        String html = useCase.getHtml(postId);
-        assertEquals(expectedHtml, html);
-    }
 }

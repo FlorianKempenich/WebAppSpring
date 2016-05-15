@@ -32,6 +32,8 @@ public class MainPageUseCaseImplTest {
 
     @Mock
     BlogPostRepository blogPostRepository;
+    @Mock
+    MarkdownParser parser;
 
     private DomainTestUtils domainTestUtils;
 
@@ -40,7 +42,6 @@ public class MainPageUseCaseImplTest {
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        MarkdownParser parser = new PegdownBasedParser(new PegDownProcessor());
         BlogPostFactory blogPostFactory = new BlogPostFactory(parser);
         BlogPostMapper blogPostMapper = new BlogPostMapper(blogPostFactory);
         PagesManagerFactory pagesManagerFactory = new PagesManagerFactory(POSTS_PER_PAGE);
@@ -94,5 +95,22 @@ public class MainPageUseCaseImplTest {
         String summary = mainPageUseCase.getSummary(postId);
         String summaryWithoutEllipsis = summary.substring(0, summary.length() - 6);
         assertTrue(postText.startsWith(summaryWithoutEllipsis));
+    }
+
+    @Test
+    public void getHtmlForSpecificPost() throws Exception {
+        String postText = "Expected text that is a bit long, and will be shortened";
+        int postId = 14;
+        BlogPostDTO postDTO = BlogPostDTO.EMPTY;
+        postDTO.setId(postId);
+        postDTO.setMarkdownPost(postText);
+        when(blogPostRepository.get(anyInt())).thenReturn(postDTO);
+
+        String expectedHtml = "MOCK HTML";
+
+        when(parser.toHtml(postText, postId)).thenReturn(expectedHtml);
+
+        String html = mainPageUseCase.getHtml(postId);
+        assertEquals(expectedHtml, html);
     }
 }

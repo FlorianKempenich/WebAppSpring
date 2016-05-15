@@ -15,5 +15,4 @@ public interface BlogPostUseCase {
 
     List<Integer> getAllIds();
 
-    String getHtml(int postId);
 }

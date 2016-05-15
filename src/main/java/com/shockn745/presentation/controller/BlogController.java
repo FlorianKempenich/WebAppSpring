@@ -97,7 +97,7 @@ public class BlogController {
         BlogPostDTO post = blogPostUseCase.get(id);
 
         String title = post.getTitle();
-        String htmlContent = blogPostUseCase.getHtml(id);
+        String htmlContent = mainPageUseCase.getHtml(id);
 
         model.addAttribute("title", title);
         model.addAttribute("htmlContent", htmlContent);

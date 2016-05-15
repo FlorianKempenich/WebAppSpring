@@ -60,9 +60,4 @@ public class BlogPostUseCaseImpl implements BlogPostUseCase {
         return result;
     }
 
-    @Override
-    public String getHtml(int postId) {
-        BlogPost post = getBlogPost(postId);
-        return post.getHtml(postId);
-    }
 }
