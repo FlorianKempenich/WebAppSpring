@@ -2,6 +2,8 @@ package com.shockn745.domain.application.driving.impl;
 
 import com.shockn745.domain.DomainTestUtils;
 import com.shockn745.domain.application.driving.TagsUseCase;
+import com.shockn745.domain.application.driving.dto.BlogPostDTO;
+import com.shockn745.domain.application.mapper.BlogPostMapper;
 import com.shockn745.domain.core.BlogPost;
 import com.shockn745.domain.core.PagesManagerFactory;
 import com.shockn745.domain.core.TagManager;
@@ -24,10 +26,12 @@ public class TagsUseCaseImplTest {
 
     private static final int THREE_POSTS_PER_PAGE = 3;
     private static final String TAG = "TAG";
+
     @Mock
     TagManager tagManager;
     private TagsUseCase tagsUseCase;
     private DomainTestUtils domainTestUtils;
+    private BlogPostMapper mapper;
 
     private List<BlogPost> sevenPostsWithTag;
 
@@ -37,8 +41,8 @@ public class TagsUseCaseImplTest {
         domainTestUtils = DomainTestUtils.getDefault();
         initListOfSevenPostWithTag();
         PagesManagerFactory pagesManagerFactory = new PagesManagerFactory(THREE_POSTS_PER_PAGE);
-
-        tagsUseCase = new TagsUseCaseImpl(tagManager, pagesManagerFactory);
+        mapper = DomainTestUtils.getDefaultMapper();
+        tagsUseCase = new TagsUseCaseImpl(tagManager, pagesManagerFactory, mapper);
     }
 
     private void initListOfSevenPostWithTag() {
@@ -62,10 +66,11 @@ public class TagsUseCaseImplTest {
 
     @Test
     public void getFirstPage() throws Exception {
-        List<BlogPost> firstPage = tagsUseCase.getPage(TAG, 0);
+        List<BlogPostDTO> firstPage = tagsUseCase.getPage(TAG, 0);
+        List<BlogPostDTO> allPostsWithTag = mapper.transformListDomainToDto(sevenPostsWithTag);
 
         assertEquals(3, firstPage.size());
-        assertTrue(sevenPostsWithTag.containsAll(firstPage));
+        assertTrue(allPostsWithTag.containsAll(firstPage));
     }
 
 

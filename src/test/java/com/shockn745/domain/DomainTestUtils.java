@@ -24,11 +24,17 @@ public class DomainTestUtils {
     private int counter = 0;
 
     public static DomainTestUtils getDefault() {
+        return new DomainTestUtils(getDefaultBlogPostFactory(), getDefaultMapper());
+    }
+
+    public static BlogPostMapper getDefaultMapper() {
+        return new BlogPostMapper(getDefaultBlogPostFactory());
+    }
+
+    public static BlogPostFactory getDefaultBlogPostFactory() {
         PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
         MarkdownParser parser = new PegdownBasedParser(processor);
-        BlogPostFactory blogPostFactory = new BlogPostFactory(parser);
-        BlogPostMapper mapper = new BlogPostMapper(blogPostFactory);
-        return new DomainTestUtils(blogPostFactory, mapper);
+        return new BlogPostFactory(parser);
     }
 
     public DomainTestUtils(BlogPostFactory blogPostFactory, BlogPostMapper blogPostMapper) {

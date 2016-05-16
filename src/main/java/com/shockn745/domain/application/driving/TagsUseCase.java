@@ -1,6 +1,6 @@
 package com.shockn745.domain.application.driving;
 
-import com.shockn745.domain.core.BlogPost;
+import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface TagsUseCase {
 
     int getPageCount(String tag);
 
-    List<BlogPost> getPage(String tag, int pageIndex);
+    List<BlogPostDTO> getPage(String tag, int pageIndex);
 }
