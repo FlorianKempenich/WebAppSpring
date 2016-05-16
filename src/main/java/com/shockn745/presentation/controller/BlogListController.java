@@ -19,7 +19,7 @@ import static com.google.common.base.Preconditions.checkArgument;
  */
 @Controller
 @RequestMapping(value = "/")
-public class MainPageController {
+public class BlogListController {
 
     @Autowired
     MainPageUseCase mainPageUseCase;
