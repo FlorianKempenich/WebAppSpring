@@ -33,16 +33,6 @@ public class BlogTagsController {
         return "yabe/main";
     }
 
-    @RequestMapping(value = "/{tag}/{pageIndex}")
-    public String mainPage(@PathVariable String tag, @PathVariable int pageIndex, Model model) {
-        if (pageIndex == 0) {
-            return "redirect:/tags/" + tag; //to remove the '0' from the url
-        } else {
-            updateModelWithPageInformation(tag, pageIndex, model);
-            return "yabe/main";
-        }
-    }
-
     private void updateModelWithPageInformation(String tag, int pageIndex, Model model) {
         int pageCount = tagsUseCase.getPageCount(tag);
         int indexOfPageToDisplay = getIndexOfPageToDisplay(pageIndex, pageCount);
@@ -54,12 +44,17 @@ public class BlogTagsController {
         List<BlogPostDTO> posts = tagsUseCase.getPage(tag, indexOfPageToDisplay);
         List<PostSummary> postSummaries = makePostSummaries(posts);
 
+        updateModelWithPopularTags(model);
         model.addAttribute("posts", postSummaries);
         model.addAttribute("currentTag", tag);
         model.addAttribute("linkOfNextPage", getLinkFromIndex(tag, indexOfNextPage));
         model.addAttribute("linkOfPreviousPage", getLinkFromIndex(tag, indexOfPreviousPage));
         model.addAttribute("isFirstPage", isFirstPage);
         model.addAttribute("isLastPage", isLastPage);
+    }
+
+    private void updateModelWithPopularTags(Model model) {
+        model.addAttribute("popularTags", tagsUseCase.getPopularTags(8));
     }
 
     private String getLinkFromIndex(String tag, int index) {
@@ -111,6 +106,16 @@ public class BlogTagsController {
             postSummaries.add(new PostSummary(post.getId(), post.getTitle(), summary, post.getDate(), post.getTags()));
         }
         return postSummaries;
+    }
+
+    @RequestMapping(value = "/{tag}/{pageIndex}")
+    public String mainPage(@PathVariable String tag, @PathVariable int pageIndex, Model model) {
+        if (pageIndex == 0) {
+            return "redirect:/tags/" + tag; //to remove the '0' from the url
+        } else {
+            updateModelWithPageInformation(tag, pageIndex, model);
+            return "yabe/main";
+        }
     }
 
 

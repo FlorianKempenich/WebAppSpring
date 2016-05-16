@@ -99,17 +99,9 @@
 
     <hr/>
     <h4 class="text-center">Popular tags</h4>
-    <a href="/tags/Featured">
-        <span class="popular-tag btn btn-fill btn-xs btn-primary label">Featured</span>
-    </a>
-    <a href="/tags/Tdd">
-        <span class="popular-tag btn btn-fill btn-xs btn-primary label">Tdd</span>
-    </a>
-    <a href="/tags/open">
-        <span class="popular-tag btn btn-fill btn-xs btn-primary label">open</span>
-    </a>
-    <a href="/tags/Architecture">
-        <span class="popular-tag btn btn-fill btn-xs btn-primary label">Architecture</span>
+
+    <a th:each="tag : ${popularTags}" th:href="@{/tags/{tag}(tag=${tag})}">
+        <span th:text="${tag}" class="popular-tag btn btn-fill btn-xs btn-primary label">Featured</span>
     </a>
 
 </div>

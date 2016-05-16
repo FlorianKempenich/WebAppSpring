@@ -73,5 +73,13 @@ public class TagsUseCaseImplTest {
         assertTrue(allPostsWithTag.containsAll(firstPage));
     }
 
+    @Test
+    public void getPopularTags_returnListInPopularityOrder() throws Exception {
+        List<String> popularTags = new ArrayList<>();
+        popularTags.add("first");
+        popularTags.add("second");
+        when(tagManager.getPopularTags(3)).thenReturn(popularTags);
 
+        assertEquals(popularTags, tagsUseCase.getPopularTags(3));
+    }
 }

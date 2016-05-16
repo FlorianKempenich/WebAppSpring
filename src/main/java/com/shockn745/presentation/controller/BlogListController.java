@@ -1,6 +1,7 @@
 package com.shockn745.presentation.controller;
 
 import com.shockn745.domain.application.driving.MainPageUseCase;
+import com.shockn745.domain.application.driving.TagsUseCase;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.presentation.model.PostSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class BlogListController {
 
     @Autowired
     MainPageUseCase mainPageUseCase;
+    @Autowired
+    TagsUseCase tagsUseCase;
 
     @RequestMapping(value = "/")
     public String mainPage(Model model) {
@@ -41,11 +44,16 @@ public class BlogListController {
         List<BlogPostDTO> posts = mainPageUseCase.getPage(indexOfPageToDisplay);
         List<PostSummary> postSummaries = makePostSummaries(posts);
 
+        updateModelWithPopularTags(model);
         model.addAttribute("posts", postSummaries);
         model.addAttribute("linkOfNextPage", getLinkFromIndex(indexOfNextPage));
         model.addAttribute("linkOfPreviousPage", getLinkFromIndex(indexOfPreviousPage));
         model.addAttribute("isFirstPage", isFirstPage);
         model.addAttribute("isLastPage", isLastPage);
+    }
+
+    private void updateModelWithPopularTags(Model model) {
+        model.addAttribute("popularTags", tagsUseCase.getPopularTags(8));
     }
 
     private String getLinkFromIndex(int index) {

@@ -16,4 +16,6 @@ public interface TagsUseCase {
     int getPageCount(String tag);
 
     List<BlogPostDTO> getPage(String tag, int pageIndex);
+
+    List<String> getPopularTags(int limit);
 }

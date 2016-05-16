@@ -52,4 +52,9 @@ public class TagsUseCaseImpl implements TagsUseCase {
         List<BlogPost> page = pagesManagerForTag.getPage(pageIndex);
         return mapper.transformListDomainToDto(page);
     }
+
+    @Override
+    public List<String> getPopularTags(int limit) {
+        return tagManager.getPopularTags(limit);
+    }
 }
