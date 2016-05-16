@@ -42,10 +42,14 @@ public class BlogListController {
         List<PostSummary> postSummaries = makePostSummaries(posts);
 
         model.addAttribute("posts", postSummaries);
-        model.addAttribute("indexOfNextPage", indexOfNextPage);
-        model.addAttribute("indexOfPreviousPage", indexOfPreviousPage);
+        model.addAttribute("linkOfNextPage", getLinkFromIndex(indexOfNextPage));
+        model.addAttribute("linkOfPreviousPage", getLinkFromIndex(indexOfPreviousPage));
         model.addAttribute("isFirstPage", isFirstPage);
         model.addAttribute("isLastPage", isLastPage);
+    }
+
+    private String getLinkFromIndex(int index) {
+        return "/pages/" + index;
     }
 
     private int getIndexOfPreviousPage(int pageIndexCurrentlyDisplayed, int pageCount) {
@@ -95,10 +99,10 @@ public class BlogListController {
         return postSummaries;
     }
 
-    @RequestMapping(value = "/{pageIndex}")
+    @RequestMapping(value = "/pages/{pageIndex}")
     public String followingPages(@PathVariable int pageIndex, Model model) {
         if (pageIndex == 0) {
-            return "redirect:"; //to remove the '0' from the url
+            return "redirect:/"; //to remove the '0' from the url
         } else {
             updateModelWithPageInformation(pageIndex, model);
             return "yabe/main";

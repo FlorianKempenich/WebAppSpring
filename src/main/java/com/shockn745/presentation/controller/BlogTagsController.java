@@ -33,6 +33,16 @@ public class BlogTagsController {
         return "yabe/main";
     }
 
+    @RequestMapping(value = "/{tag}/{pageIndex}")
+    public String mainPage(@PathVariable String tag, @PathVariable int pageIndex, Model model) {
+        if (pageIndex == 0) {
+            return "redirect:/tags/" + tag; //to remove the '0' from the url
+        } else {
+            updateModelWithPageInformation(tag, pageIndex, model);
+            return "yabe/main";
+        }
+    }
+
     private void updateModelWithPageInformation(String tag, int pageIndex, Model model) {
         int pageCount = tagsUseCase.getPageCount(tag);
         int indexOfPageToDisplay = getIndexOfPageToDisplay(pageIndex, pageCount);
@@ -41,15 +51,19 @@ public class BlogTagsController {
         boolean isFirstPage = indexOfPageToDisplay == 0;
         boolean isLastPage = indexOfPageToDisplay == pageCount - 1;
 
-//        List<BlogPostDTO> posts = tagsUseCase.getPage(tag, indexOfPageToDisplay);
-//        List<PostSummary> postSummaries = makePostSummaries(posts);
+        List<BlogPostDTO> posts = tagsUseCase.getPage(tag, indexOfPageToDisplay);
+        List<PostSummary> postSummaries = makePostSummaries(posts);
 
-//        model.addAttribute("posts", postSummaries);
-        // FIXME: 5/16/2016
-        model.addAttribute("indexOfNextPage", indexOfNextPage);
-        model.addAttribute("indexOfPreviousPage", indexOfPreviousPage);
+        model.addAttribute("posts", postSummaries);
+        model.addAttribute("currentTag", tag);
+        model.addAttribute("linkOfNextPage", getLinkFromIndex(tag, indexOfNextPage));
+        model.addAttribute("linkOfPreviousPage", getLinkFromIndex(tag, indexOfPreviousPage));
         model.addAttribute("isFirstPage", isFirstPage);
         model.addAttribute("isLastPage", isLastPage);
+    }
+
+    private String getLinkFromIndex(String tag, int index) {
+        return "/tags/" + tag + "/" + index;
     }
 
     private int getIndexOfPreviousPage(int pageIndexCurrentlyDisplayed, int pageCount) {
@@ -99,14 +113,5 @@ public class BlogTagsController {
         return postSummaries;
     }
 
-    @RequestMapping(value = "/{pageIndex}")
-    public String followingPages(@PathVariable int pageIndex, Model model) {
-        if (pageIndex == 0) {
-            return "redirect:"; //to remove the '0' from the url
-        } else {
-            updateModelWithPageInformation("", pageIndex, model);
-            return "yabe/main";
-        }
-    }
 
 }

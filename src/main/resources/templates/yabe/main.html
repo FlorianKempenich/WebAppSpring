@@ -17,9 +17,15 @@
 <div class="wrapper">
     <div class="container">
 
+
         <div class="row">
             <div class="col-sm-9">
                 <div class="main-content">
+                    <div class="row" th:if="${!#strings.isEmpty(currentTag)}">
+                        <div class="col-sm-12">
+                            <h3 class="text-center text-capitalize" th:text="${currentTag}"></h3>
+                        </div>
+                    </div>
 
                     <div th:each="post : ${posts}" class="article">
                         <div class="row">
@@ -64,7 +70,7 @@
                 <div class="row article-footer">
                     <div class="col-md-2">
                         <div th:unless="${isFirstPage}" class="pull-left">
-                            <a th:href="@{/{previousPage}(previousPage=${indexOfPreviousPage})}">
+                            <a th:href="@{{previousPage}(previousPage=${linkOfPreviousPage})}">
                                 <button class="btn btn-simple btn-default btn-move-left">
                                     <i class="fa fa-angle-left"></i>Newer Posts
                                 </button>
@@ -73,7 +79,7 @@
                     </div>
                     <div class="col-md-2 col-md-offset-8">
                         <div th:unless="${isLastPage}" class="pull-right">
-                            <a th:href="@{/{nextPage}(nextPage=${indexOfNextPage})}">
+                            <a th:href="@{{nextPage}(nextPage=${linkOfNextPage})}">
                                 <button class="btn btn-simple btn-default btn-move-right">Older Posts
                                     <i class="fa fa-angle-right"></i>
                                 </button>

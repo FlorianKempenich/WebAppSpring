@@ -55,6 +55,11 @@ html, body{
     color: white !important;
 }
 
+.popular-tag {
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
 #profile-picture {
     margin: 10px;
 }
