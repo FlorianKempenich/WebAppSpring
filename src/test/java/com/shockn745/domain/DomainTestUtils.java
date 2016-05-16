@@ -1,9 +1,13 @@
 package com.shockn745.domain;
 
+import com.shockn745.domain.application.driven.MarkdownParser;
 import com.shockn745.domain.application.driving.dto.BlogPostDTO;
 import com.shockn745.domain.application.mapper.BlogPostMapper;
 import com.shockn745.domain.core.BlogPost;
 import com.shockn745.domain.core.BlogPostFactory;
+import com.shockn745.parsing.PegdownBasedParser;
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -18,6 +22,14 @@ public class DomainTestUtils {
     private final BlogPostMapper blogPostMapper;
 
     private int counter = 0;
+
+    public static DomainTestUtils getDefault() {
+        PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
+        MarkdownParser parser = new PegdownBasedParser(processor);
+        BlogPostFactory blogPostFactory = new BlogPostFactory(parser);
+        BlogPostMapper mapper = new BlogPostMapper(blogPostFactory);
+        return new DomainTestUtils(blogPostFactory, mapper);
+    }
 
     public DomainTestUtils(BlogPostFactory blogPostFactory, BlogPostMapper blogPostMapper) {
         this.blogPostFactory = blogPostFactory;
@@ -49,6 +61,15 @@ public class DomainTestUtils {
 
     public BlogPostDTO makeFakeBlogPostDTOWithTag(String... tags) {
         return blogPostMapper.transform(makeFakeBlogPostWithTag(tags));
+    }
+
+    public BlogPost makeFakeBlogPostFromContent(String content) {
+        counter++;
+        Random random = new Random();
+        int id = counter;
+        String title = generateRandomString(random);
+        LocalDate date = makeDate();
+        return blogPostFactory.make(id, title, content, date, new ArrayList<>());
     }
 
     public BlogPost makeFakeBlogPostWithTag(String... tags) {

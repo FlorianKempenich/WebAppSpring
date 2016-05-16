@@ -1,13 +1,8 @@
 package com.shockn745.domain.core;
 
 import com.shockn745.domain.DomainTestUtils;
-import com.shockn745.domain.application.driven.MarkdownParser;
-import com.shockn745.domain.application.mapper.BlogPostMapper;
-import com.shockn745.parsing.PegdownBasedParser;
 import org.junit.Before;
 import org.junit.Test;
-import org.pegdown.Extensions;
-import org.pegdown.PegDownProcessor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,22 +16,13 @@ import static org.junit.Assert.*;
  */
 public class PagesManagerTest {
 
-    private BlogPostFactory blogPostFactory;
-
     private DomainTestUtils domainTestUtils;
-
 
     private PagesManager pagesManager;
 
     @Before
     public void setUp() throws Exception {
-        PegDownProcessor processor = new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS);
-        MarkdownParser markdownParser = new PegdownBasedParser(processor);
-        blogPostFactory = new BlogPostFactory(markdownParser);
-        BlogPostMapper blogPostMapper = new BlogPostMapper(blogPostFactory);
-
-        domainTestUtils = new DomainTestUtils(blogPostFactory, blogPostMapper);
-
+        domainTestUtils = DomainTestUtils.getDefault();
     }
 
     @Test

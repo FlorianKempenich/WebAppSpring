@@ -13,8 +13,13 @@ class Summarizer {
         this.markdownContent = nullToEmpty(markdownContent);
         String truncatedInLength = truncatePostInLength(charLimit);
         String truncatedAtFirstTitle = truncateAtFirstTitle(truncatedInLength);
+        String withoutMarkdownMarkup = removeMarkdownMarkup(truncatedAtFirstTitle);
 
-        return addEllipsis(truncatedAtFirstTitle);
+        return addEllipsis(withoutMarkdownMarkup);
+    }
+
+    private String removeMarkdownMarkup(String truncatedAtFirstTitle) {
+        return truncatedAtFirstTitle.replaceAll("\\*", "");
     }
 
     private String addEllipsis(String text) {
