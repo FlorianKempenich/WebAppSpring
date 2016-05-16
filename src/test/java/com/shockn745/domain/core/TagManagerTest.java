@@ -24,10 +24,9 @@ public class TagManagerTest {
 
     @Mock
     BlogPostRepository blogPostRepository;
-    private TagManager tagManager;
-
     @Mock
     MarkdownParser parser;
+    private TagManager tagManager;
     private BlogPostMapper mapper;
     private DomainTestUtils domainTestUtils;
 
@@ -38,6 +37,12 @@ public class TagManagerTest {
 
     private BlogPostDTO withWorldTag1;
     private BlogPostDTO withWorldTag2;
+
+    private BlogPostDTO withOtherTag;
+    private BlogPostDTO withTagTag;
+    private BlogPostDTO withMixedTag;
+    private BlogPostDTO withTestTag;
+    private BlogPostDTO withTwoDifferentTags;
 
     @Before
     public void setUp() throws Exception {
@@ -63,12 +68,26 @@ public class TagManagerTest {
         withWorldTag1 = domainTestUtils.makeFakeBlogPostDTOWithTag("world");
         withWorldTag2 = domainTestUtils.makeFakeBlogPostDTOWithTag("world");
 
+        withOtherTag = domainTestUtils.makeFakeBlogPostDTOWithTag("other");
+        withTagTag = domainTestUtils.makeFakeBlogPostDTOWithTag("tag");
+        withMixedTag = domainTestUtils.makeFakeBlogPostDTOWithTag("mixed");
+        withTestTag = domainTestUtils.makeFakeBlogPostDTOWithTag("test");
+        withTwoDifferentTags = domainTestUtils.makeFakeBlogPostDTOWithTag("two", "different");
+
+
         postsInRepository.add(withHelloTag);
         postsInRepository.add(withHelloTagCaps);
         postsInRepository.add(withHelloTagMixedCase);
         postsInRepository.add(withHelloTagWithSpaces);
+
         postsInRepository.add(withWorldTag1);
         postsInRepository.add(withWorldTag2);
+
+        postsInRepository.add(withOtherTag);
+        postsInRepository.add(withTagTag);
+        postsInRepository.add(withMixedTag);
+        postsInRepository.add(withTestTag);
+        postsInRepository.add(withTwoDifferentTags);
 
         when(blogPostRepository.getAll()).thenReturn(postsInRepository);
     }
@@ -81,7 +100,7 @@ public class TagManagerTest {
 
     @Test
     public void noCorrespondingPosts_returnEmptyList() throws Exception {
-        List<BlogPost> postsContainingTags = tagManager.findPosts("tag");
+        List<BlogPost> postsContainingTags = tagManager.findPosts("no-corresponding-tag");
         assertTrue(postsContainingTags.isEmpty());
     }
 
@@ -91,6 +110,14 @@ public class TagManagerTest {
         List<BlogPost> result = tagManager.findPosts("world");
 
         assertEquals(expected, result);
+    }
+
+    private List<BlogPost> makeExpectedList(BlogPostDTO... posts) {
+        List<BlogPost> expected = new ArrayList<>(posts.length);
+        for (BlogPostDTO post : posts) {
+            expected.add(mapper.transform(post));
+        }
+        return expected;
     }
 
     @Test
@@ -109,11 +136,94 @@ public class TagManagerTest {
         assertTrue("Should contain", result.containsAll(expectedToBeIncluded));
     }
 
-    private List<BlogPost> makeExpectedList(BlogPostDTO... posts) {
-        List<BlogPost> expected = new ArrayList<>(posts.length);
-        for (BlogPostDTO post : posts) {
-            expected.add(mapper.transform(post));
-        }
-        return expected;
+
+    @Test
+    public void noPosts_noPopularTags_emptyList() throws Exception {
+        when(blogPostRepository.getAll()).thenReturn(new ArrayList<>());
+
+        List<String> popularTags = tagManager.getPopularTags(10);
+        assertTrue(popularTags.isEmpty());
+    }
+
+    @Test
+    public void fewerTagsThanRequested_samePopularity_returnAllTags_withoutDuplicate_noOrder() throws Exception {
+        List<BlogPostDTO> postsWithTags = new ArrayList<>();
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withTwoDifferentTags);
+        when(blogPostRepository.getAll()).thenReturn(postsWithTags);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("hello");
+        expected.add("two");
+        expected.add("different");
+
+        List<String> result = tagManager.getPopularTags(10);
+        assertTrue(result.containsAll(expected));
+        assertTrue(expected.containsAll(result));
+    }
+
+    @Test
+    public void mixedCaseAndSpaces_fewerTagsThanRequested_samePopularity_returnAllTags_withoutDuplicate_noOrder() throws Exception {
+        List<BlogPostDTO> postsWithTags = new ArrayList<>();
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTagCaps);
+        postsWithTags.add(withHelloTagMixedCase);
+        postsWithTags.add(withHelloTagWithSpaces);
+        postsWithTags.add(withTwoDifferentTags);
+        when(blogPostRepository.getAll()).thenReturn(postsWithTags);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("hello");
+        expected.add("two");
+        expected.add("different");
+
+        List<String> result = tagManager.getPopularTags(10);
+        assertTrue(result.containsAll(expected));
+        assertTrue(expected.containsAll(result));
+    }
+
+
+    @Test
+    public void orderByPopularity() throws Exception {
+        List<BlogPostDTO> postsWithTags = new ArrayList<>();
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTag);
+
+        postsWithTags.add(withOtherTag);
+
+        postsWithTags.add(withWorldTag1);
+        postsWithTags.add(withWorldTag1);
+
+        when(blogPostRepository.getAll()).thenReturn(postsWithTags);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("hello");
+        expected.add("world");
+        expected.add("other");
+
+        assertEquals(expected, tagManager.getPopularTags(10));
+    }
+
+    @Test
+    public void limitNumberOfTags() throws Exception {
+        List<BlogPostDTO> postsWithTags = new ArrayList<>();
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTag);
+        postsWithTags.add(withHelloTag);
+
+        postsWithTags.add(withOtherTag);
+
+        postsWithTags.add(withWorldTag1);
+        postsWithTags.add(withWorldTag1);
+
+        when(blogPostRepository.getAll()).thenReturn(postsWithTags);
+
+        List<String> expected = new ArrayList<>();
+        expected.add("hello");
+        expected.add("world");
+
+        assertEquals(expected, tagManager.getPopularTags(2));
     }
 }
