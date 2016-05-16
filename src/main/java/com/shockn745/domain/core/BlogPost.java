@@ -55,10 +55,10 @@ public class BlogPost {
         boolean shouldShorten = nullToEmpty(markdownContent).length() > 7;
         String shortenedPost = shouldShorten ? markdownContent.substring(0, 7) : markdownContent;
         return MoreObjects.toStringHelper(this)
-//                .add("title", title)
-//                .add("markdownContent", shortenedPost)
+                .add("title", title)
+                .add("markdownContent", shortenedPost)
                 .add("date", date)
-//                .add("tags", tags)
+                .add("tags", tags)
                 .toString();
     }
 

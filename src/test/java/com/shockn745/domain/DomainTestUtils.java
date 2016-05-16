@@ -7,10 +7,7 @@ import com.shockn745.domain.core.BlogPostFactory;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Kempenich Florian
@@ -41,19 +38,27 @@ public class DomainTestUtils {
     private List<BlogPost> makeFakeListPostsWithIncreasingDate(int size) {
         List<BlogPost> fakeList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            fakeList.add(makeFakeBlogPost(blogPostFactory));
+            fakeList.add(makeFakeBlogPost());
         }
         return fakeList;
     }
 
-    private BlogPost makeFakeBlogPost(BlogPostFactory blogPostFactory) {
+    public BlogPost makeFakeBlogPost() {
+        return makeFakeBlogPostWithTag();
+    }
+
+    public BlogPostDTO makeFakeBlogPostDTOWithTag(String... tags) {
+        return blogPostMapper.transform(makeFakeBlogPostWithTag(tags));
+    }
+
+    public BlogPost makeFakeBlogPostWithTag(String... tags) {
         counter++;
         Random random = new Random();
         int id = counter;
         String content = generateRandomString(random);
         String title = generateRandomString(random);
         LocalDate date = makeDate();
-        return blogPostFactory.make(id, title, content, date, new ArrayList<>());
+        return blogPostFactory.make(id, title, content, date, Arrays.asList(tags));
     }
 
     private LocalDate makeDate() {
