@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Youtube Test</title>
+    <th:block th:include="yabe/fragments :: head"/>
+</head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <h1>Youtube video</h1>
+    </div>
+    <div class="row">
+        <iframe id="ytplayer" type="text/html" width="640" height="390"
+                th:src="@{'https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&loop=1/'}"
+                frameborder="0"></iframe>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>

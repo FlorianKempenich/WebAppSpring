@@ -7,6 +7,25 @@
 
 }
 
+.article-detail h2 {
+    text-align: start;
+}
+
+.article-detail h3 {
+    text-align: start;
+}
+
+.article-detail h4 {
+    text-align: start;
+}
+
+.article-detail a {
+    color: #EB5E28;;
+}
+
+.article-detail a:hover {
+    color: #B33C12;
+}
 
 .article-detail .card-image {
     margin: 30px 120px;
