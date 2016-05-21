@@ -31,6 +31,12 @@ public class DataConfiguration {
     }
 
     @Bean
+    @Profile("prod")
+    public BlogPostRepository getBlogPostRepository_prod(Path database) {
+        return new InFileBlogPostRepositoryImpl(database);
+    }
+
+    @Bean
     @Qualifier("in-file-database-path")
     @Profile("dev")
     public Path getInFileDatabaseDirectoryPath() {
@@ -42,12 +48,6 @@ public class DataConfiguration {
     @Profile("prod")
     public Path getInFileDatabaseDirectoryPath_prod() {
         return Paths.get("..", "ftp", "professional_beginner", "blog_posts");
-    }
-
-    @Bean
-    @Profile("prod")
-    public BlogPostRepository getBlogPostRepository_prod(Path database) {
-        return new InFileBlogPostRepositoryImpl(database);
     }
 
     @Bean
