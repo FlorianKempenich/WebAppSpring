@@ -15,7 +15,7 @@ public class ParsingConfiguration {
 
     @Bean
     public PegDownProcessor getPegdownProcessor() {
-        return new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS|Extensions.STRIKETHROUGH);
+        return new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS|Extensions.STRIKETHROUGH|Extensions.EXTANCHORLINKS);
     }
 
     @Bean

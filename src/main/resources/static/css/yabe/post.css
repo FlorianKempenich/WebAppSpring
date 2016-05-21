@@ -11,6 +11,17 @@
     text-align: start;
 }
 
+@media (min-width: 767px) {
+    /*This adds a padding when navigating directly to an anchor on desktop*/
+    /*To prevent the title to be hidden by the navbar */
+    .article-detail h2 a {
+        display: block;
+        height: 115px;
+        margin-top: -115px;
+        visibility: hidden;
+    }
+}
+
 .article-detail h3 {
     text-align: start;
 }
