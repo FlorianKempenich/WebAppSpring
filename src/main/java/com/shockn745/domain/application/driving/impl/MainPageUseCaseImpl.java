@@ -53,7 +53,7 @@ public class MainPageUseCaseImpl implements MainPageUseCase {
     @Override
     public String getSummary(int postId) {
         BlogPost post = getBlogPost(postId);
-        return post.summarize(300);
+        return post.summarize(200);
     }
 
     private BlogPost getBlogPost(int id) {
