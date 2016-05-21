@@ -20,7 +20,8 @@
 }
 
 .article-detail a {
-    color: #EB5E28;;
+    color: #EB5E28;
+    font-weight: bold;
 }
 
 .article-detail a:hover {
