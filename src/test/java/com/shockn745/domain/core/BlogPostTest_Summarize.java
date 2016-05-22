@@ -83,7 +83,7 @@ public class BlogPostTest_Summarize {
     }
 
     @Test
-    public void removeMarkDownSpecificSymbolsInSummary() throws Exception {
+    public void summarize_removeMarkDown_boldAndItalic() throws Exception {
         String withMarkDownMarkup = "Hello this is some text with *bold* and **italic too**, let's remove that!";
         String withoutMarkDownMarkup = "Hello this is some text with bold and italic too, let's remove that!";
 
@@ -92,4 +92,23 @@ public class BlogPostTest_Summarize {
         assertEquals(withoutMarkDownMarkup + " . . .", withMarkdown.summarize(100000));
     }
 
+    @Test
+    public void summarize_removeMarkDown_links() throws Exception {
+        String withMarkDownMarkup = "In the [previous article](/post/5) I presented an overview of the basic principle";
+        String withoutMarkDownMarkup = "In the previous article I presented an overview of the basic principle";
+
+        BlogPost withMarkdown = domainTestUtils.makeFakeBlogPostFromContent(withMarkDownMarkup);
+
+        assertEquals(withoutMarkDownMarkup + " . . .", withMarkdown.summarize(100000));
+    }
+
+    @Test
+    public void summarize_removeMarkDown_links_truncatedLink() throws Exception {
+        String withMarkDownMarkup = "In the [previous article](/post/5) I presented an overview of the basic principle";
+        String withoutMarkDownMarkup = "In the previous";
+
+        BlogPost withMarkdown = domainTestUtils.makeFakeBlogPostFromContent(withMarkDownMarkup);
+
+        assertEquals(withoutMarkDownMarkup + " . . .", withMarkdown.summarize(20));
+    }
 }

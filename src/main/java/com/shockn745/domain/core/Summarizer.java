@@ -1,5 +1,8 @@
 package com.shockn745.domain.core;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.google.common.base.Strings.nullToEmpty;
 
 /**
@@ -11,46 +14,57 @@ class Summarizer {
 
     synchronized String getSummary(String markdownContent, int charLimit) {
         this.markdownContent = nullToEmpty(markdownContent);
-        String truncatedInLength = truncatePostInLength(charLimit);
-        String truncatedAtFirstTitle = truncateAtFirstTitle(truncatedInLength);
-        String withoutMarkdownMarkup = removeMarkdownMarkup(truncatedAtFirstTitle);
+        removeMarkdownMarkup();
+        truncatePostInLength(charLimit);
+        truncateAtFirstTitle();
 
-        return addEllipsis(withoutMarkdownMarkup);
+        addEllipsis();
+        return this.markdownContent;
     }
 
-    private String removeMarkdownMarkup(String truncatedAtFirstTitle) {
-        return truncatedAtFirstTitle.replaceAll("\\*", "");
+    private void removeMarkdownMarkup() {
+        removeBoldAndItalicMarkup();
+        removeLinks();
     }
 
-    private String addEllipsis(String text) {
-        text = removeSpecialCharacterAtTheEnd(text);
-        return text + " . . .";
+    private void removeLinks() {
+        Pattern pattern = Pattern.compile("\\[(.*)\\]\\(.*\\)");
+        Matcher matcher = pattern.matcher(markdownContent);
+
+        while (matcher.find()) {
+            markdownContent = markdownContent.replace(matcher.group(), matcher.group(1));
+        }
+    }
+
+    private void removeBoldAndItalicMarkup() {
+        markdownContent = markdownContent.replaceAll("\\*", "");
+    }
+
+    private void addEllipsis() {
+        removeSpecialCharacterAtTheEnd();
+        markdownContent = markdownContent + " . . .";
     }
 
     /**
      * Removes the following characters from the end of the string : " ", "\n", '."
      */
-    private String removeSpecialCharacterAtTheEnd(String text) {
-        return text.replaceAll("[ \\n.]$", "");
+    private void removeSpecialCharacterAtTheEnd() {
+        markdownContent = markdownContent.replaceAll("[ \\n.]$", "");
     }
 
-    private String truncateAtFirstTitle(String truncated) {
-        int indexOfFirstTitle = truncated.indexOf("#");
+    private void truncateAtFirstTitle() {
+        int indexOfFirstTitle = markdownContent.indexOf("#");
         if (indexOfFirstTitle != -1) {
-            return truncated.substring(0, indexOfFirstTitle);
-        } else {
-            return truncated;
+            markdownContent = markdownContent.substring(0, indexOfFirstTitle);
         }
     }
 
-    private String truncatePostInLength(int charLimit) {
+    private void truncatePostInLength(int charLimit) {
         if (markdownContent.length() > charLimit) {
             while (inMiddleOfWord(charLimit)) {
                 charLimit--;
             }
-            return markdownContent.substring(0, charLimit);
-        } else {
-            return markdownContent;
+            markdownContent = markdownContent.substring(0, charLimit);
         }
     }
 
