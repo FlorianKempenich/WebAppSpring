@@ -47,7 +47,7 @@
                                     <a th:href="@{/post/{id}(id=${post.id})}">
                                         <div class="card-big-shadow">
                                             <div class="card" data-radius="none"
-                                                 th:style="'background-image:url(' + @{/assets/lion.jpg} + ');'"
+                                                 th:style="'background-image:url(' + @{/assets/blog-post/{id}/hero.jpg(id=${post.id})} + ');'"
                                                  style="background-image: url('../../static/assets/lion.jpg');">
                                             </div> <!-- end card -->
                                         </div>
