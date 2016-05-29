@@ -13,7 +13,7 @@ public class Disqus {
     }
 
     public String getPageIdentifier(int id) {
-        return "blog-post-" + id;
+        return "blog-post-id-" + id;
     }
 
 }
