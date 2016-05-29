@@ -13,6 +13,7 @@
 
     <link href="../../static/css/dev/main.css" th:href="@{/css/dev/main.css}" rel="stylesheet"/>
 
+    <th:block th:include="yabe/fragments :: head"/>
 </head>
 <body>
 <div class="container">
@@ -21,6 +22,47 @@
     </div>
     <div class="row">
         <div id="map"></div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4><small>Default</small></h4>
+            <button class="btn btn-icon btn-twitter">
+                <i class="ti-twitter"></i>
+            </button>
+            <button class="btn btn-icon btn-facebook">
+                <i class="ti-facebook"> </i>
+            </button>
+            <button class="btn btn-icon btn-google">
+                <i class="ti-google"> </i>
+            </button>
+            <button class="btn btn-icon btn-linkedin">
+                <i class="ti-linkedin"></i>
+            </button>
+            <button class="btn btn-icon btn-pinterest">
+                <i class="ti-pinterest"></i>
+            </button>
+            <button class="btn btn-icon btn-youtube">
+                <i class="ti-youtube"> </i>
+            </button>
+            <button class="btn btn-icon btn-tumblr">
+                <i class="ti-tumblr"> </i>
+            </button>
+            <button class="btn btn-icon btn-github">
+                <i class="ti-github"></i>
+            </button>
+            <button class="btn btn-icon btn-dribbble">
+                <i class="ti-dribbble"></i>
+            </button>
+            <button class="btn btn-icon btn-reddit">
+                <i class="ti-reddit"></i>
+            </button>
+            <button class="btn btn-icon btn-instagram">
+                <i class="ti-instagram"></i>
+            </button>
+        </div>
     </div>
 
     <script th:src="@{/js/dev/maps.js}"></script>

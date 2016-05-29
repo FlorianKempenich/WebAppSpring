@@ -16,6 +16,8 @@
         <link href="../../static/paperkitpro/css/ct-paper.css" th:href="@{/paperkitpro/css/ct-paper.css}"
               rel="stylesheet"/>
         <link href="../../static/paperkitpro/css/demo.css" th:href="@{/paperkitpro/css/demo.css}" rel="stylesheet"/>
+        <link href="../../static/paperkitpro/css/themify-icons.css" th:href="@{/paperkitpro/css/themify-icons.css}"
+              rel="stylesheet"/>
 
         <!-- Highlight.js -->
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"/>
@@ -104,12 +106,37 @@
         <span th:text="${tag}" class="popular-tag btn btn-fill btn-xs btn-primary label">Featured</span>
     </a>
 
+    <hr/>
+    <h4 class="text-center">Get in touch</h4>
+
+    <a href="mailto:florian.kempenich@gmail.com">
+        <button type="button"
+                class="btn btn-icon btn-google"
+                data-toggle="popover"
+                data-placement="bottom"
+                title=""
+                data-content="florian.kempenich@gmail.com"
+                data-original-title="Mail">
+            <i class="ti-email"> </i>
+        </button>
+    </a>
+    <a href="https://www.linkedin.com/in/floriankempenich">
+        <button class="btn btn-icon btn-linkedin">
+            <i class="ti-linkedin"></i>
+        </button>
+    </a>
+    <a href="https://github.com/shockn745">
+        <button class="btn btn-icon btn-github">
+            <i class="ti-github"></i>
+        </button>
+    </a>
+
 </div>
 
 
 <th:block th:fragment="sidebar">
     <div class="col-sm-3 hidden-xs">
-        <div class="sidebar" id="on-the-side" >
+        <div class="sidebar" id="on-the-side">
             <div th:replace="yabe/fragments :: sidebarcontent"></div>
         </div>
     </div>
