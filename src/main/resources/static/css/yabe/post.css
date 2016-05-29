@@ -2,24 +2,34 @@
     /*border:solid crimson 1px !important;*/
 }
 
-.article-detail strong {
-    color: #7A9E9F;
-
-}
-
-.article-detail h2 {
-    text-align: start;
-}
-
 @media (min-width: 767px) {
     /*This adds a padding when navigating directly to an anchor on desktop*/
     /*To prevent the title to be hidden by the navbar */
-    .article-detail h2 a {
+    .article-detail h2 a[name*="-"] {
         display: block;
         height: 115px;
         margin-top: -115px;
         visibility: hidden;
     }
+
+    /*This adds a padding when navigating directly to an anchor on desktop*/
+    /*To prevent the title to be hidden by the navbar */
+    .article-detail h3 a[name*="-"], .article-detail h4 a[name*="-"] {
+        display: block;
+        height: 105px;
+        margin-top: -105px;
+        visibility: hidden;
+    }
+}
+
+.article-detail strong {
+    color: #7A9E9F;
+}
+
+.article-detail h2 {
+    text-align: start;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .article-detail h3 {
@@ -40,9 +50,11 @@
 }
 
 .article-detail .card-image {
-    margin: 30px 120px;
+    margin: 30px auto;
 }
 
 #article-title {
     margin-bottom: 50px;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }

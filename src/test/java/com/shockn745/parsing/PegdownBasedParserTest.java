@@ -30,7 +30,6 @@ public class PegdownBasedParserTest {
         String expectedHtml = "<p>Hello this is the intro</p>\n" +
                 "<h1>First title</h1>";
 
-
         String resultHtml = parser.toHtml(markdown, 0);
 
         assertEquals(expectedHtml, resultHtml);
@@ -40,9 +39,7 @@ public class PegdownBasedParserTest {
     public void parseImage() throws Exception {
         String image = "PICTURE:test";
         int postId = 12;
-        String expectedHtml = "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"" + "/assets/blog-post/" + postId + "/test.jpg" + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
-                "</div>";
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg");
 
         assertEquals(expectedHtml, parser.toHtml(image, postId));
     }
@@ -52,10 +49,18 @@ public class PegdownBasedParserTest {
         String imageLink = "http://ichef.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg";
         String image = "PICTURE:" + imageLink;
         int postId = 12;
-        String expectedHtml = "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
-                "</div>";
+        String expectedHtml = makeImageHTMLTemplate(imageLink);
 
         assertEquals(expectedHtml, parser.toHtml(image, postId));
+    }
+
+    private String makeImageHTMLTemplate(String imageLink) {
+        return "<div class=\"row\">" +
+                "    <div class=\"col-md-8 col-md-offset-2\">" +
+                "        <div class=\"card-image card-with-shadow\">\n" +
+                "            <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive center-block\">\n" +
+                "        </div>" +
+                "    </div>" +
+                "</div>";
     }
 }

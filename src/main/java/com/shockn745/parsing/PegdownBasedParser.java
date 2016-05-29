@@ -60,9 +60,12 @@ public class PegdownBasedParser implements MarkdownParser {
     }
 
     private String makeImageDiv(String imageLink) {
-        return "<div class=\"card-image card-with-shadow\">\n" +
-                "    <img src=\"" + imageLink +
-                "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive\">\n" +
-                "</div>\n";
+        return "<div class=\"row\">" +
+                "    <div class=\"col-md-8 col-md-offset-2\">" +
+                "        <div class=\"card-image card-with-shadow\">\n" +
+                "            <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive center-block\">\n" +
+                "        </div>" +
+                "    </div>" +
+                "</div>";
     }
 }

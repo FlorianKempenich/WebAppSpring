@@ -2,7 +2,7 @@
     /*border: solid 1px crimson !important;*/
 }
 
-html, body{
+html, body {
     margin: 0;
 
     padding: 0;
@@ -46,7 +46,7 @@ html, body{
     background-color: #FFFCF5;
 }
 
-.navbar-brand, .navbar-brand:hover, .navbar-brand:focus{
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
     color: white;
 }
 
@@ -72,6 +72,7 @@ pre {
 .main-content {
     padding-top: 80px;
 }
+
 @media (max-width: 767px) /* @grid-float-breakpoint -1 */ {
     .main-content {
         padding-top: 0;
@@ -82,4 +83,5 @@ pre {
         top: auto;
     }
 }
+
 /*END - For the sticky navbar only on desktop*/
