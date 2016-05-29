@@ -37,14 +37,14 @@ public class ApplicationConfiguration {
     @Qualifier("posts-per-page")
     @Profile("prod")
     public int getPostsPerPage_prod() {
-        return 3;
+        return 4;
     }
 
     @Bean
     @Qualifier("posts-per-page")
     @Profile("dev")
     public int getPostsPerPage_dev() {
-        return 2;
+        return 4;
     }
 
     @Bean
