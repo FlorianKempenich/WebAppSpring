@@ -41,8 +41,6 @@ public class DevController {
             names.add(name + " " + i);
         }
         model.addAttribute("names", names);
-
-
         return "dev/thymeleaf";
     }
 
@@ -80,5 +78,17 @@ public class DevController {
     @RequestMapping(value = "/youtube")
     public String embedVideo(Model model) {
         return "dev/youtube";
+    }
+
+
+    @RequestMapping(value = "/newsletter", method = RequestMethod.GET)
+    public String newsletter(Model model) {
+        return "dev/newsletter";
+    }
+
+    @RequestMapping(value = "/newsletter", method = RequestMethod.POST)
+    public String newsletter_post(Model model, @RequestParam(value="firstname", required=false)String firstName) {
+        System.out.println(firstName);
+        return "dev/newsletter";
     }
 }
