@@ -15,6 +15,7 @@ public class NewsletterRequest {
 
     @Email
     @Size(max = 40)
+    @NotEmpty
     private String email;
 
     public String getEmail() {

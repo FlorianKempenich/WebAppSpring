@@ -56,6 +56,17 @@ function initNewsletterPopup() {
     });
 }
 
+function showToolTip(title) {
+    $('#email-field-sidebar').tooltip({
+        title: title,
+        placement: "top"
+    });
+    $('#email-field-sidebar').tooltip('show');
+    setTimeout(function () {
+        $("#email-field-sidebar").tooltip('destroy');
+    }, 2000);
+}
+
 function initRegisterEmailButton() {
     $("#register-newsletter-sidebar").click(function (event) {
 
@@ -71,22 +82,14 @@ function initRegisterEmailButton() {
             url: "/newsletter/subscribe",
             data: JSON.stringify(data),
             dataType: 'json',
-            timeout: 600000,
+            timeout: 60000,
             success: function (data) {
                 $("#register-newsletter-sidebar").prop("disabled", false);
-                console.log(data.email);
-                console.log("post success");
-                //todo tooltip in reaction to response
-                // -> Success: "Thank you"
-                // -> Invalid: "Error"
+                showToolTip("Thank you!");
             },
             error: function (e) {
                 $("#register-newsletter-sidebar").prop("disabled", false);
-                console.log("post failed");
-                console.log(e);
-                //todo tooltip in reaction to response
-                // -> Success: "Thank you"
-                // -> Invalid: "Error"
+                showToolTip("Please verify your email address!");
             }
         });
 
