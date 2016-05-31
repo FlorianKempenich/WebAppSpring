@@ -5,10 +5,6 @@ function incrementCookieCounter() {
     Cookies.set('counter', counter);
 }
 
-function removeCookieCounter() {
-    Cookies.remove('counter');
-}
-
 function getCookieCounter() {
     var counterCookie = Cookies.get('counter');
     var counter;
@@ -18,10 +14,6 @@ function getCookieCounter() {
         counter = parseInt(counterCookie);
     }
     return counter;
-}
-function displayCookieCounter() {
-    var cookie = getCookieCounter();
-    console.log(cookie);
 }
 
 function showModal() {
@@ -60,8 +52,7 @@ function showToolTip(title) {
     $('#email-field-sidebar').tooltip({
         title: title,
         placement: "top"
-    });
-    $('#email-field-sidebar').tooltip('show');
+    }).tooltip('show');
     setTimeout(function () {
         $("#email-field-sidebar").tooltip('destroy');
     }, 2000);
@@ -85,7 +76,12 @@ function initRegisterEmailButton() {
             timeout: 60000,
             success: function (data) {
                 $("#register-newsletter-sidebar").prop("disabled", false);
-                showToolTip("Thank you!");
+                // showToolTip("Thank you!");
+
+                $('#email-field-sidebar').fadeOut(1000, function () {
+                    $('#email-field-sidebar-thank-you').fadeIn(1000);
+                });
+
             },
             error: function (e) {
                 $("#register-newsletter-sidebar").prop("disabled", false);
