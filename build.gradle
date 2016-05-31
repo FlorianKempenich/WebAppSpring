@@ -39,9 +39,8 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     runtime('com.h2database:h2')
 
-	// TEMP
+	// Parsing
 	compile('org.pegdown:pegdown:1.6.0')
-
 
 	// Test
     testCompile('org.springframework.boot:spring-boot-starter-test')

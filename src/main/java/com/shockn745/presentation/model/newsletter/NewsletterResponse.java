@@ -1,12 +1,13 @@
 package com.shockn745.presentation.model.newsletter;
 
 /**
- * Created by Florian on 31/05/16.
+ * Simple response class for the Ajax 'subscribe to newsletter' request.
+ * Might not even be necessary, but for now does the job.
+ * (Simple string response would send failed to Ajax)
  */
 public class NewsletterResponse {
 
     private boolean status;
-    private String email;
 
     public boolean isStatus() {
         return status;
@@ -14,13 +15,5 @@ public class NewsletterResponse {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }
