@@ -64,100 +64,89 @@
 
 
 <!--    SIDEBAR     -->
-<div th:fragment="sidebarcontent">
-
-    <h4 class="text-center">Manifesto</h4>
-    <ul>
-        <li>I am not an <strong>expert</strong></li>
-        <li>A place to share my <strong>thoughts</strong></li>
-        <li>Will try to update as often as <strong>possible</strong></li>
-        <li><strong>Not</strong> an online course</li>
-        <li><strong>Asking</strong> instead of <strong>answering</strong></li>
-    </ul>
-    <div class="text-center">
-        <a th:href="@{/manifesto}">
-            <button class="btn btn-danger btn-fill btn-xs">Read more</button>
-        </a>
-    </div>
-    <hr/>
-
-    <h4 class="text-center">Mailinglist</h4>
-    <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
-            <input id="email-field-sidebar" type="email" class="form-control border-input" placeholder="email address"/>
-            <div id="email-field-sidebar-thank-you" class="form-control border-input" style="display: none;">Thank you!</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-10 col-xs-offset-1">
-            <button id="register-newsletter-sidebar" class="btn btn-danger btn-fill btn-sm center-block" style="margin-top: 15px;">Get notified!</button>
-        </div>
-    </div>
-    <hr/>
-    <h4 class="text-center">About me</h4>
-    <div class="card-image" id="profile-picture">
-        <a th:href="@{/manifesto}">
-            <img th:src="@{/assets/profile_picture.jpg}" src="../../static/assets/profile_picture.jpg"
-                 alt="Rounded Image" class="img-rounded img-responsive"/>
-        </a>
-    </div>
-    <p class="text-justify" style="margin-top: 20px;">
-        My name is <strong>Florian</strong>, and I am the <strong>Professional Beginner</strong>. <br/>
-        On this blog I present programming <strong>concepts</strong> taken from the
-        <strong>industry</strong>, with the point of view of a <strong>beginner</strong>.
-    </p>
-
-    <div class="text-center">
-        <a th:href="@{/manifesto#who-am-i-}">
-            <button class="btn btn-danger btn-fill btn-xs">Read more</button>
-        </a>
-    </div>
-
-    <hr/>
-    <h4 class="text-center">Popular tags</h4>
-
-    <a th:each="tag : ${popularTags}" th:href="@{/tags/{tag}(tag=${tag})}">
-        <span th:text="${tag}" class="popular-tag btn btn-fill btn-xs btn-primary label">Featured</span>
-    </a>
-
-    <hr/>
-    <h4 class="text-center">Get in touch</h4>
-
-    <a href="mailto:florian.kempenich@gmail.com">
-        <button type="button"
-                class="btn btn-icon btn-google"
-                data-toggle="popover"
-                data-placement="bottom"
-                title=""
-                data-content="florian.kempenich@gmail.com"
-                data-original-title="Mail">
-            <i class="ti-email"> </i>
-        </button>
-    </a>
-    <a href="https://www.linkedin.com/in/floriankempenich">
-        <button class="btn btn-icon btn-linkedin">
-            <i class="ti-linkedin"></i>
-        </button>
-    </a>
-    <a href="https://github.com/shockn745">
-        <button class="btn btn-icon btn-github">
-            <i class="ti-github"></i>
-        </button>
-    </a>
-
-</div>
-
-
 <th:block th:fragment="sidebar">
-    <div class="col-sm-3 hidden-xs">
-        <div class="sidebar" id="on-the-side">
-            <div th:replace="yabe/fragments :: sidebarcontent"></div>
-        </div>
-    </div>
-    <div class="col-sm-3 hidden-sm hidden-md hidden-lg">
+    <div class="col-sm-3">
         <hr/>
-        <div class="sidebar center-block" id="at-the-bottom">
-            <div th:replace="yabe/fragments :: sidebarcontent"></div>
+        <div class="sidebar">
+            <h4 class="text-center">Manifesto</h4>
+            <ul>
+                <li>I am not an <strong>expert</strong></li>
+                <li>A place to share my <strong>thoughts</strong></li>
+                <li>Will try to update as often as <strong>possible</strong></li>
+                <li><strong>Not</strong> an online course</li>
+                <li><strong>Asking</strong> instead of <strong>answering</strong></li>
+            </ul>
+            <div class="text-center">
+                <a th:href="@{/manifesto}">
+                    <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+                </a>
+            </div>
+            <hr/>
+
+            <h4 class="text-center">Mailinglist</h4>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <input id="email-field-sidebar" type="email" class="form-control border-input" placeholder="email address"/>
+                    <div id="email-field-sidebar-thank-you" class="form-control border-input" style="display: none;">Thank you!</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1">
+                    <button id="register-newsletter-sidebar" class="btn btn-danger btn-fill btn-sm center-block" style="margin-top: 15px;">Get notified!</button>
+                </div>
+            </div>
+            <hr/>
+
+            <h4 class="text-center">About me</h4>
+            <div class="card-image" id="profile-picture">
+                <a th:href="@{/manifesto#who-am-i-}">
+                    <img th:src="@{/assets/profile_picture.jpg}" src="../../static/assets/profile_picture.jpg"
+                         alt="Rounded Image" class="img-rounded img-responsive"/>
+                </a>
+            </div>
+            <p class="text-justify" style="margin-top: 20px;">
+                My name is <strong>Florian</strong>, and I am the <strong>Professional Beginner</strong>. <br/>
+                On this blog I present programming <strong>concepts</strong> taken from the
+                <strong>industry</strong>, with the point of view of a <strong>beginner</strong>.
+            </p>
+
+            <div class="text-center">
+                <a th:href="@{/manifesto#who-am-i-}">
+                    <button class="btn btn-danger btn-fill btn-xs">Read more</button>
+                </a>
+            </div>
+
+            <hr/>
+            <h4 class="text-center">Popular tags</h4>
+
+            <a th:each="tag : ${popularTags}" th:href="@{/tags/{tag}(tag=${tag})}">
+                <span th:text="${tag}" class="popular-tag btn btn-fill btn-xs btn-primary label">Featured</span>
+            </a>
+
+            <hr/>
+            <h4 class="text-center">Get in touch</h4>
+
+            <a href="mailto:florian.kempenich@gmail.com">
+                <button type="button"
+                        class="btn btn-icon btn-google"
+                        data-toggle="popover"
+                        data-placement="bottom"
+                        title=""
+                        data-content="florian.kempenich@gmail.com"
+                        data-original-title="Mail">
+                    <i class="ti-email"> </i>
+                </button>
+            </a>
+            <a href="https://www.linkedin.com/in/floriankempenich">
+                <button class="btn btn-icon btn-linkedin">
+                    <i class="ti-linkedin"></i>
+                </button>
+            </a>
+            <a href="https://github.com/shockn745">
+                <button class="btn btn-icon btn-github">
+                    <i class="ti-github"></i>
+                </button>
+            </a>
         </div>
     </div>
 </th:block>
