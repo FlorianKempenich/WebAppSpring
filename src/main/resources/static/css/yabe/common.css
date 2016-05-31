@@ -20,26 +20,13 @@ html, body {
     min-height: 100%;
 }
 
-.sidebar {
-    /*border: solid 1px crimson !important;*/
-    overflow-x: hidden;
-}
+/*.sidebar {*/
+    /*!*border: solid 1px crimson !important;*!*/
+    /*overflow-x: hidden;*/
+/*}*/
 
 .sidebar .label {
     margin-bottom: 5px;
-}
-
-#on-the-side {
-    top: 0;
-    max-width: 210px;
-    max-height: 100%;
-    overflow-y: auto;
-    padding-top: 80px;
-    padding-bottom: 30px;
-}
-
-#at-the-bottom {
-    max-width: 280px;
 }
 
 .wrapper {
@@ -73,12 +60,12 @@ pre {
     margin: 3px 5px;
 }
 
-/*For the sticky navbar only on desktop*/
 .main-content {
     padding-top: 80px;
 }
 
 @media (max-width: 767px) /* @grid-float-breakpoint -1 */ {
+    /*For the sticky navbar only on desktop*/
     .main-content {
         padding-top: 0;
     }
@@ -87,6 +74,16 @@ pre {
         position: relative;
         top: auto;
     }
+
+    /*END - For the sticky navbar only on desktop*/
+    .sidebar {
+        padding-top: 0 !important;
+        margin: auto;
+    }
 }
 
-/*END - For the sticky navbar only on desktop*/
+.sidebar {
+    max-width: 80%;
+    padding-top: 35px;
+    padding-bottom: 30px;
+}
