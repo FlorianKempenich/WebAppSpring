@@ -1,4 +1,3 @@
-
 function incrementCookieCounter() {
     var counter = getCookieCounter();
     counter++;
@@ -25,7 +24,6 @@ function displayCookieCounter() {
     console.log(cookie);
 }
 
-
 function showModal() {
     $('#newsletterPopup').modal('show');
     console.log("opening");
@@ -37,7 +35,7 @@ function showModal() {
  *
  * todo: If user enter email, never display again
  */
-function newsletterPopupInit() {
+function initNewsletterPopup() {
 
     // todo: If user enter email, never display again
     // $('#newsletterPopup').on('hidden.bs.modal', function (e) {
@@ -56,5 +54,41 @@ function newsletterPopupInit() {
             }
         }
     });
+}
 
+function initRegisterEmailButton() {
+    $("#register-newsletter-sidebar").click(function (event) {
+
+        $("#register-newsletter-sidebar").prop("disabled", true);
+        console.log("before post");
+
+        var data = {};
+        data["email"] = $('#email-field-sidebar').val();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/newsletter/subscribe",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            timeout: 600000,
+            success: function (data) {
+                $("#register-newsletter-sidebar").prop("disabled", false);
+                console.log(data.email);
+                console.log("post success");
+                //todo tooltip in reaction to response
+                // -> Success: "Thank you"
+                // -> Invalid: "Error"
+            },
+            error: function (e) {
+                $("#register-newsletter-sidebar").prop("disabled", false);
+                console.log("post failed");
+                console.log(e);
+                //todo tooltip in reaction to response
+                // -> Success: "Thank you"
+                // -> Invalid: "Error"
+            }
+        });
+
+    })
 }
