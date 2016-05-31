@@ -48,24 +48,24 @@ function initNewsletterPopup() {
     });
 }
 
-function showToolTip(title) {
-    $('#email-field-sidebar').tooltip({
+function showToolTip(emailFieldId, title) {
+    $(emailFieldId).tooltip({
         title: title,
         placement: "top"
     }).tooltip('show');
     setTimeout(function () {
-        $("#email-field-sidebar").tooltip('destroy');
+        $(emailFieldId).tooltip('destroy');
     }, 2000);
 }
 
-function initRegisterEmailButton() {
-    $("#register-newsletter-sidebar").click(function (event) {
+function initRegisterEmailButton(emailFieldId, thankYouId, submitButtonId) {
+    $(submitButtonId).click(function (event) {
 
-        $("#register-newsletter-sidebar").prop("disabled", true);
+        $(submitButtonId).prop("disabled", true);
         console.log("before post");
 
         var data = {};
-        data["email"] = $('#email-field-sidebar').val();
+        data["email"] = $(emailFieldId).val();
 
         $.ajax({
             type: "POST",
@@ -75,17 +75,19 @@ function initRegisterEmailButton() {
             dataType: 'json',
             timeout: 60000,
             success: function (data) {
-                $("#register-newsletter-sidebar").prop("disabled", false);
-                // showToolTip("Thank you!");
-
-                $('#email-field-sidebar').fadeOut(1000, function () {
-                    $('#email-field-sidebar-thank-you').fadeIn(1000);
+                $(submitButtonId).prop("disabled", false);
+                $(emailFieldId).fadeOut(500, function () {
+                    $(thankYouId).fadeIn(500, function () {
+                        setTimeout(function () {
+                            $('#newsletterPopup').modal('hide');
+                        }, 400);
+                    });
                 });
 
             },
             error: function (e) {
-                $("#register-newsletter-sidebar").prop("disabled", false);
-                showToolTip("Please verify your email address!");
+                $(submitButtonId).prop("disabled", false);
+                showToolTip(emailFieldId, "Please verify your email address!");
             }
         });
 
