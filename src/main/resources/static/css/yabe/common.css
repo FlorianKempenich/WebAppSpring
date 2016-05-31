@@ -73,6 +73,12 @@ pre {
     margin: 3px 5px;
 }
 
+
+
+#newsletterPopup {
+    margin-top: 25%;
+}
+
 /*For the sticky navbar only on desktop*/
 .main-content {
     padding-top: 80px;

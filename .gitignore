@@ -77,6 +77,5 @@ secret_store
 aaaa_temp_file
 file_database/blog_posts/*
 
-src/main/resources/static/js/yabe/*.js*
 
 *.DS_Store

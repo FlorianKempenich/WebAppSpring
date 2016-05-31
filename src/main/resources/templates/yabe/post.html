@@ -58,6 +58,8 @@
     </div>
 </div>
 
+<th:block th:include="yabe/fragments :: newsletterPopup"/>
+
 
 <script th:inline="javascript">
 /*<![CDATA[*/
@@ -85,4 +87,9 @@
 
 </body>
 <th:block th:include="yabe/fragments :: scripts"/>
+<script type="text/javascript">
+    $(document).ready(function () {
+        automaticPopup("atendpage", false);
+    });
+</script>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <th:block th:include="yabe/fragments :: head"></th:block>
+    <th:block th:include="yabe/fragments :: head"/>
     <!--suppress HtmlUnknownTarget : Placeholder-->
     <link href="../../static/css/yabe/main.css" th:href="@{/css/yabe/main.css}" rel="stylesheet"/>
 
@@ -9,7 +9,7 @@
 </head>
 <body>
 <!--    navbar come here          -->
-<th:block th:include="yabe/fragments :: navbar"></th:block>
+<th:block th:include="yabe/fragments :: navbar"/>
 <!-- end navbar  -->
 
 
@@ -100,5 +100,5 @@
 <!--   end modal -->
 
 </body>
-<th:block th:include="yabe/fragments :: scripts"></th:block>
+<th:block th:include="yabe/fragments :: scripts"/>
 </html>
