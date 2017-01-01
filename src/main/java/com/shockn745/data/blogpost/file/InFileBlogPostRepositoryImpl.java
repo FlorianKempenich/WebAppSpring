@@ -148,19 +148,26 @@ public class InFileBlogPostRepositoryImpl implements BlogPostRepository {
             Stream<Path> files = Files.list(directory);
 
             List<BlogPostDTO> posts = new ArrayList<>();
-            files.forEach(path -> {
-                try {
-                    BlogPostDTO post = getPost(path);
-                    posts.add(post);
-                } catch (IOException e) {
-                    System.err.println("Couldn't find markdownContent: " + path);
-                }
-            });
+
+            files
+                    .filter(this::isValidBlogFile)
+                    .forEach(path -> {
+                        try {
+                            BlogPostDTO post = getPost(path);
+                            posts.add(post);
+                        } catch (IOException e) {
+                            System.err.println("Couldn't find markdownContent: " + path);
+                        }
+                    });
             return posts;
 
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    private boolean isValidBlogFile(Path file) {
+        return file.getFileName().toString().endsWith("md");
     }
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Kempenich Florian
@@ -210,6 +211,47 @@ public class InFileBlogPostRepositoryImplTest {
     @Test
     public void getAllPost() throws Exception {
         List<BlogPostDTO> allPosts = repository.getAll();
+
+        List<BlogPostDTO> expected = new ArrayList<>();
+        expected.add(post1);
+        expected.add(post2);
+
+        assertEquals(expected, allPosts);
+    }
+
+    @Test
+    public void getAllPost_ignoreNonMdFiles() throws Exception {
+        Path nonMdFile1 = tempDir.resolve("illegal-file.asd");
+        Path nonMdFile2 = tempDir.resolve("illegal-file-543.txt");
+        BlogPostDTO illegalPost1 = writeLinesAndReturnCorrespondingBlogPostDTO(
+                nonMdFile1,
+                999,
+                LocalDate.MAX,
+                new ArrayList<>(),
+                "Title",
+                " ",
+                "2016-05-09",
+                "Content",
+                "Content line 1"
+        );
+        BlogPostDTO illegalPost2 = writeLinesAndReturnCorrespondingBlogPostDTO(
+                nonMdFile2,
+                111,
+                LocalDate.MAX,
+                new ArrayList<>(),
+                "Title",
+                " ",
+                "2016-05-08",
+                "Content",
+                "Content line 1"
+        );
+        additionalTempFilesToDelete.add(nonMdFile1);
+        additionalTempFilesToDelete.add(nonMdFile2);
+
+        List<BlogPostDTO> allPosts = repository.getAll();
+
+        assertFalse(allPosts.contains(illegalPost1));
+        assertFalse(allPosts.contains(illegalPost2));
 
         List<BlogPostDTO> expected = new ArrayList<>();
         expected.add(post1);
