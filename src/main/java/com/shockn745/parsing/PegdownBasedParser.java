@@ -41,7 +41,7 @@ public class PegdownBasedParser implements MarkdownParser {
                 imageLink = makeLocalImageLink(imageName, postId);
             }
 
-            html = html.replace(
+            html = html.replaceFirst(
                     imageTag,
                     makeImageDiv(imageLink)
             );

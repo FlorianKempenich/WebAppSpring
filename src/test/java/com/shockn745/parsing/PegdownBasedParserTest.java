@@ -45,6 +45,18 @@ public class PegdownBasedParserTest {
     }
 
     @Test
+    public void parseImage_2DifferentImagesWithSimilarNames() throws Exception {
+        String image = "PICTURE:test";
+        String image2 = "PICTURE:test_second";
+        String toParse = image + "\n" + image2;
+        int postId = 12;
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg") + "\n"
+                + makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test_second.jpg");
+
+        assertEquals(expectedHtml, parser.toHtml(toParse, postId));
+    }
+
+    @Test
     public void parseImageWithLink() throws Exception {
         String imageLink = "http://ichef.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg";
         String image = "PICTURE:" + imageLink;
