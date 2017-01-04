@@ -1,5 +1,6 @@
 package com.shockn745.presentation.controller;
 
+import com.shockn745.domain.application.driving.BlogPostDetailUseCase;
 import com.shockn745.domain.application.driving.GetWhatMessageUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,10 @@ public class DevController {
 
     @Autowired
     GetWhatMessageUseCase getWhatMessageUseCase;
+
+    @Autowired
+    BlogPostDetailUseCase blogPostDetailUseCase;
+
 
 
     @RequestMapping(value = "addPost", method = RequestMethod.PUT)
@@ -90,5 +95,12 @@ public class DevController {
     public String newsletter_post(Model model, @RequestParam(value="firstname", required=false)String firstName) {
         System.out.println(firstName);
         return "dev/newsletter";
+    }
+
+    @RequestMapping(value = "/popup")
+    public String popup(Model model) {
+        String html = blogPostDetailUseCase.getHtml(10);
+        model.addAttribute("htmlContent", html);
+        return "dev/popup";
     }
 }

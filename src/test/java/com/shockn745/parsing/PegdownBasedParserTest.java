@@ -37,42 +37,61 @@ public class PegdownBasedParserTest {
 
     @Test
     public void parseImage() throws Exception {
-        String image = "PICTURE:test";
+        String image = "PICTURE:test.123.456.\"\"\n";
         int postId = 12;
-        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg");
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg", 123, 456);
+
+        assertEquals(expectedHtml, parser.toHtml(image, postId));
+    }
+
+    @Test
+    public void parseImageWithDescription() throws Exception {
+        String image = "PICTURE:test.123.456.\"Hey this is a test\"\n";
+        int postId = 12;
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg", 123, 456, "Hey this is a test");
+
+        assertEquals(expectedHtml, parser.toHtml(image, postId));
+    }
+
+    @Test
+    public void parseImageWithDescription_specialCharacters() throws Exception {
+        String image = "PICTURE:test.123.456.\"Hey this is a: test\"\n";
+        int postId = 12;
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg", 123, 456, "Hey this is a: test");
 
         assertEquals(expectedHtml, parser.toHtml(image, postId));
     }
 
     @Test
     public void parseImage_2DifferentImagesWithSimilarNames() throws Exception {
-        String image = "PICTURE:test";
-        String image2 = "PICTURE:test_second";
-        String toParse = image + "\n" + image2;
+        String image = "PICTURE:test.124.667.\"\"";
+        String image2 = "PICTURE:test_second.999.456.\"\"";
+        String toParse = image + "\n\n" + image2 + "\n";
         int postId = 12;
-        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg") + "\n"
-                + makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test_second.jpg");
+        String expectedHtml = makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test.jpg", 124, 667) + "\n"
+                + makeImageHTMLTemplate("/assets/blog-post/" + postId + "/test_second.jpg", 999, 456);
 
         assertEquals(expectedHtml, parser.toHtml(toParse, postId));
     }
 
-    @Test
-    public void parseImageWithLink() throws Exception {
-        String imageLink = "http://ichef.bbci.co.uk/news/976/media/images/83351000/jpg/_83351965_explorer273lincolnshirewoldssouthpicturebynicholassilkstone.jpg";
-        String image = "PICTURE:" + imageLink;
-        int postId = 12;
-        String expectedHtml = makeImageHTMLTemplate(imageLink);
-
-        assertEquals(expectedHtml, parser.toHtml(image, postId));
+    private String makeImageHTMLTemplate(String imageLink, int width, int height) {
+        return makeImageHTMLTemplate(imageLink, width, height, "");
     }
-
-    private String makeImageHTMLTemplate(String imageLink) {
-        return "<div class=\"row\">" +
-                "    <div class=\"col-md-8 col-md-offset-2\">" +
-                "        <div class=\"card-image card-with-shadow\">\n" +
-                "            <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive center-block\">\n" +
-                "        </div>" +
-                "    </div>" +
+    private String makeImageHTMLTemplate(String imageLink, int width, int height, String description) {
+        //language=HTML
+        return "<div class=\"row\">\n" +
+                "    <div class=\"my-gallery\" itemscope=\"\" itemtype=\"http://schema.org/ImageGallery\">\n" +
+                "        <figure itemprop=\"associatedMedia\" itemscope=\"\" itemtype=\"http://schema.org/ImageObject\"\n" +
+                "                class=\"col-md-8 col-md-offset-2 gallery-item\">\n" +
+                "            <a href=\"" + imageLink + "\" itemprop=\"contentUrl\"\n" +
+                "               data-size=\""+ width + "x" + height + "\">\n" +
+                "                <img src=\"" + imageLink + "\" itemprop=\"thumbnail\"\n" +
+                "                     alt=\"Image description\" class=\"img-rounded img-responsive center-block\"></img>\n" +
+                "            </a>\n" +
+                "            <figcaption itemprop=\"caption description\" class=\"gallery-caption\">" + description + "\n" +
+                "            </figcaption>\n" +
+                "        </figure>\n" +
+                "    </div>\n" +
                 "</div>";
     }
 }

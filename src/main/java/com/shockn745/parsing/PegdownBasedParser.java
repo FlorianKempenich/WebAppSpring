@@ -26,46 +26,48 @@ public class PegdownBasedParser implements MarkdownParser {
     }
 
     private String parsePictures(String html, int postId) {
-        Pattern pattern = Pattern.compile("PICTURE:(.+)");
+        Pattern pattern = Pattern.compile("PICTURE:(.+)\\.(.+)\\.(.+)\\.\"(.+)?\"\\n");
         Matcher matcher = pattern.matcher(html);
 
         while (matcher.find()) {
             String imageTag = matcher.group();
             String imageName = matcher.group(1);
+            String width = matcher.group(2);
+            String height = matcher.group(3);
+            String description = matcher.group(4);
 
-            String imageLink;
+            String imageLink = makeLocalImageLink(imageName, postId);
 
-            if (isWebLink(imageName)) {
-                imageLink = imageName;
-            } else {
-                imageLink = makeLocalImageLink(imageName, postId);
-            }
 
             html = html.replaceFirst(
                     imageTag,
-                    makeImageDiv(imageLink)
+                    makeImageDiv(imageLink, width, height, description)
             );
         }
 
         return html;
     }
 
-    private boolean isWebLink(String imageName) {
-        return imageName.startsWith("http");
-    }
-
-
     private String makeLocalImageLink(String imageName, int postId) {
         return "/assets/blog-post/" + postId + "/" + imageName + ".jpg";
     }
 
-    private String makeImageDiv(String imageLink) {
-        return "<div class=\"row\">" +
-                "    <div class=\"col-md-8 col-md-offset-2\">" +
-                "        <div class=\"card-image card-with-shadow\">\n" +
-                "            <img src=\"" + imageLink + "\" alt=\"Rounded Image\" class=\"img-rounded img-responsive center-block\">\n" +
-                "        </div>" +
-                "    </div>" +
+    private String makeImageDiv(String imageLink, String width, String height, String description) {
+        description = nullToEmpty(description);
+        //language=HTML
+        return "<div class=\"row\">\n" +
+                "    <div class=\"my-gallery\" itemscope=\"\" itemtype=\"http://schema.org/ImageGallery\">\n" +
+                "        <figure itemprop=\"associatedMedia\" itemscope=\"\" itemtype=\"http://schema.org/ImageObject\"\n" +
+                "                class=\"col-md-8 col-md-offset-2 gallery-item\">\n" +
+                "            <a href=\"" + imageLink + "\" itemprop=\"contentUrl\"\n" +
+                "               data-size=\"" + width + "x" + height + "\">\n" +
+                "                <img src=\"" + imageLink + "\" itemprop=\"thumbnail\"\n" +
+                "                     alt=\"Image description\" class=\"img-rounded img-responsive center-block\"></img>\n" +
+                "            </a>\n" +
+                "            <figcaption itemprop=\"caption description\" class=\"gallery-caption\">" + description + "\n" +
+                "            </figcaption>\n" +
+                "        </figure>\n" +
+                "    </div>\n" +
                 "</div>";
     }
 }
