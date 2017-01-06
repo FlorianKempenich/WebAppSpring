@@ -1,23 +1,20 @@
 ------------ DIMENSION --------------
 
 ----------------------------
-10/client-side-rendering-1.jpg
-Width: 1200 | Height: 482
+9/afterhtml.jpg
+Width: 873 | Height: 111
 ----------------------------
-10/client-side-rendering-2.jpg
-Width: 1200 | Height: 778
+9/distantapp.jpg
+Width: 1200 | Height: 439
 ----------------------------
-10/client-side-rendering-with-json.jpg
-Width: 1200 | Height: 778
+9/hero.jpg
+Width: 1200 | Height: 437
 ----------------------------
-10/movie_list_with_details.jpg
-Width: 1200 | Height: 632
+9/localcli.jpg
+Width: 1200 | Height: 594
 ----------------------------
-10/movie_list_with_details_ajax.jpg
-Width: 1200 | Height: 476
+9/tunnel.jpg
+Width: 1200 | Height: 437
 ----------------------------
-10/movie_list_with_details_server_side.jpg
-Width: 1200 | Height: 535
-----------------------------
-10/server-side-rendering.jpg
-Width: 1200 | Height: 462
+9/webframework.jpg
+Width: 1200 | Height: 429
