@@ -1,65 +1,23 @@
 ------------ DIMENSION --------------
 
 ----------------------------
-1/hero.jpg
-Width: 1200 | Height: 800
+10/client-side-rendering-1.jpg
+Width: 1200 | Height: 482
 ----------------------------
-1000/hero.jpg
-Width: 648 | Height: 505
+10/client-side-rendering-2.jpg
+Width: 1200 | Height: 778
 ----------------------------
-2/hero.jpg
-Width: 416 | Height: 303
+10/client-side-rendering-with-json.jpg
+Width: 1200 | Height: 778
 ----------------------------
-3/hero.jpg
-Width: 700 | Height: 436
+10/movie_list_with_details.jpg
+Width: 1200 | Height: 632
 ----------------------------
-3/refactorCycle.jpg
-Width: 480 | Height: 239
+10/movie_list_with_details_ajax.jpg
+Width: 1200 | Height: 476
 ----------------------------
-3/tddCycle.jpg
-Width: 700 | Height: 436
+10/movie_list_with_details_server_side.jpg
+Width: 1200 | Height: 535
 ----------------------------
-4/hero.jpg
-Width: 873 | Height: 955
-----------------------------
-4/hexAndroid.jpg
-Width: 873 | Height: 955
-----------------------------
-4/layerToHex.jpg
-Width: 1200 | Height: 687
-----------------------------
-5/driven.jpg
-Width: 1200 | Height: 994
-----------------------------
-5/driving.jpg
-Width: 1200 | Height: 828
-----------------------------
-5/flowDependencies.jpg
-Width: 1200 | Height: 1154
-----------------------------
-5/hero.jpg
-Width: 1200 | Height: 994
-----------------------------
-5/withNetwork.jpg
-Width: 1200 | Height: 559
-----------------------------
-6/afterDto.jpg
-Width: 1140 | Height: 532
-----------------------------
-6/appLayer.jpg
-Width: 1200 | Height: 547
-----------------------------
-6/dtoBoundaries.jpg
-Width: 1200 | Height: 794
-----------------------------
-6/hero.jpg
-Width: 1140 | Height: 532
-----------------------------
-6/simpleUml.jpg
-Width: 440 | Height: 330
-----------------------------
-7/hero.jpg
-Width: 1200 | Height: 806
-----------------------------
-8/hero.jpg
-Width: 520 | Height: 362
+10/server-side-rendering.jpg
+Width: 1200 | Height: 462
