@@ -18,6 +18,7 @@ public class ParsingConfiguration {
         return new PegDownProcessor(Extensions.FENCED_CODE_BLOCKS
                 |Extensions.STRIKETHROUGH
                 |Extensions.EXTANCHORLINKS
+                |Extensions.SMARTS
         );
     }
 
