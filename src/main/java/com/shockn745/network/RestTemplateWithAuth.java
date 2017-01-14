@@ -17,7 +17,6 @@ import java.util.List;
  * <p>
  * Simply extract the Basic Authentication feature from {@code TestRestTemplate}.
  * <p>
- * Created by izeye on 15. 7. 1..
  */
 public class RestTemplateWithAuth extends RestTemplate {
 
@@ -29,11 +28,12 @@ public class RestTemplateWithAuth extends RestTemplate {
         if (username == null) {
             return;
         }
-        List<ClientHttpRequestInterceptor> interceptors = Collections
-                .singletonList(
-                        new BasicAuthorizationInterceptor(username, password));
-        setRequestFactory(new InterceptingClientHttpRequestFactory(getRequestFactory(),
-                interceptors));
+
+        List<ClientHttpRequestInterceptor> interceptors = Collections.singletonList(
+                new BasicAuthorizationInterceptor(username, password)
+        );
+
+        setRequestFactory(new InterceptingClientHttpRequestFactory(getRequestFactory(), interceptors));
     }
 
     private static class BasicAuthorizationInterceptor implements
@@ -51,10 +51,14 @@ public class RestTemplateWithAuth extends RestTemplate {
         @Override
         public ClientHttpResponse intercept(HttpRequest request, byte[] body,
                                             ClientHttpRequestExecution execution) throws IOException {
-            byte[] token = Base64.getEncoder().encode(
-                    (this.username + ":" + this.password).getBytes());
+            byte[] token = encodeToken(this.username + ":" + this.password);
             request.getHeaders().add("Authorization", "Basic " + new String(token));
             return execution.execute(request, body);
+        }
+
+        private byte[] encodeToken(String toEncode) {
+            byte[] toEncodeBytes = toEncode.getBytes();
+            return Base64.getEncoder().encode(toEncodeBytes);
         }
 
     }
