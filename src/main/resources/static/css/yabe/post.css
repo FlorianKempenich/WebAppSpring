@@ -29,6 +29,20 @@
     }
 }
 
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+td {
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+th {
+    text-align: center;
+}
+
 .article-detail strong {
     color: #7A9E9F;
 }
