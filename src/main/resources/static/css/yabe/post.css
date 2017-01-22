@@ -20,6 +20,13 @@
         margin-top: -105px;
         visibility: hidden;
     }
+
+    .anchor-hack {
+        display: block;
+        height: 80px;
+        margin-top: -80px;
+        visibility: hidden;
+    }
 }
 
 .article-detail strong {
