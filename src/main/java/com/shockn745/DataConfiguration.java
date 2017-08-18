@@ -32,7 +32,8 @@ public class DataConfiguration {
     @Bean
     @Qualifier("in-file-database-path")
     public Path getInFileDatabaseDirectoryPath_prod() {
-        return Paths.get("..", "ftp", "professional_beginner", "blog_posts");
+//        return Paths.get("..", "ftp", "professional_beginner", "blog_posts");
+        return Paths.get("/posts");
     }
 
     @Bean
