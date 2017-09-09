@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class Disqus {
 
     public String getPageUrl(int id) {
-        return "http://www.professionalbeginner.com/post/" + id;
+        return "https://www.professionalbeginner.com/post/" + id;
     }
 
     public String getPageIdentifier(int id) {

@@ -56,8 +56,8 @@ public class PegdownBasedParser implements MarkdownParser {
         description = nullToEmpty(description);
         //language=HTML
         return "<div class=\"row\">\n" +
-                "    <div class=\"my-gallery\" itemscope=\"\" itemtype=\"http://schema.org/ImageGallery\">\n" +
-                "        <figure itemprop=\"associatedMedia\" itemscope=\"\" itemtype=\"http://schema.org/ImageObject\"\n" +
+                "    <div class=\"my-gallery\" itemscope=\"\" itemtype=\"https://schema.org/ImageGallery\">\n" +
+                "        <figure itemprop=\"associatedMedia\" itemscope=\"\" itemtype=\"https://schema.org/ImageObject\"\n" +
                 "                class=\"col-md-8 col-md-offset-2 gallery-item\">\n" +
                 "            <a href=\"" + imageLink + "\" itemprop=\"contentUrl\"\n" +
                 "               data-size=\"" + width + "x" + height + "\">\n" +
