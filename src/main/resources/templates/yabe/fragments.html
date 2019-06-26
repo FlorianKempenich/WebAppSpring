@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/manifesto}" class="btn nav-item btn-simple">Manifesto</a></li>
+                    <li><a th:href="@{/about}" class="btn nav-item btn-simple">About</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a th:href="@{/}" class="btn nav-item btn-simple">Blog</a></li>
@@ -68,15 +68,14 @@
     <div class="col-sm-3">
         <hr/>
         <div class="sidebar">
-            <h4 class="text-center">Manifesto</h4>
+            <h4 class="text-center">Professional Beginner</h4>
             <ul>
-                <li>Nothing <strong>needs</strong> to be complex</li>
-                <li><strong>Opinionated</strong> but <strong>easy</strong> to understand</li>
-                <li>Get the <strong>Big picture</strong></li>
-                <li>Focus on the details <strong>later</strong></li>
+                <li>Everything is <strong>complex</strong> before it becomes <strong>simple</strong></li>
+                <li>Nothing needs to <strong>remain</strong> complex</li>
+                <li>The only thing required is <strong>the willingness to explore</strong></li>
             </ul>
             <div class="text-center">
-                <a th:href="@{/manifesto}">
+                <a th:href="@{/about#professional-beginner}">
                     <button class="btn btn-danger btn-fill btn-xs">Read more</button>
                 </a>
             </div>
@@ -103,7 +102,7 @@
 
             <h4 class="text-center">About me</h4>
             <div class="card-image" id="profile-picture">
-                <a th:href="@{/manifesto#who-am-i-}">
+                <a th:href="@{/about#who-am-i-}">
                     <img th:src="@{/assets/profile_picture.jpg}" src="../../static/assets/profile_picture.jpg"
                          alt="Rounded Image" class="img-rounded img-responsive"/>
                 </a>
@@ -118,7 +117,7 @@
             </p>
 
             <div class="text-center">
-                <a th:href="@{/manifesto#who-am-i-}">
+                <a th:href="@{/about#my-short-story}">
                     <button class="btn btn-danger btn-fill btn-xs">Read more</button>
                 </a>
             </div>

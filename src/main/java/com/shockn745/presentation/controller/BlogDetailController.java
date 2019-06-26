@@ -29,9 +29,9 @@ public class BlogDetailController {
     @Autowired
     Environment environment;
 
-    @RequestMapping(value = "/manifesto")
-    public String showManifesto(Model model) {
-        // By convention manifesto id == 1
+    @RequestMapping(value = "/about")
+    public String showAbout(Model model) {
+        // By convention 'About page' id == 1
         updateModelWithPostInformation(1, model);
         return "yabe/post";
     }
