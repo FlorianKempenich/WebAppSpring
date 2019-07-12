@@ -62,7 +62,7 @@ public class PegdownBasedParser implements MarkdownParser {
                 "            <a href=\"" + imageLink + "\" itemprop=\"contentUrl\"\n" +
                 "               data-size=\"" + width + "x" + height + "\">\n" +
                 "                <img src=\"" + imageLink + "\" itemprop=\"thumbnail\"\n" +
-                "                     alt=\"Image description\" class=\"img-rounded img-responsive center-block\"></img>\n" +
+                "                     alt=\"" + description + "\" class=\"img-rounded img-responsive center-block\"></img>\n" +
                 "            </a>\n" +
                 "            <figcaption itemprop=\"caption description\" class=\"gallery-caption\">" + description + "\n" +
                 "            </figcaption>\n" +
